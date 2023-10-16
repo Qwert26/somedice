@@ -1,0 +1,105 @@
+package io.github.qwert26.somedice;
+
+import java.util.*;
+
+/**
+ * A mixed dice group which consist of dice of varying types. For a dice group
+ * containing only a single type of die, use {@link HomogenousDiceGroup}.
+ * 
+ * @author Qwert26
+ * @see HomogenousDiceGroup
+ */
+public class MixedDiceGroup implements IDie {
+	private final IDie[] sources;
+
+	/**
+	 * 
+	 * @param sources
+	 * @throws IllegalArgumentException if the source-array is <code>null</code>,
+	 *                                  empty or contains <code>null</code>.
+	 */
+	public MixedDiceGroup(IDie... sources) {
+		if (sources == null) {
+			throw new IllegalArgumentException("No sources were given");
+		}
+		if (sources.length == 0) {
+			throw new IllegalArgumentException("Sources were empty");
+		}
+		for (IDie source : sources) {
+			if (source == null) {
+				throw new IllegalArgumentException("A single source was null");
+			}
+		}
+		this.sources = sources;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(sources);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof MixedDiceGroup)) {
+			return false;
+		}
+		MixedDiceGroup other = (MixedDiceGroup) obj;
+		if (!Arrays.equals(sources, other.sources)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("MixedDiceGroup [sources=");
+		builder.append(Arrays.toString(sources));
+		builder.append("]");
+		return builder.toString();
+	}
+
+	@Override
+	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
+		@SuppressWarnings("unchecked")
+		List<Map.Entry<Map<Integer, Integer>, Long>>[] indexedResultEntries = new List[sources.length];
+		for (int i = 0; i < sources.length; i++) {
+			indexedResultEntries[i] = new ArrayList<Map.Entry<Map<Integer, Integer>, Long>>(
+					sources[i].getAbsoluteFrequencies().entrySet());
+		}
+		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>();
+		int[] indices = new int[sources.length];
+		Arrays.fill(indices, 0);
+		int masterIndex;
+		infinity: while (true) {
+			masterIndex = 0;
+			final Map<Integer, Integer> nextKey = new TreeMap<Integer, Integer>();
+			long nextValue = 1;
+			for (int i = 0; i < sources.length; i++) {
+				Map.Entry<Map<Integer, Integer>, Long> currentEntry = indexedResultEntries[i].get(indices[i]);
+				for (Map.Entry<Integer, Integer> valueCount : currentEntry.getKey().entrySet()) {
+					nextKey.merge(valueCount.getKey(), valueCount.getValue(), (oldV, newV) -> newV + oldV);
+				}
+				nextValue *= currentEntry.getValue();
+			}
+			ret.merge(nextKey, nextValue, (oldV, newV) -> oldV + newV);
+			do {
+				indices[masterIndex]++;
+				if (indices[masterIndex] == indexedResultEntries[masterIndex].size()) {
+					indices[masterIndex] = 0;
+					masterIndex++;
+				} else {
+					continue infinity;
+				}
+			} while (masterIndex < indices.length);
+			break;
+		}
+		return ret;
+	}
+}
