@@ -10,12 +10,20 @@ import java.util.*;
  * @see MixedDiceGroup
  */
 public class HomogenousDiceGroup implements IDie {
+	/**
+	 * The base die this group consists of: It will be virtually replicated as
+	 * indicated by {@link #count}.
+	 */
 	private AbstractDie baseDie;
+	/**
+	 * Amount of identical dice in this group.
+	 */
 	private int count;
 
 	/**
 	 * 
 	 * @param baseDie
+	 * @throws NullPointerException If the base die is <code>null</code>.
 	 */
 	public HomogenousDiceGroup(AbstractDie baseDie) {
 		this(baseDie, 1);
@@ -25,6 +33,8 @@ public class HomogenousDiceGroup implements IDie {
 	 * 
 	 * @param baseDie
 	 * @param count
+	 * @throws NullPointerException     If the base die is <code>null</code>.
+	 * @throws IllegalArgumentException If the amount is not positive.
 	 */
 	public HomogenousDiceGroup(AbstractDie baseDie, int count) {
 		setBaseDie(baseDie);
@@ -35,12 +45,18 @@ public class HomogenousDiceGroup implements IDie {
 	 * 
 	 * @param count
 	 * @param baseDie
+	 * @throws NullPointerException     If the base die is <code>null</code>.
+	 * @throws IllegalArgumentException If the amount is not positive.
 	 */
 	public HomogenousDiceGroup(int count, AbstractDie baseDie) {
 		setBaseDie(baseDie);
 		setCount(count);
 	}
 
+	/**
+	 * 
+	 * @return The current base die.
+	 */
 	public final AbstractDie getBaseDie() {
 		return baseDie;
 	}
@@ -48,19 +64,23 @@ public class HomogenousDiceGroup implements IDie {
 	/**
 	 * 
 	 * @param baseDie
-	 * @throws NullPointerException if the new base die is <code>null</code>.
+	 * @throws NullPointerException If the new base die is <code>null</code>.
 	 */
 	public final void setBaseDie(AbstractDie baseDie) {
 		this.baseDie = Objects.requireNonNull(baseDie, "A base die is required!");
 	}
 
+	/**
+	 * 
+	 * @return The current amount of virtual dice.
+	 */
 	public final int getCount() {
 		return count;
 	}
 
 	/**
 	 * 
-	 * @param count
+	 * @param count The new amount of virtual dice.
 	 * @throws IllegalArgumentException if count is not positive.
 	 */
 	public final void setCount(int count) {

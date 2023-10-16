@@ -7,6 +7,7 @@ import java.util.*;
  * result of a chain of manipulating actions.
  * 
  * @author Qwert26
+ * @see Compressor#toUnfairDie()
  */
 public final class UnfairDie extends AbstractDie {
 	/**
@@ -39,11 +40,19 @@ public final class UnfairDie extends AbstractDie {
 		return ret;
 	}
 
+	/**
+	 * Delegates to the <code>size()</code>-method of the underlying map.
+	 * 
+	 * @see Map#size()
+	 */
 	@Override
 	public int getDistinctValues() {
 		return data.size();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -52,6 +61,9 @@ public final class UnfairDie extends AbstractDie {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -67,6 +79,9 @@ public final class UnfairDie extends AbstractDie {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -10,9 +10,14 @@ import java.util.*;
  * @see HomogenousDiceGroup
  */
 public class MixedDiceGroup implements IDie {
+	/**
+	 * The source where the results are coming from, the same source can be used
+	 * multiple times.
+	 */
 	private final IDie[] sources;
 
 	/**
+	 * Creates a new mixed dice group with the given sources.
 	 * 
 	 * @param sources
 	 * @throws IllegalArgumentException if the source-array is <code>null</code>,
@@ -32,7 +37,9 @@ public class MixedDiceGroup implements IDie {
 		}
 		this.sources = sources;
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -40,7 +47,9 @@ public class MixedDiceGroup implements IDie {
 		result = prime * result + Arrays.hashCode(sources);
 		return result;
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -55,7 +64,9 @@ public class MixedDiceGroup implements IDie {
 		}
 		return true;
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

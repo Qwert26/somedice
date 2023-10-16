@@ -6,6 +6,14 @@
 	<artifactId>somedice</artifactId>
 	<version>0.0.1</version>
 	<name>SomeDice</name>
+	<developers>
+		<developer>
+			<name>Christian Schuerhoff</name>
+			<email>qwert268862@gmail.com</email>
+			<organization>GitHub</organization>
+			<organizationUrl>https://github.com</organizationUrl>
+		</developer>
+	</developers>
 	<properties>
 		<maven.compiler.source>19</maven.compiler.source>
 		<maven.compiler.target>19</maven.compiler.target>
@@ -19,4 +27,7 @@
 		</dependency>
 	</dependencies>
 	<inceptionYear>2023</inceptionYear>
+	<scm>
+		<url>https://github.com/Qwert26/somedice</url>
+	</scm>
 </project>

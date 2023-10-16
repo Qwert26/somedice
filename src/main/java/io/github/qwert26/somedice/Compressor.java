@@ -8,9 +8,21 @@ import java.util.function.*;
  * into a single number: This is more memory efficient but loses details.
  */
 public class Compressor implements IDie {
+	/**
+	 * The source of dice rolls.
+	 */
 	private IDie source;
+	/**
+	 * Compresses value-count-pairs into a single value.
+	 */
 	private ToIntBiFunction<Integer, Integer> valueCountFunction;
+	/**
+	 * Compresses many pairs into a single value.
+	 */
 	private ToIntBiFunction<Integer, Integer> accumulator;
+	/**
+	 * Provides the start value for the accumulation.
+	 */
 	private IntSupplier startValue;
 
 	/**
@@ -49,10 +61,25 @@ public class Compressor implements IDie {
 
 	/**
 	 * Creates a standard compressor, which adds up all the individual dice with a
+	 * custom start value.
+	 * 
+	 * @param source The source of the dice rolls.
+	 * @param start  The supplier for getting a start value for the accumulation.
+	 * @throws NullPointerException if the given source is <code>null</code>.
+	 */
+	public Compressor(IDie source, int start) {
+		setSource(source);
+		setStartValue(start);
+		valueCountFunction = Math::multiplyExact;
+		accumulator = Math::addExact;
+	}
+
+	/**
+	 * Creates a standard compressor, which adds up all the individual dice with a
 	 * start value of zero.
 	 * 
 	 * @param source The source of the dice rolls.
-	 * @throws NullPointerException
+	 * @throws NullPointerException if the parameter is <code>null</code>.
 	 */
 	public Compressor(IDie source) {
 		setSource(source);
@@ -61,60 +88,92 @@ public class Compressor implements IDie {
 		startValue = () -> 0;
 	}
 
+	/**
+	 * 
+	 * @return The current source.
+	 */
 	public final IDie getSource() {
 		return source;
 	}
 
 	/**
 	 * 
-	 * @param source
-	 * @throws NullPointerException
+	 * @param source The source of dice rolls to compress.
+	 * @throws NullPointerException if the parameter is <code>null</code>.
 	 */
 	public final void setSource(IDie source) {
 		this.source = Objects.requireNonNull(source, "A source must be given!");
 	}
 
+	/**
+	 * 
+	 * @return The current function for compressing entries (a value and its count)
+	 *         into a single number.
+	 */
 	public final ToIntBiFunction<Integer, Integer> getValueCountFunction() {
 		return valueCountFunction;
 	}
 
 	/**
 	 * 
-	 * @param valueCountFunction
-	 * @throws NullPointerException
+	 * @param valueCountFunction The function compressing pairs of values and counts
+	 *                           into a single value, which will be accumulated.
+	 * @throws NullPointerException if the parameter is <code>null</code>.
 	 */
 	public final void setValueCountFunction(ToIntBiFunction<Integer, Integer> valueCountFunction) {
 		this.valueCountFunction = Objects.requireNonNull(valueCountFunction,
 				"A function for compressing key-value pairs must be given!");
 	}
 
+	/**
+	 * 
+	 * @return The current function for accumulating the complete dice roll.
+	 */
 	public final ToIntBiFunction<Integer, Integer> getAccumulator() {
 		return accumulator;
 	}
 
 	/**
 	 * 
-	 * @param accumulator
-	 * @throws NullPointerException
+	 * @param accumulator The function for accumulating the results of the
+	 *                    {@link #valueCountFunction}.
+	 * @throws NullPointerException if the parameter is <code>null</code>.
 	 */
 	public final void setAccumulator(ToIntBiFunction<Integer, Integer> accumulator) {
 		this.accumulator = Objects.requireNonNull(accumulator,
 				"A function for accumulating the results must be given!");
 	}
 
+	/**
+	 * 
+	 * @return The supplier of the start value of the accumulation.
+	 */
 	public final IntSupplier getStartValue() {
 		return startValue;
 	}
 
 	/**
 	 * 
-	 * @param startValue
-	 * @throws NullPointerException
+	 * @param startValue A supplier for giving out the start value for accumulating.
+	 *                   It should return a constant value each time.
+	 * @throws NullPointerException if the parameter is <code>null</code>.
 	 */
 	public final void setStartValue(IntSupplier startValue) {
 		this.startValue = Objects.requireNonNull(startValue, "A start value must be given!");
 	}
 
+	/**
+	 * 
+	 * @param startValue The discrete starting value for accumulation, will be
+	 *                   wrapped in a {@link IntSupplier}.
+	 */
+	public final void setStartValue(final int startValue) {
+		this.startValue = () -> startValue;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,6 +185,9 @@ public class Compressor implements IDie {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -166,6 +228,9 @@ public class Compressor implements IDie {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -181,6 +246,11 @@ public class Compressor implements IDie {
 		return builder.toString();
 	}
 
+	/**
+	 * Compresses the source down into a single value. All entries in the returned
+	 * map will look like this: <code>{{X=1}=Y}</code>. <code>X</code> is the
+	 * compressed value and <code>Y</code> is the total frequency of said result.
+	 */
 	@Override
 	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
 		Map<Map<Integer, Integer>, Long> result = source.getAbsoluteFrequencies();

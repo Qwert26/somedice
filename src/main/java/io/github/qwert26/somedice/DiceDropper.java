@@ -9,8 +9,17 @@ import java.util.*;
  * @author Qwert26
  */
 public class DiceDropper implements IDie {
+	/**
+	 * The source to drop dice from.
+	 */
 	private final IDie source;
+	/**
+	 * Amount of lowest values to drop.
+	 */
 	private int dropLowest;
+	/**
+	 * Amount of highest values to drop.
+	 */
 	private int dropHighest;
 
 	/**
@@ -23,13 +32,17 @@ public class DiceDropper implements IDie {
 		dropHighest = dropLowest = 0;
 	}
 
+	/**
+	 * 
+	 * @return The current amount of low values to drop.
+	 */
 	public final int getDropLowest() {
 		return dropLowest;
 	}
 
 	/**
 	 * 
-	 * @param dropLowest
+	 * @param dropLowest The new amount of low values to drop.
 	 * @throws IllegalArgumentException if the parameter is negative.
 	 */
 	public final void setDropLowest(int dropLowest) {
@@ -39,13 +52,17 @@ public class DiceDropper implements IDie {
 		this.dropLowest = dropLowest;
 	}
 
+	/**
+	 * 
+	 * @return The current amount of high values to drop.
+	 */
 	public final int getDropHighest() {
 		return dropHighest;
 	}
 
 	/**
 	 * 
-	 * @param dropHighest
+	 * @param dropHighest The current amount of high values to drop.
 	 * @throws IllegalArgumentException if the parameter is negative.
 	 */
 	public final void setDropHighest(int dropHighest) {
@@ -55,6 +72,10 @@ public class DiceDropper implements IDie {
 		this.dropHighest = dropHighest;
 	}
 
+	/**
+	 * 
+	 * @return The current source.
+	 */
 	public final IDie getSource() {
 		return source;
 	}

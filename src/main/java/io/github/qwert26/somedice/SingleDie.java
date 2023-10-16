@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * Represents a single fair die, with numbers starting either at zero or one.
+ * The die is "dense", meaning it does not skip numbers.
  * 
  * @author Christian Schuerhoff
  */
@@ -24,8 +25,11 @@ public final class SingleDie extends AbstractDie {
 	 * Creates die that either has numbers from <code>0</code> to
 	 * <code>size-1</code> or from <code>1</code> to <code>size</code>.
 	 * 
-	 * @param startAt0
-	 * @param maximum
+	 * @param startAt0 When <code>true</code>, this die starts at zero, otherwise it
+	 *                 starts at one.
+	 * @param maximum  The amount of different numbers to produce, must be greater
+	 *                 than 1.
+	 * @throws IllegalArgumentException If the given maximum is less than two.
 	 */
 	public SingleDie(boolean startAt0, int maximum) {
 		setMaximum(maximum);
@@ -36,8 +40,11 @@ public final class SingleDie extends AbstractDie {
 	 * Creates die that either has numbers from <code>0</code> to
 	 * <code>size-1</code> or from <code>1</code> to <code>size</code>.
 	 * 
-	 * @param maximum
-	 * @param startAt0
+	 * @param maximum  The amount of different numbers to produce, must be greater
+	 *                 than 1.
+	 * @param startAt0 When <code>true</code>, this die starts at zero, otherwise it
+	 *                 starts at one.
+	 * @throws IllegalArgumentException If the given maximum is less than two.
 	 */
 	public SingleDie(int maximum, boolean startAt0) {
 		setMaximum(maximum);
@@ -45,10 +52,12 @@ public final class SingleDie extends AbstractDie {
 	}
 
 	/**
-	 * Creates a die, whose numbers start at <code>1</code> and end at
+	 * Creates a "game-die", whose numbers start at <code>1</code> and end at
 	 * <code>maximum</code>.
 	 * 
-	 * @param maximum
+	 * @param maximum The amount of different numbers to produce, must be greater
+	 *                than 1.
+	 * @throws IllegalArgumentException If the given maximum is less than two.
 	 */
 	public SingleDie(int maximum) {
 		this(maximum, false);
@@ -56,7 +65,8 @@ public final class SingleDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @return
+	 * @return <code>true</code>, if the die is starting with a zero.
+	 *         <code>false</code>, if it is starting with a one.
 	 */
 	public final boolean isStartAt0() {
 		return startAt0;
@@ -72,7 +82,8 @@ public final class SingleDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @return
+	 * @return The current maximum.
+	 * @see #getDistinctValues()
 	 */
 	public final int getMaximum() {
 		return maximum;
@@ -80,7 +91,7 @@ public final class SingleDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @param maximum
+	 * @param maximum The new maximum, which should be greater than one.
 	 * @throws IllegalArgumentException if the new maximum is less than
 	 *                                  <code>2</code>.
 	 */
@@ -91,6 +102,9 @@ public final class SingleDie extends AbstractDie {
 		this.maximum = maximum;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,6 +114,9 @@ public final class SingleDie extends AbstractDie {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -118,6 +135,9 @@ public final class SingleDie extends AbstractDie {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -148,7 +168,7 @@ public final class SingleDie extends AbstractDie {
 	}
 
 	/**
-	 * 
+	 * @see #getMaximum()
 	 */
 	@Override
 	public int getDistinctValues() {
