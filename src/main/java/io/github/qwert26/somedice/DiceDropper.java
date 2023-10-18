@@ -105,7 +105,7 @@ public class DiceDropper implements IDie {
 			if (nextKey.size() == 0) {
 				throw new IllegalStateException("Overfiltered after dropping lowest and highest rolls!");
 			}
-			ret.compute(nextKey, (k, v) -> v == null ? entry.getValue() : (v + entry.getValue()));
+			ret.compute(nextKey, (k, v) -> entry.getValue() + (v == null ? 0 : v));
 		}
 		return ret;
 	}
