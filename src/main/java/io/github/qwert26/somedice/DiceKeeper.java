@@ -3,13 +3,17 @@ package io.github.qwert26.somedice;
 import java.util.*;
 
 /**
- * Keeps dice from a dice roll.
+ * Keeps dice from a dice roll. It can keep any number of low and high rolls, as
+ * long as there is no overlap between the two. For dropping values instead, use
+ * the <code>DiceDropper</code>.
  * 
  * @author Qwert26
+ * @see DiceDropper
  */
 public class DiceKeeper implements IDie {
 	/**
-	 * The source of the dice rolls, can never be null.
+	 * The source of the dice rolls, can never be <code>null</code> or
+	 * <code>this</code>.
 	 */
 	private final IDie source;
 	/**
@@ -22,14 +26,22 @@ public class DiceKeeper implements IDie {
 	private int keepLowest = 0;
 
 	/**
+	 * Creates a new <code>DiceKeeper</code>, which must be configured by calling
+	 * its setter methods.
 	 * 
-	 * @param source
+	 * @see #setKeepHighest(int)
+	 * @see #setKeepLowest(int)
+	 * @param source The source to keep dice rolls from, must be not null.
 	 * @throws NullPointerException If the given source is null.
 	 */
 	public DiceKeeper(IDie source) {
 		this.source = Objects.requireNonNull(source, "A source must be given!");
 	}
 
+	/**
+	 * 
+	 * @return The current amount of high rolls to keep.
+	 */
 	public final int getKeepHighest() {
 		return keepHighest;
 	}
@@ -46,6 +58,10 @@ public class DiceKeeper implements IDie {
 		this.keepHighest = keepHighest;
 	}
 
+	/**
+	 * 
+	 * @return The current amount of low rolls to keep.
+	 */
 	public final int getKeepLowest() {
 		return keepLowest;
 	}
@@ -62,6 +78,10 @@ public class DiceKeeper implements IDie {
 		this.keepLowest = keepLowest;
 	}
 
+	/**
+	 * 
+	 * @return The source, that is being used.
+	 */
 	public final IDie getSource() {
 		return source;
 	}

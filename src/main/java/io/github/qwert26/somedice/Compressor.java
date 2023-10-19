@@ -45,6 +45,25 @@ public class Compressor implements IDie {
 	}
 
 	/**
+	 * Creates a fully customized compressor.
+	 * 
+	 * @param source The source of the dice rolls.
+	 * @param vcf    The function which turns a pair of a value and its occurence
+	 *               into a single value, to be accumulated.
+	 * @param accu   The function which takes the previously accumulated result and
+	 *               combines it with the next entry.
+	 * @param start  The discrete starting value.
+	 * @throws NullPointerException if any of the first three parameters are null.
+	 */
+	public Compressor(IDie source, ToIntBiFunction<Integer, Integer> vcf, ToIntBiFunction<Integer, Integer> accu,
+			int start) {
+		setSource(source);
+		setValueCountFunction(vcf);
+		setAccumulator(accu);
+		setStartValue(start);
+	}
+
+	/**
 	 * Creates a standard compressor, which adds up all the individual dice with a
 	 * custom start value.
 	 * 

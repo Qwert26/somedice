@@ -17,13 +17,13 @@ class TestCompressor {
 	@Test
 	void disallowsNullVCF() {
 		assertThrows(NullPointerException.class,
-				() -> new Compressor(FudgeDie.INSTANCE, null, Math::addExact, () -> 0));
+				() -> new Compressor(FudgeDie.INSTANCE, null, Math::addExact, 0));
 	}
 
 	@Test
 	void disallowsNullAccu() {
 		assertThrows(NullPointerException.class,
-				() -> new Compressor(FudgeDie.INSTANCE, Math::multiplyExact, null, () -> 0));
+				() -> new Compressor(FudgeDie.INSTANCE, Math::multiplyExact, null, 0));
 	}
 
 	@Test

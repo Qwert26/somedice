@@ -3,14 +3,17 @@ package io.github.qwert26.somedice;
 import java.util.*;
 
 /**
- * Drops dice from a roll, can drop any number of low and high rolls, as long as
- * there are dice still left over to create a frequency mapping.
+ * Drops dice from a roll. It can drop any number of low and high rolls, as long
+ * as there are dice still left over to create a frequency mapping. For keeping
+ * dice instead, use the <code>DiceKeeper</code>.
  * 
  * @author Qwert26
+ * @see DiceKeeper
  */
 public class DiceDropper implements IDie {
 	/**
-	 * The source to drop dice from.
+	 * The source to drop dice from, can never be <code>null</code> or
+	 * <code>this</code>.
 	 */
 	private final IDie source;
 	/**
@@ -23,7 +26,11 @@ public class DiceDropper implements IDie {
 	private int dropHighest;
 
 	/**
+	 * Creates a new <code>DiceDropper</code>, which does not drop any dice at all.
+	 * To start dropping, call its setter methods.
 	 * 
+	 * @see #setDropHighest(int)
+	 * @see #setDropLowest(int)
 	 * @param source The source to filter, it must not be <code>null</code>.
 	 * @throws NullPointerException if the source is <code>null</code>.
 	 */

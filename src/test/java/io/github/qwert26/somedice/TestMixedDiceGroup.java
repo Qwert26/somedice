@@ -32,7 +32,7 @@ class TestMixedDiceGroup {
 	}
 
 	@ParameterizedTest
-	@MethodSource("com.github.qwert26.somedice.TestSingleDie#commonDieSizes")
+	@MethodSource("io.github.qwert26.somedice.TestSingleDie#commonDieSizes")
 	void testIdentiyBehavior(int size) {
 		SingleDie truth = new SingleDie(size);
 		MixedDiceGroup underTest = new MixedDiceGroup(truth);
@@ -51,7 +51,7 @@ class TestMixedDiceGroup {
 
 	@SuppressWarnings("unlikely-arg-type")
 	@ParameterizedTest
-	@MethodSource("com.github.qwert26.somedice.TestSingleDie#commonDieSizes")
+	@MethodSource("io.github.qwert26.somedice.TestSingleDie#commonDieSizes")
 	void testIdenticalBehavior(int size) {
 		SingleDie baseDie = new SingleDie(size);
 		MixedDiceGroup underTest = new MixedDiceGroup(baseDie);

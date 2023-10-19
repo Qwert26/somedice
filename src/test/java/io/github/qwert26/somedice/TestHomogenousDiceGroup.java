@@ -43,7 +43,7 @@ class TestHomogenousDiceGroup {
 	}
 
 	@ParameterizedTest
-	@MethodSource("com.github.qwert26.somedice.TestSingleDie#commonDieSizes")
+	@MethodSource("io.github.qwert26.somedice.TestSingleDie#commonDieSizes")
 	void testIdentityBehavior(int size) {
 		SingleDie truth = new SingleDie(size);
 		HomogenousDiceGroup underTest = new HomogenousDiceGroup(truth);
