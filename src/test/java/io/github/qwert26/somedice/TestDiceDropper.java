@@ -3,7 +3,11 @@ package io.github.qwert26.somedice;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.*;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 /**
  * Class under test is {@link DiceDropper}.
@@ -46,6 +50,82 @@ class TestDiceDropper {
 		underTest.setDropLowest(2);
 		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies(),
 				"Dice filter overfiltered!");
+	}
+
+	@Test
+	void disallowsEmptyMapsForKeysViaHigh() {
+		DiceDropper underTest = new DiceDropper(new SingleDie(4));
+		underTest.setDropHighest(1);
+		underTest.setDropLowest(0);
+		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies(),
+				"Dice filter overfiltered!");
+	}
+
+	@Test
+	void disallowsEmptyMapsForKeysViaLow() {
+		DiceDropper underTest = new DiceDropper(new SingleDie(4));
+		underTest.setDropHighest(0);
+		underTest.setDropLowest(1);
+		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies(),
+				"Dice filter overfiltered!");
+	}
+
+	@Test
+	void keepsSource() {
+		DiceDropper underTest = new DiceDropper(FudgeDie.INSTANCE);
+		assertEquals(FudgeDie.INSTANCE, underTest.getSource(), "Source is not truthful!");
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3 })
+	void keepsValuesDropHighest(int value) {
+		DiceDropper underTest = new DiceDropper(FudgeDie.INSTANCE);
+		underTest.setDropHighest(value);
+		assertEquals(value, underTest.getDropHighest());
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3 })
+	void keepsValuesDropLowest(int value) {
+		DiceDropper underTest = new DiceDropper(FudgeDie.INSTANCE);
+		underTest.setDropLowest(value);
+		assertEquals(value, underTest.getDropLowest());
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3 })
+	void keepsValuesDropHighestAfterInsertion(int value) {
+		DiceDropper underTest = new DiceDropper(FudgeDie.INSTANCE);
+		underTest.setDropHighest(value);
+		assumeTrue(value == underTest.getDropHighest());
+		assumeTrue(() -> {
+			boolean ret = false;
+			try {
+				underTest.setDropHighest(-1);
+			} catch (Throwable t) {
+				ret = true;
+			}
+			return ret;
+		});
+		assertEquals(value, underTest.getDropHighest());
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3 })
+	void keepsValuesDropLowestAfterInsertion(int value) {
+		DiceDropper underTest = new DiceDropper(FudgeDie.INSTANCE);
+		underTest.setDropLowest(value);
+		assumeTrue(value == underTest.getDropLowest());
+		assumeTrue(() -> {
+			boolean ret = false;
+			try {
+				underTest.setDropLowest(-1);
+			} catch (Throwable t) {
+				ret = true;
+			}
+			return ret;
+		});
+		assertEquals(value, underTest.getDropLowest());
 	}
 
 	@Test

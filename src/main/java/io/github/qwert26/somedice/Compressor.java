@@ -281,7 +281,7 @@ public class Compressor implements IDie {
 				accumulated = accumulator.applyAsInt(accumulated, temp);
 			}
 			ret.compute(Collections.singletonMap(accumulated, 1),
-					(k, v) -> v == null ? resultEntry.getValue() : (v + resultEntry.getValue()));
+					(k, v) -> resultEntry.getValue() + (v == null ? 0 : v));
 		}
 		return ret;
 	}
@@ -303,7 +303,7 @@ public class Compressor implements IDie {
 				int temp = valueCountFunction.applyAsInt(valueCount.getKey(), valueCount.getValue());
 				accumulated = accumulator.applyAsInt(accumulated, temp);
 			}
-			data.compute(accumulated, (k, v) -> v == null ? resultEntry.getValue() : (v + resultEntry.getValue()));
+			data.compute(accumulated, (k, v) -> resultEntry.getValue() + (v == null ? 0 : v));
 		}
 		return ret;
 	}
