@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestSingleDie {
 	private static final int[] CDS = { 2, 4, 6, 8, 10, 12, 20, 100 };
 
-	static int[] commonDieSizes() {
+	public final static int[] commonDieSizes() {
 		return CDS;
 	}
 

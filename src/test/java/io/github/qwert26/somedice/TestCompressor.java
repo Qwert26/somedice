@@ -92,6 +92,8 @@ class TestCompressor {
 		assumeFalse(truth.equals(underTest));
 		UnfairDie trueFate = truth.toUnfairDie();
 		UnfairDie dieUnderTest = underTest.toUnfairDie();
+		assertEquals(trueFate.getDistinctValues(), dieUnderTest.getDistinctValues(),
+				"Mismatched count of key-value pairs!");
 		assumeTrue(trueFate.hashCode() == dieUnderTest.hashCode(), "The two dice could never be identical!");
 		assertEquals(trueFate, dieUnderTest, "Dice have not the same distribution!");
 	}
