@@ -7,10 +7,11 @@ package io.github.qwert26.somedice;
  * @see SingleDie
  * @see FudgeDie
  * @see UnfairDie
+ * @see RangeDie
  * 
  * @author Qwert26
  */
-public abstract sealed class AbstractDie implements IDie permits SingleDie, FudgeDie, UnfairDie {
+public abstract sealed class AbstractDie implements IDie permits SingleDie, FudgeDie, UnfairDie, RangeDie {
 	/**
 	 * A new abstract die.
 	 */

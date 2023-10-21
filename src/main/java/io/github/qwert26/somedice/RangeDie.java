@@ -1,0 +1,187 @@
+package io.github.qwert26.somedice;
+
+import java.util.*;
+
+/**
+ * A die which produces numbers from an interval.
+ * 
+ * @author Qwert26
+ */
+public final class RangeDie extends AbstractDie {
+	/**
+	 * The start value, it is inclusive.
+	 */
+	private int start;
+	/**
+	 * The end value, it is exclusive.
+	 */
+	private int end;
+	/**
+	 * The step size.
+	 */
+	private int step;
+
+	/**
+	 * 
+	 * @param start
+	 * @param end
+	 * @throws IllegalArgumentException if start is greater than or equal to end.
+	 */
+	public RangeDie(int start, int end) {
+		super();
+		setEnd(end);
+		setStart(start);
+		step = 1;
+	}
+
+	/**
+	 * 
+	 * @param start
+	 * @param end
+	 * @param step
+	 * @throws IllegalArgumentException if start is greater than or equal to end or
+	 *                                  step is not positive.
+	 */
+	public RangeDie(int start, int end, int step) {
+		super();
+		setEnd(end);
+		setStart(start);
+		setStep(step);
+	}
+
+	/**
+	 * 
+	 * @return the current start value.
+	 */
+	public final int getStart() {
+		return start;
+	}
+
+	/**
+	 * 
+	 * @param start
+	 * @throws IllegalArgumentException if the new start value is greater than or
+	 *                                  equal to the current end value.
+	 */
+	public final void setStart(int start) {
+		if (start >= end) {
+			throw new IllegalArgumentException("start can not be greater than end.");
+		}
+		this.start = start;
+	}
+
+	/**
+	 * 
+	 * @return the current end value.
+	 */
+	public final int getEnd() {
+		return end;
+	}
+
+	/**
+	 * 
+	 * @param end
+	 * @throws IllegalArgumentException if the new end value is less than or equal
+	 *                                  to the current start value.
+	 */
+	public final void setEnd(int end) {
+		if (start >= end) {
+			throw new IllegalArgumentException("start can not be greater than end.");
+		}
+		this.end = end;
+	}
+
+	/**
+	 * 
+	 * @return the current step size.
+	 */
+	public final int getStep() {
+		return step;
+	}
+
+	/**
+	 * 
+	 * @param step
+	 * @throws IllegalArgumentException if steps are not positive.
+	 */
+	public final void setStep(int step) {
+		if (step <= 0) {
+			throw new IllegalArgumentException("steps must be positive.");
+		}
+		this.step = step;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(getDistinctValues(), 1.0f);
+		for (int value = start; value < end; value += step) {
+			ret.put(Collections.singletonMap(value, 1), 1L);
+		}
+		return ret;
+	}
+
+	/**
+	 * A <code>RangeDie</code> calculates its distinct values with the formula
+	 * <code>ceil((end - start) / step)</code>.
+	 */
+	@Override
+	public int getDistinctValues() {
+		return (end - start) / step + (step > 1 ? 1 : 0);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + end;
+		result = prime * result + start;
+		result = prime * result + step;
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof RangeDie)) {
+			return false;
+		}
+		RangeDie other = (RangeDie) obj;
+		if (end != other.end) {
+			return false;
+		}
+		if (start != other.start) {
+			return false;
+		}
+		if (step != other.step) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RangeDie [start=");
+		builder.append(start);
+		builder.append(", end=");
+		builder.append(end);
+		builder.append(", step=");
+		builder.append(step);
+		builder.append("]");
+		return builder.toString();
+	}
+}

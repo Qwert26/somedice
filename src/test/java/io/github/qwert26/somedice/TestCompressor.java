@@ -97,4 +97,10 @@ class TestCompressor {
 		assumeTrue(trueFate.hashCode() == dieUnderTest.hashCode(), "The two dice could never be identical!");
 		assertEquals(trueFate, dieUnderTest, "Dice have not the same distribution!");
 	}
+
+	@Test
+	void checkToString() {
+		Compressor underTest = new Compressor(DiceCollection.WRATH_AND_GLORY_DIE);
+		assertNotNull(assertDoesNotThrow(() -> underTest.toString()));
+	}
 }
