@@ -29,8 +29,7 @@ public final class RangeDie extends AbstractDie {
 	 */
 	public RangeDie(int start, int end) {
 		super();
-		setEnd(end);
-		setStart(start);
+		setRange(start, end);
 		step = 1;
 	}
 
@@ -44,8 +43,7 @@ public final class RangeDie extends AbstractDie {
 	 */
 	public RangeDie(int start, int end, int step) {
 		super();
-		setEnd(end);
-		setStart(start);
+		setRange(start, end);
 		setStep(step);
 	}
 
@@ -59,7 +57,7 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @param start
+	 * @param start the new start value of the range.
 	 * @throws IllegalArgumentException if the new start value is greater than or
 	 *                                  equal to the current end value.
 	 */
@@ -80,7 +78,7 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @param end
+	 * @param end The new end value of the range.
 	 * @throws IllegalArgumentException if the new end value is less than or equal
 	 *                                  to the current start value.
 	 */
@@ -89,6 +87,21 @@ public final class RangeDie extends AbstractDie {
 			throw new IllegalArgumentException("start can not be greater than end.");
 		}
 		this.end = end;
+	}
+
+	/**
+	 * 
+	 * @param start the new start value, it must be less than the new end value.
+	 * @param end   the new end value, it must be greater than the new start value.
+	 * @throws IllegalArgumentException if the new range is not allowed.
+	 */
+	public final void setRange(int start, int end) {
+		if (start < end) {
+			this.start = start;
+			this.end = end;
+		} else {
+			throw new IllegalArgumentException("start can not be greater than end.");
+		}
 	}
 
 	/**

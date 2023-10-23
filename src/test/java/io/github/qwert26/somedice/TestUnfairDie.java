@@ -1,40 +1,70 @@
 package io.github.qwert26.somedice;
 
-import org.junit.jupiter.api.*;
 import java.util.*;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 /**
- * Class under test is {@link UnfairDie}.
- * 
- * @author Qwert26
+ * Tests {@link UnfairDie}.
  */
-class TestUnfairDie {
+public class TestUnfairDie {
 	@Test
-	void rollsSingularNumbers() {
-		final int number = 1;
-		final long occurences = 1L;
+	void checkEmpty() {
 		UnfairDie underTest = new UnfairDie();
-		Map<Integer, Long> internalData = underTest.getData();
-		assumeTrue(internalData != null, "Constructor failed to create a map to fill.");
-		assumeTrue(internalData.isEmpty(), "Constructor filled the map with something.");
-		internalData.put(number, occurences);
-		Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
-		assertEquals(1, result.size(), "Unfair die rolled more than one result!");
-		Map.Entry<Map<Integer, Integer>, Long> resultEntry = result.entrySet().iterator().next();
-		assertEquals(1, resultEntry.getKey().get(number), "The given number occured more than once!");
-		assertEquals(occurences, resultEntry.getValue(), "The given number occured more or less than expected!");
+		assertEquals(0, underTest.getDistinctValues());
+		assertTrue(underTest.getData().isEmpty());
+		assertTrue(underTest.getAbsoluteFrequencies().isEmpty());
 	}
 
 	@Test
-	void checkEquality() {
-		UnfairDie one = new UnfairDie();
-		UnfairDie two = new UnfairDie();
-		one.getData().put(1, 1L);
-		two.getData().put(1, 1L);
-		assertEquals(one.hashCode(), two.hashCode(), "Unfair die can not be equal!");
-		assertTrue(one.equals(two), "Unfair die are not equal!");
+	void checkEqualsThis() {
+		UnfairDie underTest = new UnfairDie();
+		assertTrue(underTest.equals(underTest));
+	}
+
+	@Test
+	void checkEqualsDifferentClass() {
+		UnfairDie underTest = new UnfairDie();
+		assertFalse(underTest.equals(new Object()));
+	}
+
+	@Test
+	void checkEqualsDifferentData() {
+		UnfairDie underTest = new UnfairDie();
+		assertNotEquals(underTest.hashCode(), DiceCollection.WRATH_AND_GLORY_DIE.hashCode());
+		assertFalse(underTest.equals(DiceCollection.WRATH_AND_GLORY_DIE));
+	}
+
+	@Test
+	void checkEquals() {
+		UnfairDie underTest = new UnfairDie();
+		underTest.getData().put(0, 3L);
+		underTest.getData().put(1, 2L);
+		underTest.getData().put(2, 1L);
+		assumeTrue(underTest.hashCode() == DiceCollection.WRATH_AND_GLORY_DIE.hashCode());
+		assertTrue(underTest.equals(DiceCollection.WRATH_AND_GLORY_DIE));
+	}
+
+	@Test
+	void checkToString() {
+		String result = assertDoesNotThrow(() -> DiceCollection.WRATH_AND_GLORY_DIE.toString());
+		assertNotNull(result);
+	}
+
+	@Test
+	void checkConsistency() {
+		UnfairDie underTest = DiceCollection.WRATH_AND_GLORY_DIE;
+		Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
+		Map<Integer, Long> data = underTest.getData();
+		assertEquals(data.size(), result.size());
+		for (Map.Entry<Integer, Long> dataEntry : data.entrySet()) {
+			Map<Integer, Integer> valueCountKey = Collections.singletonMap(dataEntry.getKey(), 1);
+			assertTrue(result.containsKey(valueCountKey));
+			Long frequency = result.get(valueCountKey);
+			assertNotNull(frequency);
+			assertEquals(dataEntry.getValue(), frequency);
+		}
 	}
 }
