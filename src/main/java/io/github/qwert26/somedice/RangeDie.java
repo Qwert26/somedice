@@ -23,8 +23,8 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @param start
-	 * @param end
+	 * @param start The start value, it is inclusive
+	 * @param end   The end value, it is exclusive.
 	 * @throws IllegalArgumentException if start is greater than or equal to end.
 	 */
 	public RangeDie(int start, int end) {
@@ -35,9 +35,9 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @param start
-	 * @param end
-	 * @param step
+	 * @param start The start value, it is inclusive
+	 * @param end   The end value, it is exclusive.
+	 * @param step  The step size, which must be positive.
 	 * @throws IllegalArgumentException if start is greater than or equal to end or
 	 *                                  step is not positive.
 	 */
@@ -138,11 +138,11 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * A <code>RangeDie</code> calculates its distinct values with the formula
-	 * <code>ceil((end - start) / step)</code>.
+	 * <code>floor((end - start) / step)</code>.
 	 */
 	@Override
 	public int getDistinctValues() {
-		return (end - start) / step + (step > 1 ? 1 : 0);
+		return (end - start) / step;
 	}
 
 	/**
