@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assumptions.*;
 /**
  * Tests {@link RangeDie}.
  */
+@Tag("unit")
 public class TestRangeDie {
 	@Test
 	void disallowsWrongRanges() {

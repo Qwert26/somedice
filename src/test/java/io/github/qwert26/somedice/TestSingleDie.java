@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 /**
  * Tests {@link SingleDie}.
  */
+@Tag("unit")
 public class TestSingleDie {
 	private static final int[] PHYSICAL_DIE_SIZES = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
 			18, 19, 20, 21, 22, 24, 26, 28, 30, 36, 48, 50, 60, 100, 120 };
@@ -124,6 +125,7 @@ public class TestSingleDie {
 	}
 
 	@Nested
+	@Tag("unit")
 	public class Properties {
 		@ParameterizedTest
 		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")

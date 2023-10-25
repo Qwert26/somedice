@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assumptions.*;
 /**
  * Tests {@link UnfairDie}.
  */
+@Tag("unit")
 public class TestUnfairDie {
 	@Test
 	void checkEmpty() {
@@ -65,6 +66,35 @@ public class TestUnfairDie {
 			Long frequency = result.get(valueCountKey);
 			assertNotNull(frequency);
 			assertEquals(dataEntry.getValue(), frequency);
+		}
+	}
+
+	@Nested
+	@Tag("compare")
+	public class ReplicatesFudgeDie {
+		private UnfairDie underTest;
+
+		@BeforeEach
+		void setup() {
+			underTest = new UnfairDie();
+			underTest.getData().put(-1, 1L);
+			underTest.getData().put(0, 1L);
+			underTest.getData().put(1, 1L);
+		}
+
+		@Test
+		void checkIdenticalCount() {
+			assertEquals(FudgeDie.INSTANCE.getDistinctValues(), underTest.getDistinctValues());
+		}
+
+		@Test
+		void checkIdenticalFrequencies() {
+			assertEquals(FudgeDie.INSTANCE.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
+		}
+
+		@AfterEach
+		void teardown() {
+			underTest = null;
 		}
 	}
 }

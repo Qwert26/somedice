@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests {@link FudgeDie}.
  */
+@Tag("unit")
 public class TestFudgeDie {
 	@Test
 	void checkInstanceExists() {
