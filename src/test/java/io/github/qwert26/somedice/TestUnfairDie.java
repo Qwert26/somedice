@@ -1,8 +1,10 @@
 package io.github.qwert26.somedice;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 
@@ -104,35 +106,28 @@ public class TestUnfairDie {
 	@Nested
 	@Tag("compare")
 	public class ReplicatesSingleDie {
-		private UnfairDie underTest;
-		private SingleDie truth;
-
-		@BeforeEach
+		@ParameterizedTest
 		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
-		void setup(final int size) {
-			truth = new SingleDie(size);
-			underTest = new UnfairDie();
-			for (int value = 1; value < size; value++) {
-				underTest.getData().put(value, 1L);
+		void checkIdenticalCountStartingWith1(final int size) {
+			SingleDie truth = new SingleDie(size, false);
+			UnfairDie underTest = new UnfairDie();
+			for (int i = 1; i <= size; i++) {
+				underTest.getData().put(i, 1L);
 			}
+			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
+			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
 		}
 
 		@ParameterizedTest
-		@ValueSource(booleans = { true, false })
-		void checkIdenticalCount(final boolean startAt0) {
-			truth.setStartAt0(startAt0);
-			if (startAt0) {
-				underTest.getData().put(0, 1L);
-			} else {
-				underTest.getData().put(truth.getMaximum(), 1L);
+		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
+		void checkIdenticalCountStartingWith0(final int size) {
+			SingleDie truth = new SingleDie(size, true);
+			UnfairDie underTest = new UnfairDie();
+			for (int i = 0; i < size; i++) {
+				underTest.getData().put(i, 1L);
 			}
 			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
-		}
-
-		@AfterEach
-		void teardown() {
-			truth = null;
-			underTest = null;
+			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
 		}
 	}
 }
