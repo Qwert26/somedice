@@ -3,6 +3,9 @@ package io.github.qwert26.somedice;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -94,6 +97,41 @@ public class TestUnfairDie {
 
 		@AfterEach
 		void teardown() {
+			underTest = null;
+		}
+	}
+
+	@Nested
+	@Tag("compare")
+	public class ReplicatesSingleDie {
+		private UnfairDie underTest;
+		private SingleDie truth;
+
+		@BeforeEach
+		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
+		void setup(final int size) {
+			truth = new SingleDie(size);
+			underTest = new UnfairDie();
+			for (int value = 1; value < size; value++) {
+				underTest.getData().put(value, 1L);
+			}
+		}
+
+		@ParameterizedTest
+		@ValueSource(booleans = { true, false })
+		void checkIdenticalCount(final boolean startAt0) {
+			truth.setStartAt0(startAt0);
+			if (startAt0) {
+				underTest.getData().put(0, 1L);
+			} else {
+				underTest.getData().put(truth.getMaximum(), 1L);
+			}
+			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
+		}
+
+		@AfterEach
+		void teardown() {
+			truth = null;
 			underTest = null;
 		}
 	}
