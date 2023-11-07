@@ -132,4 +132,55 @@ public class TestRangeDie {
 			assertEquals(1L, frequency.longValue());
 		}
 	}
+
+	@Test
+	void checkEqualsWrongClass() {
+		RangeDie underTest = new RangeDie(0, 10, 1);
+		assertFalse(underTest.equals(new Object()));
+	}
+
+	@Test
+	void checkEqualsItself() {
+		RangeDie underTest = new RangeDie(0, 10, 1);
+		assertTrue(underTest.equals(underTest));
+	}
+
+	@Test
+	void checkEqualsDifferentStarts() {
+		RangeDie one = new RangeDie(0, 10, 1);
+		RangeDie two = new RangeDie(1, 10, 1);
+		assertNotEquals(one.hashCode(), two.hashCode());
+		assertFalse(one.equals(two));
+	}
+
+	@Test
+	void checkEqualsDifferentEnds() {
+		RangeDie one = new RangeDie(0, 10, 1);
+		RangeDie two = new RangeDie(0, 1, 1);
+		assertNotEquals(one.hashCode(), two.hashCode());
+		assertFalse(one.equals(two));
+	}
+
+	@Test
+	void checkEqualsDifferentSteps() {
+		RangeDie one = new RangeDie(0, 10, 1);
+		RangeDie two = new RangeDie(0, 10, 2);
+		assertNotEquals(one.hashCode(), two.hashCode());
+		assertFalse(one.equals(two));
+	}
+
+	@Test
+	void checkEqualsIdentical() {
+		RangeDie one = new RangeDie(0, 10, 1);
+		RangeDie two = new RangeDie(0, 10, 1);
+		assertEquals(one.hashCode(), two.hashCode());
+		assertTrue(one.equals(two));
+	}
+
+	@Test
+	void checkToString() {
+		RangeDie one = new RangeDie(0, 10, 1);
+		String result = assertDoesNotThrow(() -> one.toString());
+		assertNotNull(result);
+	}
 }

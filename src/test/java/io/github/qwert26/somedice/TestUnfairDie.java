@@ -1,15 +1,13 @@
 package io.github.qwert26.somedice;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Tests {@link UnfairDie}.
@@ -75,7 +73,7 @@ public class TestUnfairDie {
 	}
 
 	@Nested
-	@Tag("compare")
+	@Tag("comparison")
 	public class ReplicatesFudgeDie {
 		private UnfairDie underTest;
 
@@ -104,7 +102,7 @@ public class TestUnfairDie {
 	}
 
 	@Nested
-	@Tag("compare")
+	@Tag("comparison")
 	public class ReplicatesSingleDie {
 		@ParameterizedTest
 		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
