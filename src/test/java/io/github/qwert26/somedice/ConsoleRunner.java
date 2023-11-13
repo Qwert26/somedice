@@ -8,9 +8,7 @@ public class ConsoleRunner {
 		SingleDie D8 = new SingleDie(8, false);
 		HomogenousDiceGroup threeD6 = new HomogenousDiceGroup(3, D6);
 		MixedDiceGroup threeD6AndD8 = new MixedDiceGroup(threeD6, D8);
-		DiceDropper dropLowest = new DiceDropper(threeD6AndD8);
-		dropLowest.setDropLowest(1);
-		dropLowest.setDropHighest(0);
+		DiceDropper dropLowest = new DiceDropper(threeD6AndD8, 1, 0);
 		Compressor comp = new Compressor(dropLowest);
 		UnfairDie result = comp.toUnfairDie();
 		System.out.println("Result for (3d6+d8)dl1:");

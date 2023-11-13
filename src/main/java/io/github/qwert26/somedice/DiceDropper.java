@@ -40,6 +40,36 @@ public class DiceDropper implements IDie {
 	}
 
 	/**
+	 * Creates a new <code>DiceDropper</code>, which drops the specified high and
+	 * low amount of dice rolls.
+	 * 
+	 * @param source      The source to filter, it must not be <code>null</code>.
+	 * @param dropLowest  The amount of low rolls to drop, it must not be negative.
+	 * @param dropHighest The amount of high rolls to drop, it must not be negative.
+	 * @throws NullPointerException     if the source is <code>null</code>.
+	 * @throws IllegalArgumentException if the amount of dice to drop is negative.
+	 */
+	public DiceDropper(IDie source, int dropLowest, int dropHighest) {
+		this.source = Objects.requireNonNull(source, "A source must be given");
+		setDropHighest(dropHighest);
+		setDropLowest(dropLowest);
+	}
+
+	/**
+	 * Creates a new <code>DiceDropper</code>, which drops the specified high and
+	 * low amount of dice rolls.
+	 * 
+	 * @param dropLowest  The amount of low rolls to drop, it must not be negative.
+	 * @param dropHighest The amount of high rolls to drop, it must not be negative.
+	 * @param source      The source to filter, it must not be <code>null</code>.
+	 * @throws NullPointerException     if the source is <code>null</code>.
+	 * @throws IllegalArgumentException if the amount of dice to drop is negative.
+	 */
+	public DiceDropper(int dropLowest, int dropHighest, IDie source) {
+		this(source, dropLowest, dropHighest);
+	}
+
+	/**
 	 * 
 	 * @return The current amount of low values to drop.
 	 */
@@ -88,7 +118,8 @@ public class DiceDropper implements IDie {
 	}
 
 	/**
-	 * @throws IllegalStateException if the source "rolled not enough dice".
+	 * @throws IllegalStateException if the source did not "rolled enough dice" and
+	 *                               dropping values resulted in an empty key.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
