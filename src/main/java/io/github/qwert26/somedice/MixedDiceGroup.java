@@ -37,6 +37,16 @@ public class MixedDiceGroup implements IDie {
 		}
 		this.sources = sources;
 	}
+
+	/**
+	 * 
+	 * @return A copy of the internal sources, changes made to the array do not
+	 *         reflect in an instance.
+	 */
+	public IDie[] getSources() {
+		return Arrays.copyOf(sources, sources.length);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -47,6 +57,7 @@ public class MixedDiceGroup implements IDie {
 		result = prime * result + Arrays.hashCode(sources);
 		return result;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -64,6 +75,7 @@ public class MixedDiceGroup implements IDie {
 		}
 		return true;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
