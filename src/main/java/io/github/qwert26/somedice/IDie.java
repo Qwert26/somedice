@@ -7,6 +7,7 @@ import java.util.*;
  * 
  * @author Qwert26
  */
+@FunctionalInterface
 public interface IDie {
 	/**
 	 * 

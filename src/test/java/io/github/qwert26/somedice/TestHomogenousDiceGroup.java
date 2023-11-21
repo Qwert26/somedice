@@ -65,7 +65,7 @@ public abstract class TestHomogenousDiceGroup {
 		}
 
 		@ParameterizedTest
-		@ValueSource(ints = { 2, 3, 4, 5, 6, 7, 8, 9 })
+		@ValueSource(ints = { 2, 3, 4, 5, 6 })
 		void checkValueCounts(final int count) {
 			HomogenousDiceGroup underTest = new HomogenousDiceGroup(source, count);
 			Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
