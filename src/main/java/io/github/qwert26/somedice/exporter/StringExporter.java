@@ -22,6 +22,7 @@ public final class StringExporter {
 		case RangeDie range -> export(range);
 		case SingleDie single -> export(single);
 		case UnfairDie unfair -> export(unfair);
+		case Compressor compressor -> export(compressor);
 		default -> throw new IllegalArgumentException("Unable to Export!");
 		};
 	}
@@ -100,5 +101,9 @@ public final class StringExporter {
 		builder.append(range.getStep());
 		builder.append(']');
 		return builder.toString();
+	}
+
+	public static final String export(Compressor compressor) {
+		return export(compressor.getSource());
 	}
 }

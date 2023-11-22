@@ -2,6 +2,8 @@ package io.github.qwert26.somedice;
 
 import java.util.*;
 
+import io.github.qwert26.somedice.exporter.StringExporter;
+
 public class ConsoleRunner {
 	public static void main(String[] args) {
 		SingleDie D6 = new SingleDie(false, 6);
@@ -11,7 +13,7 @@ public class ConsoleRunner {
 		DiceDropper dropLowest = new DiceDropper(threeD6AndD8, 1, 0);
 		Compressor comp = new Compressor(dropLowest);
 		UnfairDie result = comp.toUnfairDie();
-		System.out.println("Result for (3d6+d8)dl1:");
+		System.out.println("Result for " + StringExporter.export(dropLowest) + ":");
 		for (Map.Entry<Integer, Long> valueCount : result.getData().entrySet()) {
 			System.out.println("\t" + valueCount.getKey() + ": " + valueCount.getValue());
 		}
