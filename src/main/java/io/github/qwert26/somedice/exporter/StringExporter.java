@@ -10,7 +10,6 @@ public final class StringExporter {
 		super();
 	}
 
-	@SuppressWarnings("preview")
 	public static final String export(IDie somedie) {
 		return switch (somedie) {
 		case null -> "";
