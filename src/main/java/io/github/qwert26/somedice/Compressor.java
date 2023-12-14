@@ -7,7 +7,7 @@ import java.util.function.*;
  * A compressor takes in a detailed description of rolled dice and converts them
  * into a single number: This is more memory efficient but loses details.
  */
-public class Compressor implements IDie {
+public final class Compressor implements IDie {
 	/**
 	 * The source of dice rolls.
 	 */

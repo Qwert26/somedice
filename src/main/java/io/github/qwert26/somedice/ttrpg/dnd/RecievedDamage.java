@@ -33,6 +33,12 @@ public class RecievedDamage implements IDie {
 		return reduction;
 	}
 
+	/**
+	 * Sets the value to reduce damage by: Damage can not be reduced below 0.
+	 * 
+	 * @param reduction
+	 * @throws IllegalArgumentException If the new reduction is negative.
+	 */
 	public final void setReduction(int reduction) {
 		if (reduction < 0) {
 			throw new IllegalArgumentException("Reduction can not be negative.");
@@ -44,6 +50,12 @@ public class RecievedDamage implements IDie {
 		return resistance;
 	}
 
+	/**
+	 * Enables or disables resistance: It cuts damage in half and is applied after
+	 * reduction.
+	 * 
+	 * @param resistance
+	 */
 	public final void setResistance(boolean resistance) {
 		this.resistance = resistance;
 	}
@@ -52,6 +64,12 @@ public class RecievedDamage implements IDie {
 		return vulnerability;
 	}
 
+	/**
+	 * Enables or disables vulnerability: It doubles damage and is applied after
+	 * reduction and a possible resistance.
+	 * 
+	 * @param vulnerability
+	 */
 	public final void setVulnerability(boolean vulnerability) {
 		this.vulnerability = vulnerability;
 	}
@@ -66,7 +84,8 @@ public class RecievedDamage implements IDie {
 		Map<Map<Integer, Integer>, Long> result = source.getAbsoluteFrequencies();
 		for (Map.Entry<Map<Integer, Integer>, Long> resultEntry : result.entrySet()) {
 			Map.Entry<Integer, Integer> valueCount = resultEntry.getKey().entrySet().iterator().next();
-			// Compressor and UnfairDie both produce valueCounts, where the count is always equal to 1.
+			// Compressor and UnfairDie both produce valueCounts, where the count is always
+			// equal to 1.
 			int value = valueCount.getKey();
 			value = Math.max(0, value - reduction);
 			value = resistance ? Math.ceilDiv(value, 2) : value;
@@ -77,6 +96,9 @@ public class RecievedDamage implements IDie {
 		return ret;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,6 +110,9 @@ public class RecievedDamage implements IDie {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -115,4 +140,23 @@ public class RecievedDamage implements IDie {
 		}
 		return true;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RecievedDamage [source=");
+		builder.append(source);
+		builder.append(", reduction=");
+		builder.append(reduction);
+		builder.append(", resistance=");
+		builder.append(resistance);
+		builder.append(", vulnerability=");
+		builder.append(vulnerability);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
