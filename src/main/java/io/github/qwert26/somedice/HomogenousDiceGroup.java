@@ -90,6 +90,9 @@ public class HomogenousDiceGroup implements IDie {
 		this.count = count;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -101,6 +104,9 @@ public class HomogenousDiceGroup implements IDie {
 		return builder.toString();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,6 +116,9 @@ public class HomogenousDiceGroup implements IDie {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -132,6 +141,9 @@ public class HomogenousDiceGroup implements IDie {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
 		int[] primitiveKeys = new int[baseDie.getDistinctValues()];

@@ -40,6 +40,34 @@ public class DiceKeeper implements IDie {
 
 	/**
 	 * 
+	 * @param source
+	 * @param keepLowest
+	 * @param keepHighest
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 */
+	public DiceKeeper(IDie source, int keepLowest, int keepHighest) {
+		this.source = Objects.requireNonNull(source, "A source must be given!");
+		setKeepHighest(keepHighest);
+		setKeepLowest(keepLowest);
+	}
+
+	/**
+	 * 
+	 * @param keepLowest
+	 * @param keepHighest
+	 * @param source
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 */
+	public DiceKeeper(int keepLowest, int keepHighest, IDie source) {
+		this.source = Objects.requireNonNull(source, "A source must be given!");
+		setKeepHighest(keepHighest);
+		setKeepLowest(keepLowest);
+	}
+
+	/**
+	 * 
 	 * @return The current amount of high rolls to keep.
 	 */
 	public final int getKeepHighest() {
