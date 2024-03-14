@@ -21,7 +21,8 @@ public class MixedDiceGroup implements IDie {
 	 * 
 	 * @param sources
 	 * @throws IllegalArgumentException if the source-array is <code>null</code>,
-	 *                                  empty or contains <code>null</code>.
+	 *                                  empty or contains at least one
+	 *                                  <code>null</code>.
 	 */
 	public MixedDiceGroup(IDie... sources) {
 		if (sources == null) {
