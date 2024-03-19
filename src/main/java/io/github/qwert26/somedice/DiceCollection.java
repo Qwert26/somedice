@@ -7,7 +7,8 @@ package io.github.qwert26.somedice;
  */
 public final class DiceCollection {
 	/**
-	 * A die from the Warhammer 40k TTRPG "Wrath and Glory".
+	 * A die from the Warhammer 40k TTRPG "Wrath and Glory". It is basically a d6,
+	 * but with the following multi-set of numbers: {0, 0, 0, 1, 1, 2}.
 	 */
 	public static final UnfairDie WRATH_AND_GLORY_DIE;
 	/**
