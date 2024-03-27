@@ -4,6 +4,9 @@ import java.util.*;
 
 import io.github.qwert26.somedice.exporter.StringExporter;
 
+/**
+ * Not an actual test.
+ */
 public class ConsoleRunner {
 	public static void main(String[] args) {
 		SingleDie D6 = new SingleDie(false, 6);
