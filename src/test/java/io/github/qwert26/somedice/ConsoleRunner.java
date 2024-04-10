@@ -1,14 +1,23 @@
 package io.github.qwert26.somedice;
 
-import java.util.*;
+import java.util.Map;
+
+import org.junit.jupiter.api.Disabled;
 
 import io.github.qwert26.somedice.exporter.StringExporter;
 
 /**
- * Not an actual test.
+ * Not an actual test!
  */
+@Disabled("Not an actual Test!")
+@Deprecated
 public class ConsoleRunner {
 	public static void main(String[] args) {
+		testIDG();
+	}
+
+	@SuppressWarnings("unused")
+	private static final void mixedStatRoller() {
 		SingleDie D6 = new SingleDie(false, 6);
 		SingleDie D8 = new SingleDie(8, false);
 		HomogenousDiceGroup threeD6 = new HomogenousDiceGroup(3, D6);
@@ -20,5 +29,15 @@ public class ConsoleRunner {
 		for (Map.Entry<Integer, Long> valueCount : result.getData().entrySet()) {
 			System.out.println("\t" + valueCount.getKey() + ": " + valueCount.getValue());
 		}
+	}
+
+	private static final void testIDG() {
+		SingleDie D4 = new SingleDie(false, 4);
+		SingleDie D10 = new SingleDie(false, 10);
+		HomogenousDiceGroup threeD10 = new HomogenousDiceGroup(D10, 3);
+		Compressor compress3D10 = new Compressor(threeD10);
+		IndeterministicDiceGroup peashooter = new IndeterministicDiceGroup(D4, compress3D10);
+		System.out.println(peashooter.getAbsoluteFrequencies());
+		Thread.ofVirtual().unstarted(null);
 	}
 }
