@@ -14,10 +14,9 @@ import io.github.qwert26.somedice.exporter.StringExporter;
 @Deprecated
 public class ConsoleRunner {
 	public static void main(String[] args) {
-		testIDG();
+		mixedStatRoller();
 	}
 
-	@SuppressWarnings("unused")
 	private static final void mixedStatRoller() {
 		SingleDie D6 = new SingleDie(false, 6);
 		SingleDie D8 = new SingleDie(8, false);
@@ -35,10 +34,11 @@ public class ConsoleRunner {
 	private static final void testIDG() {
 		SingleDie D4 = new SingleDie(false, 4);
 		SingleDie D10 = new SingleDie(false, 10);
-		HomogenousDiceGroup oneD10 = new HomogenousDiceGroup(D10, 1);
-		Compressor compress3D10 = new Compressor(oneD10);
+		HomogenousDiceGroup threeD10 = new HomogenousDiceGroup(D10, 3);
+		Compressor compress3D10 = new Compressor(threeD10);
 		IndeterministicDiceGroup peashooter = new IndeterministicDiceGroup(D4, compress3D10);
-		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : peashooter.getAbsoluteFrequencies()
+		Compressor compressPeashooter=new Compressor(peashooter);
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : compressPeashooter.getAbsoluteFrequencies()
 				.entrySet()) {
 			System.out.println(resultEntry);
 		}
