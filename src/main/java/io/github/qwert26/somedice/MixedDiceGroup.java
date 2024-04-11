@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -90,29 +91,29 @@ public class MixedDiceGroup implements IDie {
 	}
 
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		@SuppressWarnings("unchecked")
-		List<Map.Entry<Map<Integer, Integer>, Long>>[] indexedResultEntries = new List[sources.length];
+		List<Map.Entry<Map<Integer, Integer>, BigInteger>>[] indexedResultEntries = new List[sources.length];
 		for (int i = 0; i < sources.length; i++) {
-			indexedResultEntries[i] = new ArrayList<Map.Entry<Map<Integer, Integer>, Long>>(
+			indexedResultEntries[i] = new ArrayList<Map.Entry<Map<Integer, Integer>, BigInteger>>(
 					sources[i].getAbsoluteFrequencies().entrySet());
 		}
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>();
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>();
 		int[] indices = new int[sources.length];
 		Arrays.fill(indices, 0);
 		int masterIndex;
 		infinity: while (true) {
 			masterIndex = 0;
 			final Map<Integer, Integer> nextKey = new TreeMap<Integer, Integer>();
-			long nextValue = 1;
+			BigInteger nextValue = BigInteger.ONE;
 			for (int i = 0; i < sources.length; i++) {
-				Map.Entry<Map<Integer, Integer>, Long> currentEntry = indexedResultEntries[i].get(indices[i]);
+				Map.Entry<Map<Integer, Integer>, BigInteger> currentEntry = indexedResultEntries[i].get(indices[i]);
 				for (Map.Entry<Integer, Integer> valueCount : currentEntry.getKey().entrySet()) {
 					nextKey.merge(valueCount.getKey(), valueCount.getValue(), (oldV, newV) -> newV + oldV);
 				}
-				nextValue *= currentEntry.getValue();
+				nextValue = nextValue.multiply(currentEntry.getValue());
 			}
-			ret.merge(nextKey, nextValue, (oldV, newV) -> oldV + newV);
+			ret.merge(nextKey, nextValue, (oldV, newV) -> oldV.add(newV));
 			do {
 				indices[masterIndex]++;
 				if (indices[masterIndex] == indexedResultEntries[masterIndex].size()) {

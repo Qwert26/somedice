@@ -3,6 +3,8 @@ package io.github.qwert26.somedice;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.math.BigInteger;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -123,11 +125,11 @@ public class TestRangeDie {
 	void checkContentsWithStepsize(final int size) {
 		final int start = 0, end = 100;
 		RangeDie underTest = new RangeDie(start, end, size);
-		Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
+		Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
 		for (int value = start; value < end; value += size) {
 			Map<Integer, Integer> valueCountKey = Collections.singletonMap(value, 1);
 			assertTrue(result.containsKey(valueCountKey));
-			Long frequency = result.get(valueCountKey);
+			BigInteger frequency = result.get(valueCountKey);
 			assertNotNull(frequency);
 			assertEquals(1L, frequency.longValue());
 		}

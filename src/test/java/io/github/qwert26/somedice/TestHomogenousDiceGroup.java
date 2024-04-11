@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -68,8 +69,8 @@ public abstract class TestHomogenousDiceGroup {
 		@ValueSource(ints = { 2, 3, 4, 5, 6 })
 		void checkValueCounts(final int count) {
 			HomogenousDiceGroup underTest = new HomogenousDiceGroup(source, count);
-			Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
-			for (Map.Entry<Map<Integer, Integer>, Long> entry : result.entrySet()) {
+			Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
+			for (Map.Entry<Map<Integer, Integer>, BigInteger> entry : result.entrySet()) {
 				int total = 0;
 				for (Map.Entry<Integer, Integer> valueCount : entry.getKey().entrySet()) {
 					total += valueCount.getValue();

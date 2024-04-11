@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -122,10 +123,10 @@ public class DiceDropper implements IDie {
 	 *                               dropping values resulted in an empty key.
 	 */
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, Long> base = source.getAbsoluteFrequencies();
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(base.size(), 1.0f);
-		for (Map.Entry<Map<Integer, Integer>, Long> entry : base.entrySet()) {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, BigInteger> base = source.getAbsoluteFrequencies();
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(base.size(), 1.0f);
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> entry : base.entrySet()) {
 			TreeMap<Integer, Integer> nextKey = new TreeMap<Integer, Integer>(entry.getKey());
 			int drop;
 			for (drop = dropLowest; drop > 0; drop--) {
@@ -143,7 +144,7 @@ public class DiceDropper implements IDie {
 			if (nextKey.size() == 0) {
 				throw new IllegalStateException("Overfiltered after dropping lowest and highest rolls!");
 			}
-			ret.compute(nextKey, (k, v) -> entry.getValue() + (v == null ? 0 : v));
+			ret.compute(nextKey, (k, v) -> entry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}

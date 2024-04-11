@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice.ttrpg.dnd;
 
+import java.math.BigInteger;
 import java.util.*;
 
 import io.github.qwert26.somedice.*;
@@ -79,10 +80,10 @@ public class RecievedDamage implements IDie {
 	}
 
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, Long> ret = new TreeMap<Map<Integer, Integer>, Long>();
-		Map<Map<Integer, Integer>, Long> result = source.getAbsoluteFrequencies();
-		for (Map.Entry<Map<Integer, Integer>, Long> resultEntry : result.entrySet()) {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, BigInteger> ret = new TreeMap<Map<Integer, Integer>, BigInteger>();
+		Map<Map<Integer, Integer>, BigInteger> result = source.getAbsoluteFrequencies();
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : result.entrySet()) {
 			Map.Entry<Integer, Integer> valueCount = resultEntry.getKey().entrySet().iterator().next();
 			// Compressor and UnfairDie both produce valueCounts, where the count is always
 			// equal to 1.
@@ -91,7 +92,8 @@ public class RecievedDamage implements IDie {
 			value = resistance ? Math.ceilDiv(value, 2) : value;
 			value *= vulnerability ? 2 : 1;
 			Map<Integer, Integer> newKey = Collections.singletonMap(value, 1);
-			ret.compute(newKey, (key, frequency) -> resultEntry.getValue() + (frequency == null ? 0 : frequency));
+			ret.compute(newKey,
+					(key, frequency) -> resultEntry.getValue().add(frequency == null ? BigInteger.ZERO : frequency));
 		}
 		return ret;
 	}

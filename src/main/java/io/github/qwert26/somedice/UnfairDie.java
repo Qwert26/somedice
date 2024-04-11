@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -13,28 +14,28 @@ public final class UnfairDie extends AbstractDie {
 	/**
 	 * The internal mapping from values to frequencies.
 	 */
-	private final Map<Integer, Long> data;
+	private final Map<Integer, BigInteger> data;
 
 	/**
 	 * Creates a new empty die, ready to be filled with data.
 	 */
 	public UnfairDie() {
 		super();
-		data = new TreeMap<Integer, Long>();
+		data = new TreeMap<Integer, BigInteger>();
 	}
 
 	/**
 	 * 
 	 * @return The internal mapping of distinct values to absolute frequencies.
 	 */
-	public final Map<Integer, Long> getData() {
+	public final Map<Integer, BigInteger> getData() {
 		return data;
 	}
 
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(data.size(), 1.0f);
-		for (Map.Entry<Integer, Long> entry : data.entrySet()) {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(data.size(), 1.0f);
+		for (Map.Entry<Integer, BigInteger> entry : data.entrySet()) {
 			ret.put(Collections.singletonMap(entry.getKey(), 1), entry.getValue());
 		}
 		return ret;

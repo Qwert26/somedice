@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -146,25 +147,26 @@ public class HomogenousDiceGroup implements IDie {
 	 * 
 	 */
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		int[] primitiveKeys = new int[baseDie.getDistinctValues()];
-		long[] primitiveCounts = new long[primitiveKeys.length];
+		BigInteger[] primitiveCounts = new BigInteger[primitiveKeys.length];
 		int[] indexGroups = new int[primitiveCounts.length];
 		int masterIndex = 0;
-		for (Map.Entry<Map<Integer, Integer>, Long> baseEntry : baseDie.getAbsoluteFrequencies().entrySet()) {
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> baseEntry : baseDie.getAbsoluteFrequencies().entrySet()) {
 			primitiveKeys[masterIndex] = baseEntry.getKey().entrySet().iterator().next().getKey();
 			primitiveCounts[masterIndex++] = baseEntry.getValue();
 		}
 		int[] indices = new int[count];
 		Arrays.fill(indices, 0);
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(primitiveKeys.length, count);
-		long nextValue;
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(
+				primitiveKeys.length, count);
+		BigInteger nextValue;
 		// FIXME: Replace counting loop with calculation based on the multinomial
 		// coefficients.
 		infinity: while (true) {
 			masterIndex = 0;
 			final Map<Integer, Integer> nextKey = new TreeMap<Integer, Integer>();
-			nextValue = 1;
+			nextValue = BigInteger.ONE;
 			Arrays.fill(indexGroups, 0);
 			for (int subIndex : indices) {
 				nextKey.compute(primitiveKeys[subIndex], (k, v) -> {
@@ -174,14 +176,14 @@ public class HomogenousDiceGroup implements IDie {
 						return v + 1;
 					}
 				});
-				nextValue *= primitiveCounts[subIndex];
+				nextValue = nextValue.multiply(primitiveCounts[subIndex]);
 			}
 			// At this point we have the raw value
 			for (int subIndex : indices) {
 				indexGroups[subIndex]++;
 			}
-			final long contextValue = nextValue * multinomial(count, indexGroups);
-			ret.put(nextKey, contextValue);
+			nextValue = nextValue.multiply(multinomial(count, indexGroups));
+			ret.put(nextKey, nextValue);
 			do {
 				indices[masterIndex]++;
 				if (indices[masterIndex] == primitiveKeys.length) {
@@ -198,36 +200,36 @@ public class HomogenousDiceGroup implements IDie {
 		return ret;
 	}
 
-	private static final long multinomial(int total, int... individuals) {
+	private static final BigInteger multinomial(int total, int... individuals) {
 		if (IntStream.of(individuals).sum() > total) {
 			throw new IllegalArgumentException("Too many individual groups!");
 		}
-		long ret = 1L;
+		BigInteger ret = BigInteger.ONE;
 		for (int individual : individuals) {
-			ret *= binomial(total, individual);
+			ret = ret.multiply(binomial(total, individual));
 			total -= individual;
 		}
 		return ret;
 	}
 
-	private static final long binomial(int total, int group) {
+	private static final BigInteger binomial(int total, int group) {
 		if (total < 0 || group < 0 || group > total) {
 			throw new IllegalArgumentException(total + "C" + group + " is not defined!");
 		} else if (group == 0 || group == total) {
-			return 1L;
+			return BigInteger.ONE;
 		} else {
-			long ret = 1L;
+			BigInteger ret = BigInteger.ONE;
 			group = Math.min(group, total - group);
 			int div = group;
 			for (; total > group; total--) {
-				ret *= total;
-				while (div > 1 && ret % div == 0) {
-					ret /= div;
+				ret = ret.multiply(BigInteger.valueOf(total));
+				while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
+					ret = ret.divide(BigInteger.valueOf(div));
 					div--;
 				}
 			}
-			while (div > 1 && ret % div == 0) {
-				ret /= div;
+			while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
+				ret = ret.divide(BigInteger.valueOf(div));
 				div--;
 			}
 			return ret;

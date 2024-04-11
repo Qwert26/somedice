@@ -15,5 +15,5 @@ public interface IDie {
 	 * @return A mapping from individual or summed up dice values to their absolute
 	 *         frequencies.
 	 */
-	Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies();
+	Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies();
 }

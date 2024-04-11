@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
@@ -23,11 +24,11 @@ public class TestFudgeDie {
 
 	@Test
 	void checkContents() {
-		Map<Map<Integer, Integer>, Long> result = FudgeDie.INSTANCE.getAbsoluteFrequencies();
+		Map<Map<Integer, Integer>, BigInteger> result = FudgeDie.INSTANCE.getAbsoluteFrequencies();
 		for (int value = -1; value <= 1; value++) {
 			Map<Integer, Integer> valueCountKey = Collections.singletonMap(value, 1);
 			assertTrue(result.containsKey(valueCountKey));
-			Long frequency = result.get(valueCountKey);
+			BigInteger frequency = result.get(valueCountKey);
 			assertNotNull(frequency);
 			assertEquals(1L, frequency.longValue());
 		}

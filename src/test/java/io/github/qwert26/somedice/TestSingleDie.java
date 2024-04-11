@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
@@ -131,11 +132,11 @@ public class TestSingleDie {
 		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
 		void checkIsDenseWith0(final int size) {
 			SingleDie underTest = new SingleDie(size, true);
-			Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
+			Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
 			for (int value = 0; value < size; value++) {
 				Map<Integer, Integer> valueCountKey = Collections.singletonMap(value, 1);
 				assertTrue(result.containsKey(valueCountKey));
-				Long frequency = result.get(valueCountKey);
+				BigInteger frequency = result.get(valueCountKey);
 				assertNotNull(frequency);
 				assertEquals(1L, frequency.longValue());
 			}
@@ -145,11 +146,11 @@ public class TestSingleDie {
 		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
 		void checkIsDenseWithout0(final int size) {
 			SingleDie underTest = new SingleDie(size, false);
-			Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
+			Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
 			for (int value = 1; value <= size; value++) {
 				Map<Integer, Integer> valueCountKey = Collections.singletonMap(value, 1);
 				assertTrue(result.containsKey(valueCountKey));
-				Long frequency = result.get(valueCountKey);
+				BigInteger frequency = result.get(valueCountKey);
 				assertNotNull(frequency);
 				assertEquals(1L, frequency.longValue());
 			}

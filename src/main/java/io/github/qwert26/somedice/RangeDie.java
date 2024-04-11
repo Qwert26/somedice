@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -128,10 +129,11 @@ public final class RangeDie extends AbstractDie {
 	 * 
 	 */
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(getDistinctValues(), 1.0f);
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(getDistinctValues(),
+				1.0f);
 		for (int value = start; value < end; value += step) {
-			ret.put(Collections.singletonMap(value, 1), 1L);
+			ret.put(Collections.singletonMap(value, 1), BigInteger.ONE);
 		}
 		return ret;
 	}

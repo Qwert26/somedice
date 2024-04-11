@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.function.*;
 
@@ -271,17 +272,18 @@ public final class Compressor implements IDie {
 	 * compressed value and <code>Y</code> is the total frequency of said result.
 	 */
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, Long> result = source.getAbsoluteFrequencies();
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(result.size(), 1.0f);
-		for (Map.Entry<Map<Integer, Integer>, Long> resultEntry : result.entrySet()) {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, BigInteger> result = source.getAbsoluteFrequencies();
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(result.size(),
+				1.0f);
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : result.entrySet()) {
 			int accumulated = startValue.getAsInt();
 			for (Map.Entry<Integer, Integer> valueCount : resultEntry.getKey().entrySet()) {
 				int temp = valueCountFunction.applyAsInt(valueCount.getKey(), valueCount.getValue());
 				accumulated = accumulator.applyAsInt(accumulated, temp);
 			}
 			ret.compute(Collections.singletonMap(accumulated, 1),
-					(k, v) -> resultEntry.getValue() + (v == null ? 0 : v));
+					(k, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}
@@ -294,16 +296,16 @@ public final class Compressor implements IDie {
 	 *         compressed source.
 	 */
 	public UnfairDie toUnfairDie() {
-		Map<Map<Integer, Integer>, Long> result = source.getAbsoluteFrequencies();
+		Map<Map<Integer, Integer>, BigInteger> result = source.getAbsoluteFrequencies();
 		UnfairDie ret = new UnfairDie();
-		Map<Integer, Long> data = ret.getData();
-		for (Map.Entry<Map<Integer, Integer>, Long> resultEntry : result.entrySet()) {
+		Map<Integer, BigInteger> data = ret.getData();
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : result.entrySet()) {
 			int accumulated = startValue.getAsInt();
 			for (Map.Entry<Integer, Integer> valueCount : resultEntry.getKey().entrySet()) {
 				int temp = valueCountFunction.applyAsInt(valueCount.getKey(), valueCount.getValue());
 				accumulated = accumulator.applyAsInt(accumulated, temp);
 			}
-			data.compute(accumulated, (k, v) -> resultEntry.getValue() + (v == null ? 0 : v));
+			data.compute(accumulated, (k, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}

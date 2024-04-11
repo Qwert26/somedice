@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -31,10 +32,10 @@ public final class FudgeDie extends AbstractDie {
 	 * </ul>
 	 */
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(3, 1f);
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(3, 1f);
 		for (int v = -1; v <= 1; v++) {
-			ret.put(Collections.singletonMap(v, 1), 1L);
+			ret.put(Collections.singletonMap(v, 1), BigInteger.ONE);
 		}
 		return ret;
 	}

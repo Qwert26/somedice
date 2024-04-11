@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
@@ -44,9 +45,9 @@ public class TestUnfairDie {
 	@Test
 	void checkEquals() {
 		UnfairDie underTest = new UnfairDie();
-		underTest.getData().put(0, 3L);
-		underTest.getData().put(1, 2L);
-		underTest.getData().put(2, 1L);
+		underTest.getData().put(0, BigInteger.valueOf(3));
+		underTest.getData().put(1, BigInteger.TWO);
+		underTest.getData().put(2, BigInteger.ONE);
 		assumeTrue(underTest.hashCode() == DiceCollection.WRATH_AND_GLORY_DIE.hashCode());
 		assertTrue(underTest.equals(DiceCollection.WRATH_AND_GLORY_DIE));
 	}
@@ -60,13 +61,13 @@ public class TestUnfairDie {
 	@Test
 	void checkConsistency() {
 		UnfairDie underTest = DiceCollection.WRATH_AND_GLORY_DIE;
-		Map<Map<Integer, Integer>, Long> result = underTest.getAbsoluteFrequencies();
-		Map<Integer, Long> data = underTest.getData();
+		Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
+		Map<Integer, BigInteger> data = underTest.getData();
 		assertEquals(data.size(), result.size());
-		for (Map.Entry<Integer, Long> dataEntry : data.entrySet()) {
+		for (Map.Entry<Integer, BigInteger> dataEntry : data.entrySet()) {
 			Map<Integer, Integer> valueCountKey = Collections.singletonMap(dataEntry.getKey(), 1);
 			assertTrue(result.containsKey(valueCountKey));
-			Long frequency = result.get(valueCountKey);
+			BigInteger frequency = result.get(valueCountKey);
 			assertNotNull(frequency);
 			assertEquals(dataEntry.getValue(), frequency);
 		}
@@ -80,9 +81,9 @@ public class TestUnfairDie {
 		@BeforeEach
 		void setup() {
 			underTest = new UnfairDie();
-			underTest.getData().put(-1, 1L);
-			underTest.getData().put(0, 1L);
-			underTest.getData().put(1, 1L);
+			underTest.getData().put(-1, BigInteger.ONE);
+			underTest.getData().put(0, BigInteger.ONE);
+			underTest.getData().put(1, BigInteger.ONE);
 		}
 
 		@Test
@@ -110,7 +111,7 @@ public class TestUnfairDie {
 			SingleDie truth = new SingleDie(size, false);
 			UnfairDie underTest = new UnfairDie();
 			for (int i = 1; i <= size; i++) {
-				underTest.getData().put(i, 1L);
+				underTest.getData().put(i, BigInteger.ONE);
 			}
 			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
 			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
@@ -122,7 +123,7 @@ public class TestUnfairDie {
 			SingleDie truth = new SingleDie(size, true);
 			UnfairDie underTest = new UnfairDie();
 			for (int i = 0; i < size; i++) {
-				underTest.getData().put(i, 1L);
+				underTest.getData().put(i, BigInteger.ONE);
 			}
 			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
 			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());

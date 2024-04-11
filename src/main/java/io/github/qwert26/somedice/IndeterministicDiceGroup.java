@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -103,22 +104,22 @@ public class IndeterministicDiceGroup implements IDie {
 	 *         occurrence.
 	 */
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>();
-		for (Map.Entry<Integer, Long> valueCount : countDistribution.getData().entrySet()) {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>();
+		for (Map.Entry<Integer, BigInteger> valueCount : countDistribution.getData().entrySet()) {
 			final int value = valueCount.getKey();
-			final long factor = valueCount.getValue();
+			final BigInteger factor = valueCount.getValue();
 			if (value != 0) {
 				HomogenousDiceGroup temp = new HomogenousDiceGroup(baseDie, Math.absExact(value));
 				temp.getAbsoluteFrequencies().forEach((composition, count) -> {
 					ret.compute(composition, (k, v) -> {
-						return count * factor + (v == null ? 0L : v);
+						return count.multiply(factor).add(v == null ? BigInteger.ZERO : v);
 					});
 				});
 			} else {
 				Map<Integer, Integer> zero = Collections.singletonMap(0, 1);
 				ret.compute(zero, (k, v) -> {
-					return factor + (v == null ? 0L : v);
+					return factor.add(v == null ? BigInteger.ZERO : v);
 				});
 			}
 		}

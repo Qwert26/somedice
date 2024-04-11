@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -175,13 +176,13 @@ public class DiceKeeper implements IDie {
 	 * @throws IllegalStateException If too little dice can be kept.
 	 */
 	@Override
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		if (keepHighest == 0 && keepLowest == 0) {
 			throw new IllegalStateException("Both ends of keeping dice rolls are zero!");
 		}
-		Map<Map<Integer, Integer>, Long> result = source.getAbsoluteFrequencies();
-		Map<Map<Integer, Integer>, Long> ret = new HashMap<>(result.size(), 1.0f);
-		for (Map.Entry<Map<Integer, Integer>, Long> resultEntry : result.entrySet()) {
+		Map<Map<Integer, Integer>, BigInteger> result = source.getAbsoluteFrequencies();
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<>(result.size(), 1.0f);
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : result.entrySet()) {
 			TreeMap<Integer, Integer> keySource = new TreeMap<>(resultEntry.getKey());
 			TreeMap<Integer, Integer> nextKey = new TreeMap<>();
 			int keep = 0;
@@ -206,7 +207,7 @@ public class DiceKeeper implements IDie {
 				keySource.compute(firstEntry.getKey(), (k, v) -> toBeRemoved >= v ? null : (v - toBeRemoved));
 				keep -= Math.min(firstEntry.getValue(), keep);
 			}
-			ret.compute(nextKey, (k, v) -> resultEntry.getValue() + (v == null ? 0 : v));
+			ret.compute(nextKey, (k, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}

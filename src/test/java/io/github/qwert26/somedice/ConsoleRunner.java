@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 import org.junit.jupiter.api.Disabled;
@@ -26,7 +27,7 @@ public class ConsoleRunner {
 		Compressor comp = new Compressor(dropLowest);
 		UnfairDie result = comp.toUnfairDie();
 		System.out.println("Result for " + StringExporter.export(dropLowest) + ":");
-		for (Map.Entry<Integer, Long> valueCount : result.getData().entrySet()) {
+		for (Map.Entry<Integer, BigInteger> valueCount : result.getData().entrySet()) {
 			System.out.println("\t" + valueCount.getKey() + ": " + valueCount.getValue());
 		}
 	}
@@ -37,7 +38,8 @@ public class ConsoleRunner {
 		HomogenousDiceGroup oneD10 = new HomogenousDiceGroup(D10, 1);
 		Compressor compress3D10 = new Compressor(oneD10);
 		IndeterministicDiceGroup peashooter = new IndeterministicDiceGroup(D4, compress3D10);
-		for (Map.Entry<Map<Integer, Integer>, Long> resultEntry : peashooter.getAbsoluteFrequencies().entrySet()) {
+		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : peashooter.getAbsoluteFrequencies()
+				.entrySet()) {
 			System.out.println(resultEntry);
 		}
 	}

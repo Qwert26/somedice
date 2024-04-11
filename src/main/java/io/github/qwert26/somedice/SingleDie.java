@@ -1,5 +1,6 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -154,15 +155,15 @@ public final class SingleDie extends AbstractDie {
 	 * is a number from the allowed range, specified by {@link #startAt0} and
 	 * {@link #maximum}.
 	 */
-	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
-		HashMap<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(maximum, 1.0f);
+	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		HashMap<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(maximum, 1.0f);
 		for (int i = 1; i < maximum; i++) {
-			ret.put(Collections.singletonMap(i, 1), 1L);
+			ret.put(Collections.singletonMap(i, 1), BigInteger.ONE);
 		}
 		if (startAt0) {
-			ret.put(Collections.singletonMap(0, 1), 1L);
+			ret.put(Collections.singletonMap(0, 1), BigInteger.ONE);
 		} else {
-			ret.put(Collections.singletonMap(maximum, 1), 1L);
+			ret.put(Collections.singletonMap(maximum, 1), BigInteger.ONE);
 		}
 		return ret;
 	}
