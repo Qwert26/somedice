@@ -1,6 +1,7 @@
 package io.github.qwert26.somedice;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * A homogenous dice group consist of dice of a single type. For mixed dice
@@ -147,7 +148,8 @@ public class HomogenousDiceGroup implements IDie {
 	@Override
 	public Map<Map<Integer, Integer>, Long> getAbsoluteFrequencies() {
 		int[] primitiveKeys = new int[baseDie.getDistinctValues()];
-		long[] primitiveCounts = new long[baseDie.getDistinctValues()];
+		long[] primitiveCounts = new long[primitiveKeys.length];
+		int[] indexGroups = new int[primitiveCounts.length];
 		int masterIndex = 0;
 		for (Map.Entry<Map<Integer, Integer>, Long> baseEntry : baseDie.getAbsoluteFrequencies().entrySet()) {
 			primitiveKeys[masterIndex] = baseEntry.getKey().entrySet().iterator().next().getKey();
@@ -157,10 +159,13 @@ public class HomogenousDiceGroup implements IDie {
 		Arrays.fill(indices, 0);
 		Map<Map<Integer, Integer>, Long> ret = new HashMap<Map<Integer, Integer>, Long>(primitiveKeys.length, count);
 		long nextValue;
+		// FIXME: Replace counting loop with calculation based on the multinomial
+		// coefficients.
 		infinity: while (true) {
 			masterIndex = 0;
 			final Map<Integer, Integer> nextKey = new TreeMap<Integer, Integer>();
 			nextValue = 1;
+			Arrays.fill(indexGroups, 0);
 			for (int subIndex : indices) {
 				nextKey.compute(primitiveKeys[subIndex], (k, v) -> {
 					if (v == null) {
@@ -171,19 +176,61 @@ public class HomogenousDiceGroup implements IDie {
 				});
 				nextValue *= primitiveCounts[subIndex];
 			}
-			final long contextValue = nextValue;
-			ret.compute(nextKey, (k, v) -> v == null ? contextValue : (v + contextValue));
+			// At this point we have the raw value
+			for (int subIndex : indices) {
+				indexGroups[subIndex]++;
+			}
+			final long contextValue = nextValue * multinomial(count, indexGroups);
+			ret.put(nextKey, contextValue);
 			do {
 				indices[masterIndex]++;
 				if (indices[masterIndex] == primitiveKeys.length) {
-					indices[masterIndex] = 0;
 					masterIndex++;
 				} else {
+					for (int beforeMaster = 0; beforeMaster < masterIndex; beforeMaster++) {
+						indices[beforeMaster] = indices[masterIndex];
+					}
 					continue infinity;
 				}
 			} while (masterIndex < indices.length);
 			break;
 		}
 		return ret;
+	}
+
+	private static final long multinomial(int total, int... individuals) {
+		if (IntStream.of(individuals).sum() > total) {
+			throw new IllegalArgumentException("Too many individual groups!");
+		}
+		long ret = 1L;
+		for (int individual : individuals) {
+			ret *= binomial(total, individual);
+			total -= individual;
+		}
+		return ret;
+	}
+
+	private static final long binomial(int total, int group) {
+		if (total < 0 || group < 0 || group > total) {
+			throw new IllegalArgumentException(total + "C" + group + " is not defined!");
+		} else if (group == 0 || group == total) {
+			return 1L;
+		} else {
+			long ret = 1L;
+			group = Math.min(group, total - group);
+			int div = group;
+			for (; total > group; total--) {
+				ret *= total;
+				while (div > 1 && ret % div == 0) {
+					ret /= div;
+					div--;
+				}
+			}
+			while (div > 1 && ret % div == 0) {
+				ret /= div;
+				div--;
+			}
+			return ret;
+		}
 	}
 }

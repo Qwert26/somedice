@@ -1,6 +1,7 @@
 package io.github.qwert26.somedice;
 
 import java.util.*;
+import java.math.BigInteger;
 
 /**
  * The interface for a die.
