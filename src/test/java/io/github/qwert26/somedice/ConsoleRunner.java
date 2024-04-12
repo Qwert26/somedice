@@ -2,6 +2,7 @@ package io.github.qwert26.somedice;
 
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Disabled;
 
@@ -14,7 +15,7 @@ import io.github.qwert26.somedice.exporter.StringExporter;
 @Deprecated
 public class ConsoleRunner {
 	public static void main(String[] args) {
-		mixedStatRoller();
+		testIDG();
 	}
 
 	private static final void mixedStatRoller() {
@@ -38,8 +39,7 @@ public class ConsoleRunner {
 		Compressor compress3D10 = new Compressor(threeD10);
 		IndeterministicDiceGroup peashooter = new IndeterministicDiceGroup(D4, compress3D10);
 		Compressor compressPeashooter=new Compressor(peashooter);
-		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : compressPeashooter.getAbsoluteFrequencies()
-				.entrySet()) {
+		for (Entry<Integer, BigInteger> resultEntry : compressPeashooter.toUnfairDie().getData().entrySet()) {
 			System.out.println(resultEntry);
 		}
 	}
