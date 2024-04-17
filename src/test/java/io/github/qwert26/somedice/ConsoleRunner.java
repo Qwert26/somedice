@@ -38,7 +38,7 @@ public class ConsoleRunner {
 		HomogenousDiceGroup threeD10 = new HomogenousDiceGroup(D10, 3);
 		Compressor compress3D10 = new Compressor(threeD10);
 		IndeterministicDiceGroup peashooter = new IndeterministicDiceGroup(D4, compress3D10);
-		Compressor compressPeashooter=new Compressor(peashooter);
+		Compressor compressPeashooter = new Compressor(peashooter);
 		for (Entry<Integer, BigInteger> resultEntry : compressPeashooter.toUnfairDie().getData().entrySet()) {
 			System.out.println(resultEntry);
 		}

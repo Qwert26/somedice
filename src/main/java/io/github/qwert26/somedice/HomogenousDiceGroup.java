@@ -219,8 +219,8 @@ public class HomogenousDiceGroup implements IDie {
 			return BigInteger.ONE;
 		} else {
 			BigInteger ret = BigInteger.ONE;
-			group = Math.min(group, total - group);
-			int div = group;
+			group = Math.max(group, total - group);
+			int div = total - group;
 			for (; total > group; total--) {
 				ret = ret.multiply(BigInteger.valueOf(total));
 				while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
