@@ -15,6 +15,8 @@ import io.github.qwert26.somedice.exporter.StringExporter;
 @Deprecated
 public class ConsoleRunner {
 	public static void main(String[] args) {
+		mixedStatRoller();
+		System.out.println();
 		testIDG();
 	}
 
@@ -28,7 +30,7 @@ public class ConsoleRunner {
 		UnfairDie result = comp.toUnfairDie();
 		System.out.println("Result for " + StringExporter.export(dropLowest) + ":");
 		for (Map.Entry<Integer, BigInteger> valueCount : result.getData().entrySet()) {
-			System.out.println("\t" + valueCount.getKey() + ": " + valueCount.getValue());
+			System.out.println(valueCount);
 		}
 	}
 

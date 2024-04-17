@@ -23,8 +23,9 @@ public class HomogenousDiceGroup implements IDie {
 	private int count;
 
 	/**
+	 * Creates a new homogenous dice group consisting of a single base die.
 	 * 
-	 * @param baseDie
+	 * @param baseDie The dice to use, it is not replicated.
 	 * @throws NullPointerException If the base die is <code>null</code>.
 	 */
 	public HomogenousDiceGroup(AbstractDie baseDie) {
@@ -32,6 +33,8 @@ public class HomogenousDiceGroup implements IDie {
 	}
 
 	/**
+	 * Creates a new homogenous dice group consisting of the given base die, which
+	 * is virtually replicated by an indicated amount.
 	 * 
 	 * @param baseDie
 	 * @param count
@@ -44,6 +47,8 @@ public class HomogenousDiceGroup implements IDie {
 	}
 
 	/**
+	 * Creates a new homogenous dice group consisting of the given base die, which
+	 * is virtually replicated by an indicated amount.
 	 * 
 	 * @param count
 	 * @param baseDie
@@ -83,7 +88,7 @@ public class HomogenousDiceGroup implements IDie {
 	/**
 	 * 
 	 * @param count The new amount of virtual dice.
-	 * @throws IllegalArgumentException if count is not positive.
+	 * @throws IllegalArgumentException If count is not positive.
 	 */
 	public final void setCount(int count) {
 		if (count < 1) {
@@ -161,8 +166,6 @@ public class HomogenousDiceGroup implements IDie {
 		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(
 				primitiveKeys.length, count);
 		BigInteger nextValue;
-		// FIXME: Replace counting loop with calculation based on the multinomial
-		// coefficients.
 		infinity: while (true) {
 			masterIndex = 0;
 			final Map<Integer, Integer> nextKey = new TreeMap<Integer, Integer>();
@@ -182,7 +185,7 @@ public class HomogenousDiceGroup implements IDie {
 			for (int subIndex : indices) {
 				indexGroups[subIndex]++;
 			}
-			nextValue = nextValue.multiply(multinomial(count, indexGroups));
+			nextValue = nextValue.multiply(multinomialComplete(count, indexGroups));
 			ret.put(nextKey, nextValue);
 			do {
 				indices[masterIndex]++;
@@ -200,9 +203,22 @@ public class HomogenousDiceGroup implements IDie {
 		return ret;
 	}
 
-	private static final BigInteger multinomial(int total, int... individuals) {
+	/**
+	 * Computes the multinomial coefficient with the assumption, that all items are
+	 * in groups.
+	 * 
+	 * @param total
+	 * @param individuals
+	 * @throws IllegalArgumentException If the sum of the individual group sizes is
+	 *                                  not equal to the total count.
+	 * @return
+	 */
+	public static final BigInteger multinomialComplete(int total, int... individuals) {
 		if (IntStream.of(individuals).sum() > total) {
 			throw new IllegalArgumentException("Too many individual groups!");
+		}
+		if (IntStream.of(individuals).sum() < total) {
+			throw new IllegalArgumentException("Not enough individual groups!");
 		}
 		BigInteger ret = BigInteger.ONE;
 		for (int individual : individuals) {
@@ -212,27 +228,80 @@ public class HomogenousDiceGroup implements IDie {
 		return ret;
 	}
 
-	private static final BigInteger binomial(int total, int group) {
+	/**
+	 * Computes the multinomial coefficient with the assumption, that left over
+	 * items can be sprinkled in in any order.
+	 * 
+	 * @param total
+	 * @param individuals
+	 * @throws IllegalArgumentException If the sum of the individual group sizes is
+	 *                                  greater than the total count.
+	 * @return
+	 */
+	public static final BigInteger multinomialIncomplete(int total, int... individuals) {
+		if (IntStream.of(individuals).sum() > total) {
+			throw new IllegalArgumentException("Too many individual groups!");
+		}
+		BigInteger ret = BigInteger.ONE;
+		for (int individual : individuals) {
+			ret = ret.multiply(binomial(total, individual));
+			total -= individual;
+		}
+		return ret.multiply(factorial(total));
+	}
+
+	/**
+	 * Computes the factorial of {@code n}.
+	 * 
+	 * @param n
+	 * @throws IllegalArgumentException If {@code n} is negative.
+	 * @return
+	 */
+	public static final BigInteger factorial(int n) {
+		if (n < 0) {
+			throw new IllegalArgumentException("Faculty of negative numbers can not be computed!");
+		}
+		if (n == 0 || n == 1) {
+			return BigInteger.ONE;
+		}
+		BigInteger ret = BigInteger.ONE;
+		for (; n > 1; n--) {
+			ret = ret.multiply(BigInteger.valueOf(n));
+		}
+		return ret;
+	}
+
+	/**
+	 * Computes the binomial coefficient {@code total}C{@code group}.
+	 * 
+	 * @param total
+	 * @param group
+	 * @throws IllegalArgumentException If either {@code total} or {@code group} are
+	 *                                  negative or {@code group} is greater than
+	 *                                  {@code total.}
+	 * @return
+	 */
+	public static final BigInteger binomial(int total, int group) {
 		if (total < 0 || group < 0 || group > total) {
 			throw new IllegalArgumentException(total + "C" + group + " is not defined!");
-		} else if (group == 0 || group == total) {
+		}
+		if (group == 0 || group == total) {
 			return BigInteger.ONE;
-		} else {
-			BigInteger ret = BigInteger.ONE;
-			group = Math.max(group, total - group);
-			int div = total - group;
-			for (; total > group; total--) {
-				ret = ret.multiply(BigInteger.valueOf(total));
-				while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
-					ret = ret.divide(BigInteger.valueOf(div));
-					div--;
-				}
-			}
+		}
+		BigInteger ret = BigInteger.ONE;
+		group = Math.max(group, total - group);
+		int div = total - group;
+		for (; total > group; total--) {
+			ret = ret.multiply(BigInteger.valueOf(total));
 			while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
 				ret = ret.divide(BigInteger.valueOf(div));
 				div--;
 			}
-			return ret;
 		}
+		while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
+			ret = ret.divide(BigInteger.valueOf(div));
+			div--;
+		}
+		return ret;
 	}
 }
