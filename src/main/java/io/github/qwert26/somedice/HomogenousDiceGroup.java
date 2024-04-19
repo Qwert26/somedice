@@ -2,7 +2,6 @@ package io.github.qwert26.somedice;
 
 import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.IntStream;
 
 /**
  * A homogenous dice group consist of dice of a single type. For mixed dice
@@ -185,7 +184,7 @@ public class HomogenousDiceGroup implements IDie {
 			for (int subIndex : indices) {
 				indexGroups[subIndex]++;
 			}
-			nextValue = nextValue.multiply(multinomialComplete(count, indexGroups));
+			nextValue = nextValue.multiply(Utils.multinomialComplete(count, indexGroups));
 			ret.put(nextKey, nextValue);
 			do {
 				indices[masterIndex]++;
@@ -199,108 +198,6 @@ public class HomogenousDiceGroup implements IDie {
 				}
 			} while (masterIndex < indices.length);
 			break;
-		}
-		return ret;
-	}
-
-	/**
-	 * Computes the multinomial coefficient with the assumption, that all items are
-	 * in groups.
-	 * 
-	 * @param total
-	 * @param individuals
-	 * @throws IllegalArgumentException If the sum of the individual group sizes is
-	 *                                  not equal to the total count.
-	 * @return
-	 */
-	public static final BigInteger multinomialComplete(int total, int... individuals) {
-		if (IntStream.of(individuals).sum() > total) {
-			throw new IllegalArgumentException("Too many individual groups!");
-		}
-		if (IntStream.of(individuals).sum() < total) {
-			throw new IllegalArgumentException("Not enough individual groups!");
-		}
-		BigInteger ret = BigInteger.ONE;
-		for (int individual : individuals) {
-			ret = ret.multiply(binomial(total, individual));
-			total -= individual;
-		}
-		return ret;
-	}
-
-	/**
-	 * Computes the multinomial coefficient with the assumption, that left over
-	 * items can be sprinkled in in any order.
-	 * 
-	 * @param total
-	 * @param individuals
-	 * @throws IllegalArgumentException If the sum of the individual group sizes is
-	 *                                  greater than the total count.
-	 * @return
-	 */
-	public static final BigInteger multinomialIncomplete(int total, int... individuals) {
-		if (IntStream.of(individuals).sum() > total) {
-			throw new IllegalArgumentException("Too many individual groups!");
-		}
-		BigInteger ret = BigInteger.ONE;
-		for (int individual : individuals) {
-			ret = ret.multiply(binomial(total, individual));
-			total -= individual;
-		}
-		return ret.multiply(factorial(total));
-	}
-
-	/**
-	 * Computes the factorial of {@code n}.
-	 * 
-	 * @param n
-	 * @throws IllegalArgumentException If {@code n} is negative.
-	 * @return
-	 */
-	public static final BigInteger factorial(int n) {
-		if (n < 0) {
-			throw new IllegalArgumentException("Faculty of negative numbers can not be computed!");
-		}
-		if (n == 0 || n == 1) {
-			return BigInteger.ONE;
-		}
-		BigInteger ret = BigInteger.ONE;
-		for (; n > 1; n--) {
-			ret = ret.multiply(BigInteger.valueOf(n));
-		}
-		return ret;
-	}
-
-	/**
-	 * Computes the binomial coefficient {@code total}C{@code group}.
-	 * 
-	 * @param total
-	 * @param group
-	 * @throws IllegalArgumentException If either {@code total} or {@code group} are
-	 *                                  negative or {@code group} is greater than
-	 *                                  {@code total.}
-	 * @return
-	 */
-	public static final BigInteger binomial(int total, int group) {
-		if (total < 0 || group < 0 || group > total) {
-			throw new IllegalArgumentException(total + "C" + group + " is not defined!");
-		}
-		if (group == 0 || group == total) {
-			return BigInteger.ONE;
-		}
-		BigInteger ret = BigInteger.ONE;
-		group = Math.max(group, total - group);
-		int div = total - group;
-		for (; total > group; total--) {
-			ret = ret.multiply(BigInteger.valueOf(total));
-			while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
-				ret = ret.divide(BigInteger.valueOf(div));
-				div--;
-			}
-		}
-		while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
-			ret = ret.divide(BigInteger.valueOf(div));
-			div--;
 		}
 		return ret;
 	}
