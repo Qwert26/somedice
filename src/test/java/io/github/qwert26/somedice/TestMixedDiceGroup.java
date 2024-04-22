@@ -5,5 +5,7 @@ import org.junit.jupiter.api.*;
 @Tag("integration")
 @Disabled("Uncertain on how to test it.")
 public abstract class TestMixedDiceGroup {
-	// TODO
+	public TestMixedDiceGroup() {
+		super();
+	}
 }

@@ -2,18 +2,19 @@ package io.github.qwert26.somedice;
 
 import java.math.BigInteger;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static io.github.qwert26.somedice.Utils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link Utils}.
  * 
  * @author Qwert26
  */
+@Tag("unit")
 public class TestUtils {
 	@Test
 	public void testBinomialNegativeTotal() {
@@ -55,7 +56,7 @@ public class TestUtils {
 	}
 
 	@Test
-	public void testFactorialNegative() {
+	public void testFactorialNegativeOne() {
 		assertThrows(IllegalArgumentException.class, () -> factorial(-1));
 	}
 
@@ -67,5 +68,20 @@ public class TestUtils {
 	@Test
 	public void testFactorialOne() {
 		assertEquals(BigInteger.ONE, factorial(1));
+	}
+
+	@Test
+	public void testFactorialTwo() {
+		assertEquals(BigInteger.TWO, factorial(2));
+	}
+
+	@Test
+	public void testFactorialThree() {
+		assertEquals(new BigInteger("6"), factorial(3));
+	}
+
+	@Test
+	public void testFactorialFour() {
+		assertEquals(new BigInteger("24"), factorial(4));
 	}
 }
