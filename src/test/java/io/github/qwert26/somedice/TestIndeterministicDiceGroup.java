@@ -9,13 +9,7 @@ import org.junit.jupiter.api.*;
  */
 @Tag("integration")
 public abstract class TestIndeterministicDiceGroup {
-	protected UnfairDie distribution;
-
-	/**
-	 * @param distribution The distribution of base die to roll.
-	 */
-	public TestIndeterministicDiceGroup(UnfairDie distribution) {
+	public TestIndeterministicDiceGroup() {
 		super();
-		this.distribution = distribution;
 	}
 }

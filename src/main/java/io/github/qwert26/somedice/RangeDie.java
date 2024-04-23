@@ -140,11 +140,11 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * A <code>RangeDie</code> calculates its distinct values with the formula
-	 * <code>floor((end - start) / step)</code>.
+	 * <code>ceil((end - start) / step)</code>.
 	 */
 	@Override
 	public int getDistinctValues() {
-		return (end - start) / step;
+		return (int) Math.ceil((end - start) / (float) step);
 	}
 
 	/**

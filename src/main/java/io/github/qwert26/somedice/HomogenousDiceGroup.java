@@ -14,6 +14,8 @@ public class HomogenousDiceGroup implements IDie {
 	/**
 	 * The base die this group consists of: It will be virtually replicated as
 	 * indicated by {@link #count}.
+	 * 
+	 * @apiNote Never <code>null</code>.
 	 */
 	private AbstractDie baseDie;
 	/**
@@ -117,7 +119,7 @@ public class HomogenousDiceGroup implements IDie {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((baseDie == null) ? 0 : baseDie.hashCode());
+		result = prime * result + baseDie.hashCode();
 		result = prime * result + count;
 		return result;
 	}

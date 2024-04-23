@@ -22,12 +22,28 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>5.10.0</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit-pioneer</groupId>
+			<artifactId>junit-pioneer</artifactId>
+			<scope>test</scope>
+			<version>2.2.0</version>
 		</dependency>
 	</dependencies>
 	<inceptionYear>2023</inceptionYear>
 	<scm>
 		<url>https://github.com/Qwert26/somedice</url>
 	</scm>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>5.10.2</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

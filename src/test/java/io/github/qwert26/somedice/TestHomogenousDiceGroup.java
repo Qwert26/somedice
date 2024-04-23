@@ -56,6 +56,12 @@ public abstract class TestHomogenousDiceGroup {
 		assertTrue(result.contains(source.toString()));
 	}
 
+	@Test
+	void hashcodeDoesNotThrow() {
+		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		assertDoesNotThrow(() -> underTest.hashCode());
+	}
+
 	@Nested
 	@Tag("integration")
 	public class Frequencies {
