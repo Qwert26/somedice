@@ -62,6 +62,32 @@ public abstract class TestHomogenousDiceGroup {
 		assertDoesNotThrow(() -> underTest.hashCode());
 	}
 
+	@Test
+	void equalsItselfIsTrue() {
+		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		assertTrue(underTest.equals(underTest));
+	}
+
+	@Test
+	void equalsNullIsFalse() {
+		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		assertFalse(underTest.equals(null));
+	}
+
+	@Test
+	void equalsDifferentCountsIsFalse() {
+		HomogenousDiceGroup first = new HomogenousDiceGroup(source, 1);
+		HomogenousDiceGroup second = new HomogenousDiceGroup(source, 2);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void equalsAllMatchIsTrue() {
+		HomogenousDiceGroup first = new HomogenousDiceGroup(source, 3);
+		HomogenousDiceGroup second = new HomogenousDiceGroup(source, 3);
+		assertTrue(first.equals(second));
+	}
+
 	@Nested
 	@Tag("integration")
 	public class Frequencies {

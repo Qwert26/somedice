@@ -48,7 +48,7 @@ public class HomogenousDiceGroup implements IDie {
 	}
 
 	/**
-	 * Creates a new homogenous dice group consisting of the given base die, which
+	 * Creates a new homogeneous dice group consisting of the given base die, which
 	 * is virtually replicated by an indicated amount.
 	 * 
 	 * @param count
@@ -136,11 +136,7 @@ public class HomogenousDiceGroup implements IDie {
 			return false;
 		}
 		HomogenousDiceGroup other = (HomogenousDiceGroup) obj;
-		if (baseDie == null) {
-			if (other.baseDie != null) {
-				return false;
-			}
-		} else if (!baseDie.equals(other.baseDie)) {
+		if (!baseDie.equals(other.baseDie)) {
 			return false;
 		}
 		if (count != other.count) {
