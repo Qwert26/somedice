@@ -21,6 +21,7 @@ public class TestReplication extends TestIndeterministicDiceGroup {
 				.argumentsForFirstParameter(DiceCollection.WRATH_AND_GLORY_DIE, FudgeDie.INSTANCE,
 						new SingleDie(false, 4), DiceCollection.DICE_10_TO_100_IN_10)
 				.argumentsForNextParameter(1, 2, 3, 4, 5, 6);
+		// Anything over 7 for the amount of dice takes too long to compute.
 	}
 
 	private static final UnfairDie createMonoDice(int count) {

@@ -4,8 +4,15 @@ import java.math.BigInteger;
 import java.util.*;
 
 /**
+ * <p>
  * A mixed dice group which consist of dice of varying types. For a dice group
  * containing only a single type of die, use {@link HomogenousDiceGroup}.
+ * </p>
+ * <p>
+ * Being unable to change the used sources after instance creation is a design
+ * choice: It prevents the accidental creation of an endless loop, which can
+ * cause a {@link StackOverflowError}.
+ * </p>
  * 
  * @author Qwert26
  * @see HomogenousDiceGroup
@@ -20,7 +27,8 @@ public class MixedDiceGroup implements IDie {
 	/**
 	 * Creates a new mixed dice group with the given sources.
 	 * 
-	 * @param sources
+	 * @param sources The sources to use. The array gets copied, so changes made to
+	 *                it will not reflect into this class.
 	 * @throws IllegalArgumentException if the source-array is <code>null</code>,
 	 *                                  empty or contains at least one
 	 *                                  <code>null</code>.
@@ -37,7 +45,8 @@ public class MixedDiceGroup implements IDie {
 				throw new IllegalArgumentException("A single source was null");
 			}
 		}
-		this.sources = sources;
+		this.sources = new IDie[sources.length];
+		System.arraycopy(sources, 0, this.sources, 0, sources.length);
 	}
 
 	/**
@@ -90,6 +99,9 @@ public class MixedDiceGroup implements IDie {
 		return builder.toString();
 	}
 
+	/**
+	 * Computes the effective Cartesian product of its input sources.
+	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		@SuppressWarnings("unchecked")

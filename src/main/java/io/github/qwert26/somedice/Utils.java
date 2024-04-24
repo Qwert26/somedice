@@ -45,7 +45,8 @@ public final class Utils {
 
 	/**
 	 * Computes the multinomial coefficient with the assumption, that left over
-	 * items can be sprinkled in in any order.
+	 * items can be sprinkled in in any order between the groups of identical
+	 * elements.
 	 * 
 	 * @param total
 	 * @param individuals
@@ -123,6 +124,13 @@ public final class Utils {
 		return ret;
 	}
 
+	/**
+	 * 
+	 * @param rangeStart the smallest value to return, inclusive.
+	 * @param rangeEnd   the biggest value to return, also inclusive.
+	 * @param rand       the source of randomness.
+	 * @return
+	 */
 	public final static BigInteger RandomBigInteger(BigInteger rangeStart, BigInteger rangeEnd, Random rand) {
 		int scale = rangeEnd.toString().length();
 		String generated = "";
@@ -136,7 +144,7 @@ public final class Utils {
 		//
 		BigDecimal outputRangeStart = new BigDecimal(rangeStart).setScale(scale, RoundingMode.FLOOR);
 		// Adds one to the output range to correct rounding
-		BigDecimal outputRangeEnd = new BigDecimal(rangeEnd).add(BigDecimal.ONE).setScale(scale, RoundingMode.FLOOR); 
+		BigDecimal outputRangeEnd = new BigDecimal(rangeEnd).add(BigDecimal.ONE).setScale(scale, RoundingMode.FLOOR);
 		// Calculates: (generated - inputRangeStart) / (inputRangeEnd - inputRangeStart)
 		// * (outputRangeEnd - outputRangeStart) + outputRangeStart
 		BigDecimal generatedValue = new BigDecimal(new BigInteger(generated)).setScale(scale, RoundingMode.FLOOR)
