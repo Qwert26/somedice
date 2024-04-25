@@ -3,7 +3,6 @@ package io.github.qwert26.somedice.mdg;
 import org.junit.jupiter.api.Test;
 
 import io.github.qwert26.somedice.*;
-import static org.junit.jupiter.api.Assumptions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
