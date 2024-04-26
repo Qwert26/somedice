@@ -75,6 +75,12 @@ public final class StringExporter {
 		builder.append(')');
 		return builder.toString();
 	}
+	
+	public static final String export(IndeterministicDiceGroup indeterministicGroup) {
+		StringBuilder builder = new StringBuilder("");
+		// TODO
+		return builder.toString();
+	}
 
 	public static final String export(SingleDie single) {
 		StringBuilder builder = new StringBuilder("d");

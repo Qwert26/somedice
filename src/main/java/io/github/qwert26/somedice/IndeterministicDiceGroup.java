@@ -36,6 +36,40 @@ public class IndeterministicDiceGroup implements IDie {
 	}
 
 	/**
+	 * This constructor blocks the use of using two unfair die for initialization.
+	 * 
+	 * @deprecated Use
+	 *             {@link #IndeterministicDiceGroup(UnfairDie, UnfairDie, boolean)}
+	 *             instead.
+	 * @throws IllegalArgumentException Always, as this constructor should not be
+	 *                                  used.
+	 * @param first  ignored
+	 * @param second ignored
+	 */
+	@Deprecated
+	public IndeterministicDiceGroup(UnfairDie first, UnfairDie second) throws Exception {
+		super();
+		throw new Exception("Paramater are ambigous!");
+	}
+
+	/**
+	 * 
+	 * @param first
+	 * @param second
+	 * @param useFirstAsBase
+	 */
+	public IndeterministicDiceGroup(UnfairDie first, UnfairDie second, boolean useFirstAsBase) {
+		super();
+		if (useFirstAsBase) {
+			setBaseDie(first);
+			setCountDistribution(second);
+		} else {
+			setBaseDie(second);
+			setCountDistribution(first);
+		}
+	}
+
+	/**
 	 * 
 	 * @param baseDie
 	 * @param countDistribution
