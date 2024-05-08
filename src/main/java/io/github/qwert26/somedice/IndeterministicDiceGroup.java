@@ -41,8 +41,7 @@ public class IndeterministicDiceGroup implements IDie {
 	 * @deprecated Use
 	 *             {@link #IndeterministicDiceGroup(UnfairDie, UnfairDie, boolean)}
 	 *             instead.
-	 * @throws IllegalArgumentException Always, as this constructor should not be
-	 *                                  used.
+	 * @throws Exception Always, as this constructor should not be used.
 	 * @param first  ignored
 	 * @param second ignored
 	 */
@@ -93,7 +92,7 @@ public class IndeterministicDiceGroup implements IDie {
 
 	/**
 	 * 
-	 * @return
+	 * @return The current base die.
 	 */
 	public final AbstractDie getBaseDie() {
 		return baseDie;
@@ -101,7 +100,7 @@ public class IndeterministicDiceGroup implements IDie {
 
 	/**
 	 * 
-	 * @param baseDie
+	 * @param baseDie The new base die.
 	 */
 	public final void setBaseDie(AbstractDie baseDie) {
 		this.baseDie = Objects.requireNonNull(baseDie, "A base die must be given!");
@@ -109,7 +108,7 @@ public class IndeterministicDiceGroup implements IDie {
 
 	/**
 	 * 
-	 * @return
+	 * @return The current distribution.
 	 */
 	public final UnfairDie getCountDistribution() {
 		return countDistribution;
@@ -117,7 +116,7 @@ public class IndeterministicDiceGroup implements IDie {
 
 	/**
 	 * 
-	 * @param countDistribution
+	 * @param countDistribution The new distribution.
 	 */
 	public final void setCountDistribution(UnfairDie countDistribution) {
 		this.countDistribution = Objects.requireNonNull(countDistribution,
@@ -126,7 +125,7 @@ public class IndeterministicDiceGroup implements IDie {
 
 	/**
 	 * 
-	 * @param countDistribution
+	 * @param countDistribution The new distribution.
 	 */
 	public final void setCountDistribution(Compressor countDistribution) {
 		this.countDistribution = Objects.requireNonNull(countDistribution, "A compressor must be given for conversion!")
