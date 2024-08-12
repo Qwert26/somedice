@@ -27,13 +27,13 @@ public abstract class TestHomogenousDiceGroup {
 
 	@Test
 	void disallowsZero() {
-		assertThrows(IllegalArgumentException.class, () -> new HomogenousDiceGroup(source, 0));
-		assertThrows(IllegalArgumentException.class, () -> new HomogenousDiceGroup(0, source));
+		assertThrows(IllegalArgumentException.class, () -> new HomogeneousDiceGroup(source, 0));
+		assertThrows(IllegalArgumentException.class, () -> new HomogeneousDiceGroup(0, source));
 	}
 
 	@Test
 	void keepsDieValue() {
-		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(source);
 		assumeTrue(source.equals(underTest.getBaseDie()));
 		assertThrows(NullPointerException.class, () -> underTest.setBaseDie(null));
 		assertEquals(source, underTest.getBaseDie());
@@ -42,7 +42,7 @@ public abstract class TestHomogenousDiceGroup {
 	@Test
 	void keepsDieCount() {
 		final int count = 2;
-		HomogenousDiceGroup underTest = new HomogenousDiceGroup(count, source);
+		HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(count, source);
 		assumeTrue(count == underTest.getCount());
 		assertThrows(IllegalArgumentException.class, () -> underTest.setCount(0));
 		assertEquals(count, underTest.getCount());
@@ -50,7 +50,7 @@ public abstract class TestHomogenousDiceGroup {
 
 	@Test
 	void toStringContainsDie() {
-		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(source);
 		String result = assertDoesNotThrow(() -> underTest.toString());
 		assertNotNull(result);
 		assertTrue(result.contains(source.toString()));
@@ -58,33 +58,33 @@ public abstract class TestHomogenousDiceGroup {
 
 	@Test
 	void hashcodeDoesNotThrow() {
-		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(source);
 		assertDoesNotThrow(() -> underTest.hashCode());
 	}
 
 	@Test
 	void equalsItselfIsTrue() {
-		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(source);
 		assertTrue(underTest.equals(underTest));
 	}
 
 	@Test
 	void equalsNullIsFalse() {
-		HomogenousDiceGroup underTest = new HomogenousDiceGroup(source);
+		HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(source);
 		assertFalse(underTest.equals(null));
 	}
 
 	@Test
 	void equalsDifferentCountsIsFalse() {
-		HomogenousDiceGroup first = new HomogenousDiceGroup(source, 1);
-		HomogenousDiceGroup second = new HomogenousDiceGroup(source, 2);
+		HomogeneousDiceGroup first = new HomogeneousDiceGroup(source, 1);
+		HomogeneousDiceGroup second = new HomogeneousDiceGroup(source, 2);
 		assertFalse(first.equals(second));
 	}
 
 	@Test
 	void equalsAllMatchIsTrue() {
-		HomogenousDiceGroup first = new HomogenousDiceGroup(source, 3);
-		HomogenousDiceGroup second = new HomogenousDiceGroup(source, 3);
+		HomogeneousDiceGroup first = new HomogeneousDiceGroup(source, 3);
+		HomogeneousDiceGroup second = new HomogeneousDiceGroup(source, 3);
 		assertTrue(first.equals(second));
 	}
 
@@ -93,14 +93,14 @@ public abstract class TestHomogenousDiceGroup {
 	public class Frequencies {
 		@Test
 		void identity() {
-			HomogenousDiceGroup underTest = new HomogenousDiceGroup(source, 1);
+			HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(source, 1);
 			assertEquals(source.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
 		}
 
 		@ParameterizedTest
 		@ValueSource(ints = { 2, 3, 4, 5, 6 })
 		void checkValueCounts(final int count) {
-			HomogenousDiceGroup underTest = new HomogenousDiceGroup(source, count);
+			HomogeneousDiceGroup underTest = new HomogeneousDiceGroup(source, count);
 			Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
 			for (Map.Entry<Map<Integer, Integer>, BigInteger> entry : result.entrySet()) {
 				int total = 0;

@@ -4,13 +4,16 @@ import java.math.BigInteger;
 import java.util.*;
 
 /**
- * A homogenous dice group consist of dice of a single type. For mixed dice
- * groups, use {@link MixedDiceGroup}.
+ * A homogeneous dice group consist of dice of a single type. For mixed dice
+ * groups, use {@link MixedDiceGroup}. For a dice group, where the amount of
+ * rolled dice depends on another dice roll, take a look at
+ * {@link IndeterministicDiceGroup}.
  * 
  * @author Qwert26
  * @see MixedDiceGroup
+ * @see IndeterministicDiceGroup
  */
-public class HomogenousDiceGroup implements IDie {
+public class HomogeneousDiceGroup implements IDie {
 	/**
 	 * The base die this group consists of: It will be virtually replicated as
 	 * indicated by {@link #count}.
@@ -29,7 +32,7 @@ public class HomogenousDiceGroup implements IDie {
 	 * @param baseDie The dice to use, it is not replicated.
 	 * @throws NullPointerException If the base die is <code>null</code>.
 	 */
-	public HomogenousDiceGroup(AbstractDie baseDie) {
+	public HomogeneousDiceGroup(AbstractDie baseDie) {
 		this(baseDie, 1);
 	}
 
@@ -42,7 +45,7 @@ public class HomogenousDiceGroup implements IDie {
 	 * @throws NullPointerException     If the base die is <code>null</code>.
 	 * @throws IllegalArgumentException If the amount is not positive.
 	 */
-	public HomogenousDiceGroup(AbstractDie baseDie, int count) {
+	public HomogeneousDiceGroup(AbstractDie baseDie, int count) {
 		setBaseDie(baseDie);
 		setCount(count);
 	}
@@ -56,7 +59,7 @@ public class HomogenousDiceGroup implements IDie {
 	 * @throws NullPointerException     If the base die is <code>null</code>.
 	 * @throws IllegalArgumentException If the amount is not positive.
 	 */
-	public HomogenousDiceGroup(int count, AbstractDie baseDie) {
+	public HomogeneousDiceGroup(int count, AbstractDie baseDie) {
 		setBaseDie(baseDie);
 		setCount(count);
 	}
@@ -132,10 +135,10 @@ public class HomogenousDiceGroup implements IDie {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof HomogenousDiceGroup)) {
+		if (!(obj instanceof HomogeneousDiceGroup)) {
 			return false;
 		}
-		HomogenousDiceGroup other = (HomogenousDiceGroup) obj;
+		HomogeneousDiceGroup other = (HomogeneousDiceGroup) obj;
 		if (!baseDie.equals(other.baseDie)) {
 			return false;
 		}
@@ -183,7 +186,7 @@ public class HomogenousDiceGroup implements IDie {
 				indexGroups[subIndex]++;
 			}
 			nextValue = nextValue.multiply(Utils.multinomialComplete(count, indexGroups));
-			ret.put(nextKey, nextValue);
+			ret.put(nextKey, nextValue); // Actually, this is bad practice, but we never modify the key afterwards, so this is OK.
 			do {
 				indices[masterIndex]++;
 				if (indices[masterIndex] == primitiveKeys.length) {

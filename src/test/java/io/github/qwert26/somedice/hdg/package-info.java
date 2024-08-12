@@ -1,6 +1,6 @@
 /**
  * Contains tests relating to the
- * {@link io.github.qwert26.somedice.HomogenousDiceGroup}.
+ * {@link io.github.qwert26.somedice.HomogeneousDiceGroup}.
  * 
  * @author Qwert26
  */

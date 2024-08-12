@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Keeps dice from a dice roll. It can keep any number of low and high rolls, as
  * long as there is no overlap between the two. For dropping values instead, use
- * the <code>DiceDropper</code>.
+ * the {@link DiceDropper}.
  * 
  * @author Qwert26
  * @see DiceDropper

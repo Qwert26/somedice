@@ -8,6 +8,8 @@ import java.util.*;
  * rolled depends on another dice roll.
  * 
  * @author <b>Qwert26</b>, Main author
+ * @see MixedDiceGroup
+ * @see HomogeneousDiceGroup
  */
 public class IndeterministicDiceGroup implements IDie {
 	private AbstractDie baseDie;
@@ -52,10 +54,14 @@ public class IndeterministicDiceGroup implements IDie {
 	}
 
 	/**
+	 * This constructor allows the use of two unfair die, because of the boolean
+	 * flag telling it which one is the base die.
 	 * 
 	 * @param first
 	 * @param second
-	 * @param useFirstAsBase
+	 * @param useFirstAsBase If set to {@code true}, the parameter {@code first}
+	 *                       will be used as the base. Otherwise, it will be
+	 *                       {@code second}.
 	 */
 	public IndeterministicDiceGroup(UnfairDie first, UnfairDie second, boolean useFirstAsBase) {
 		super();
@@ -143,7 +149,9 @@ public class IndeterministicDiceGroup implements IDie {
 			final int value = valueCount.getKey();
 			final BigInteger factor = valueCount.getValue();
 			if (value != 0) {
-				HomogenousDiceGroup temp = new HomogenousDiceGroup(baseDie, Math.absExact(value));
+				HomogeneousDiceGroup temp = new HomogeneousDiceGroup(baseDie, Math.absExact(value));
+				// The next line is problematic, as there might be different kind of maps but
+				// having the same content!
 				temp.getAbsoluteFrequencies().forEach((composition, count) -> {
 					ret.compute(composition, (k, v) -> {
 						return count.multiply(factor).add(v == null ? BigInteger.ZERO : v);

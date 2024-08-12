@@ -16,7 +16,7 @@ public final class StringExporter {
 		case DiceDropper dropper -> export(dropper);
 		case DiceKeeper keeper -> export(keeper);
 		case FudgeDie fudge -> export(fudge);
-		case HomogenousDiceGroup hdg -> export(hdg);
+		case HomogeneousDiceGroup hdg -> export(hdg);
 		case MixedDiceGroup mdg -> export(mdg);
 		case RangeDie range -> export(range);
 		case SingleDie single -> export(single);
@@ -56,7 +56,7 @@ public final class StringExporter {
 		return "dF";
 	}
 
-	public static final String export(HomogenousDiceGroup homogenousDice) {
+	public static final String export(HomogeneousDiceGroup homogenousDice) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(homogenousDice.getCount());
 		builder.append(export(homogenousDice.getBaseDie()));

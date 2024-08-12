@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Drops dice from a roll. It can drop any number of low and high rolls, as long
  * as there are dice still left over to create a frequency mapping. For keeping
- * dice instead, use the <code>DiceKeeper</code>.
+ * dice instead, use the {@link DiceKeeper}.
  * 
  * @author Qwert26
  * @see DiceKeeper

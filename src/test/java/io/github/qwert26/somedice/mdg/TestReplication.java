@@ -14,7 +14,7 @@ public class TestReplication extends TestMixedDiceGroup {
 	@CartesianTest
 	@CartesianTest.MethodFactory("io.github.qwert26.somedice.idg.TestReplication#diceAndCounts")
 	void sameAsHDG(AbstractDie baseDie, int count) {
-		HomogenousDiceGroup expected = new HomogenousDiceGroup(baseDie, count);
+		HomogeneousDiceGroup expected = new HomogeneousDiceGroup(baseDie, count);
 		AbstractDie[] sources = new AbstractDie[count];
 		Arrays.fill(sources, baseDie);
 		MixedDiceGroup actual = new MixedDiceGroup(sources);

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests the {@link IndeterministicDiceGroup} to be able to replicate a
- * {@link HomogenousDiceGroup} or a {@link MixedDiceGroup}.
+ * {@link HomogeneousDiceGroup} or a {@link MixedDiceGroup}.
  */
 @DisplayName("TestIDGReplicatesOtherDiceGroups")
 public class TestReplication extends TestIndeterministicDiceGroup {
@@ -33,7 +33,7 @@ public class TestReplication extends TestIndeterministicDiceGroup {
 	@CartesianTest
 	@CartesianTest.MethodFactory("diceAndCounts")
 	void sameAsHDG(AbstractDie baseDie, int count) {
-		HomogenousDiceGroup expected = new HomogenousDiceGroup(baseDie, count);
+		HomogeneousDiceGroup expected = new HomogeneousDiceGroup(baseDie, count);
 		IndeterministicDiceGroup actual = new IndeterministicDiceGroup(createMonoDice(count), baseDie);
 		assertEquals(expected.getAbsoluteFrequencies(), actual.getAbsoluteFrequencies());
 	}
