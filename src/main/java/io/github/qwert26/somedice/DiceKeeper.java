@@ -183,6 +183,7 @@ public class DiceKeeper implements IDie {
 		Map<Map<Integer, Integer>, BigInteger> result = source.getAbsoluteFrequencies();
 		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<>(result.size(), 1.0f);
 		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : result.entrySet()) {
+			// It is important, that we clone the mapping here!
 			TreeMap<Integer, Integer> keySource = new TreeMap<>(resultEntry.getKey());
 			TreeMap<Integer, Integer> nextKey = new TreeMap<>();
 			int keep = 0;

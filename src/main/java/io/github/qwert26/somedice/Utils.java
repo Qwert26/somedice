@@ -29,10 +29,11 @@ public final class Utils {
 		if (total < 0) {
 			throw new IllegalArgumentException("Total can not be negative!");
 		}
-		if (IntStream.of(individuals).sum() > total) {
+		final int sum = IntStream.of(individuals).sum();
+		if (sum > total) {
 			throw new IllegalArgumentException("Too many individual groups!");
 		}
-		if (IntStream.of(individuals).sum() < total) {
+		if (sum < total) {
 			throw new IllegalArgumentException("Not enough individual groups!");
 		}
 		BigInteger ret = BigInteger.ONE;
@@ -58,7 +59,8 @@ public final class Utils {
 		if (total < 0) {
 			throw new IllegalArgumentException("Total can not be negative!");
 		}
-		if (IntStream.of(individuals).sum() > total) {
+		final int sum = IntStream.of(individuals).sum();
+		if (sum > total) {
 			throw new IllegalArgumentException("Too many individual groups!");
 		}
 		BigInteger ret = BigInteger.ONE;
@@ -129,6 +131,7 @@ public final class Utils {
 	 * @param rangeStart the smallest value to return, inclusive.
 	 * @param rangeEnd   the biggest value to return, also inclusive.
 	 * @param rand       the source of randomness.
+	 * @implNote The generated values may not be entirely uniform.
 	 * @return
 	 */
 	public final static BigInteger RandomBigInteger(BigInteger rangeStart, BigInteger rangeEnd, Random rand) {

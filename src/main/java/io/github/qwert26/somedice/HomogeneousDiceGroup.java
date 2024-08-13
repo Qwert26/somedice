@@ -149,7 +149,8 @@ public class HomogeneousDiceGroup implements IDie {
 	}
 
 	/**
-	 * 
+	 * @implNote Each valid map-key gets produced exactly once and is placed
+	 *           immediately with its final value in the returned map.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
@@ -186,7 +187,8 @@ public class HomogeneousDiceGroup implements IDie {
 				indexGroups[subIndex]++;
 			}
 			nextValue = nextValue.multiply(Utils.multinomialComplete(count, indexGroups));
-			ret.put(nextKey, nextValue); // Actually, this is bad practice, but we never modify the key afterwards, so this is OK.
+			ret.put(nextKey, nextValue); // Actually, this is bad practice, but we never modify the key afterwards, so
+											// this is OK.
 			do {
 				indices[masterIndex]++;
 				if (indices[masterIndex] == primitiveKeys.length) {

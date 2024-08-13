@@ -25,13 +25,17 @@ public final class UnfairDie extends AbstractDie {
 	}
 
 	/**
-	 * 
+	 * @implSpec Returns the actual object, as {@code UnfairDie} are expected to
+	 *           operate via side-effects.
 	 * @return The internal mapping of distinct values to absolute frequencies.
 	 */
 	public final Map<Integer, BigInteger> getData() {
 		return data;
 	}
 
+	/**
+	 * @implNote Uses singleton-maps as its keys, as those are unmodifiable.
+	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(data.size(), 1.0f);

@@ -270,6 +270,8 @@ public final class Compressor implements IDie {
 	 * Compresses the source down into a single value. All entries in the returned
 	 * map will look like this: <code>{{X=1}=Y}</code>. <code>X</code> is the
 	 * compressed value and <code>Y</code> is the total frequency of said result.
+	 * 
+	 * @implNote Uses singleton-maps as its keys, as those are unmodifiable.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {

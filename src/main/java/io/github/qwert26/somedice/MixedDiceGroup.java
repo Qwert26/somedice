@@ -11,7 +11,7 @@ import java.util.*;
  * <p>
  * Being unable to change the used sources after instance creation is a design
  * choice: It prevents the accidental creation of an endless loop, which can
- * cause a {@link StackOverflowError}.
+ * cause a {@link StackOverflowError} or a {@link OutOfMemoryError}.
  * </p>
  * 
  * @author Qwert26
@@ -53,7 +53,7 @@ public class MixedDiceGroup implements IDie {
 	/**
 	 * 
 	 * @return A copy of the internal sources, changes made to the array do not
-	 *         reflect in an instance.
+	 *         reflect in the instance.
 	 */
 	public IDie[] getSources() {
 		return Arrays.copyOf(sources, sources.length);
@@ -104,6 +104,9 @@ public class MixedDiceGroup implements IDie {
 	 * Computes the effective Cartesian product of its input sources. That is the
 	 * reason why for a single type of die, the {@link HomogeneousDiceGroup} is
 	 * better suited, as it can make use of mathematics to compute all variations.
+	 * 
+	 * @implNote The same key can get generated multiple times, but it is never
+	 *           modified after it is put in the returned map.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
@@ -128,7 +131,8 @@ public class MixedDiceGroup implements IDie {
 				}
 				nextValue = nextValue.multiply(currentEntry.getValue());
 			}
-			// The next line is problematic, but after merging, we do not modify it further and instead create a new key.
+			// The next line is problematic, but after merging, we do not modify it further
+			// and instead create a new key.
 			ret.merge(nextKey, nextValue, (oldV, newV) -> oldV.add(newV));
 			do {
 				indices[masterIndex]++;

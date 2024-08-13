@@ -84,13 +84,13 @@ public final class MapComparators {
 			if (diff != 0) {
 				return diff;
 			}
-			if (o1.isEmpty()/* o2 would be also empty. */) {
-				return 0;
+			if (o1.isEmpty()) {
+				return 0; // o2 is also empty.
 			}
 			// At this point there is at least one key in each map.
-			/** These two hold the smallest key NOT in the other map. */
+			// These two hold the smallest key NOT in the other map.
 			int minKey1 = Integer.MAX_VALUE, minKey2 = Integer.MAX_VALUE;
-			// They keys can be in ANY order!
+			// The keys can be in ANY order!
 			for (Integer key1 : o1.keySet()) {
 				if (!o2.containsKey(key1)) {
 					minKey1 = Math.min(minKey1, key1);
@@ -117,6 +117,7 @@ public final class MapComparators {
 					diff = lastDiff;
 				}
 			}
+			// If diff did not update during the loop, it is still zero.
 			return diff;
 		}
 	};

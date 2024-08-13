@@ -127,6 +127,7 @@ public class DiceDropper implements IDie {
 		Map<Map<Integer, Integer>, BigInteger> base = source.getAbsoluteFrequencies();
 		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(base.size(), 1.0f);
 		for (Map.Entry<Map<Integer, Integer>, BigInteger> entry : base.entrySet()) {
+			// It is important that we clone the mapping here!
 			TreeMap<Integer, Integer> nextKey = new TreeMap<Integer, Integer>(entry.getKey());
 			int drop;
 			for (drop = dropLowest; drop > 0; drop--) {

@@ -23,6 +23,7 @@ public final class RangeDie extends AbstractDie {
 	private int step;
 
 	/**
+	 * Creates a new {@code RangeDie}.
 	 * 
 	 * @param start The start value, it is inclusive
 	 * @param end   The end value, it is exclusive.
@@ -35,6 +36,7 @@ public final class RangeDie extends AbstractDie {
 	}
 
 	/**
+	 * Creates a new {@code RangeDie}.
 	 * 
 	 * @param start The start value, it is inclusive
 	 * @param end   The end value, it is exclusive.
@@ -126,7 +128,7 @@ public final class RangeDie extends AbstractDie {
 	}
 
 	/**
-	 * 
+	 * @implNote Uses singleton-maps as its keys, as those are unmodifiable.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {

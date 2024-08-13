@@ -154,6 +154,8 @@ public final class SingleDie extends AbstractDie {
 	 * All entries in the returned map have the form <code>{{X=1}=1}</code>, where X
 	 * is a number from the allowed range, specified by {@link #startAt0} and
 	 * {@link #maximum}.
+	 * 
+	 * @implNote Uses singleton-maps as its keys, as those are unmodifiable.
 	 */
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		HashMap<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(maximum, 1.0f);

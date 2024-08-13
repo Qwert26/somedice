@@ -30,6 +30,8 @@ public final class FudgeDie extends AbstractDie {
 	 * <li><code>{{0=1}=1}</code></li>
 	 * <li><code>{{1=1}=1}</code></li>
 	 * </ul>
+	 * 
+	 * @implNote Uses singleton-maps as its keys, as those are unmodifiable.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
