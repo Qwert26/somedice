@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 /**
  * 
  */
-public class TestNaturalTreemapIntIntComparator {
+public class TestNaturalMapIntIntComparator {
 	/**
 	 * 
 	 */
@@ -21,10 +21,10 @@ public class TestNaturalTreemapIntIntComparator {
 		small.put(0, 0);
 		big.put(1, 1);
 		big.put(2, 2);
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(small, big));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(small, big));
 		assertTrue(result < 0);
 		// Swap the arguments;
-		result = MapComparators.NATURAL_TREEMAP_INT_INT.compare(big, small);
+		result = MapComparators.NATURAL_MAP_INT_INT.compare(big, small);
 		assertTrue(result > 0);
 	}
 
@@ -34,7 +34,7 @@ public class TestNaturalTreemapIntIntComparator {
 	@Test
 	public void testSameMap() {
 		TreeMap<Integer, Integer> single = new TreeMap<Integer, Integer>();
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(single, single));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(single, single));
 		assertEquals(0, result, "Expected a zero, as a Map is always equal to itself.");
 	}
 
@@ -50,10 +50,10 @@ public class TestNaturalTreemapIntIntComparator {
 		second.put(3, 3);
 		assumeTrue(first != second);
 		assumeTrue(first.equals(second));
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(first, second));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(first, second));
 		assertEquals(0, result);
 		// Swap the arguments
-		result = MapComparators.NATURAL_TREEMAP_INT_INT.compare(second, first);
+		result = MapComparators.NATURAL_MAP_INT_INT.compare(second, first);
 		assertEquals(0, result);
 	}
 
@@ -67,10 +67,10 @@ public class TestNaturalTreemapIntIntComparator {
 		big = new TreeMap<Integer, Integer>();
 		small.put(4, 4);
 		big.put(5, 5);
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(small, big));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(small, big));
 		assertTrue(result < 0);
 		// Swap the arguments
-		result = MapComparators.NATURAL_TREEMAP_INT_INT.compare(big, small);
+		result = MapComparators.NATURAL_MAP_INT_INT.compare(big, small);
 		assertTrue(result > 0);
 	}
 
@@ -86,10 +86,10 @@ public class TestNaturalTreemapIntIntComparator {
 		small.put(7, 7);
 		big.put(6, 6);
 		big.put(8, 8);
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(small, big));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(small, big));
 		assertTrue(result < 0);
 		// Swap the arguments
-		result = MapComparators.NATURAL_TREEMAP_INT_INT.compare(big, small);
+		result = MapComparators.NATURAL_MAP_INT_INT.compare(big, small);
 		assertTrue(result > 0);
 	}
 
@@ -103,10 +103,10 @@ public class TestNaturalTreemapIntIntComparator {
 		big = new TreeMap<Integer, Integer>();
 		small.put(9, 9);
 		big.put(9, 99);
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(small, big));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(small, big));
 		assertTrue(result < 0);
 		// Swap the arguments
-		result = MapComparators.NATURAL_TREEMAP_INT_INT.compare(big, small);
+		result = MapComparators.NATURAL_MAP_INT_INT.compare(big, small);
 		assertTrue(result > 0);
 	}
 
@@ -118,7 +118,7 @@ public class TestNaturalTreemapIntIntComparator {
 		TreeMap<Integer, Integer> empty1, empty2;
 		empty1 = new TreeMap<Integer, Integer>();
 		empty2 = new TreeMap<Integer, Integer>();
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(empty1, empty2));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(empty1, empty2));
 		assertTrue(result == 0);
 	}
 
@@ -131,10 +131,10 @@ public class TestNaturalTreemapIntIntComparator {
 		empty = new TreeMap<Integer, Integer>();
 		full = new TreeMap<Integer, Integer>();
 		full.put(10, 10);
-		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(empty, full));
+		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_MAP_INT_INT.compare(empty, full));
 		assertTrue(result < 0);
 		// Swap the arguments
-		result = MapComparators.NATURAL_TREEMAP_INT_INT.compare(full, empty);
+		result = MapComparators.NATURAL_MAP_INT_INT.compare(full, empty);
 		assertTrue(result > 0);
 	}
 }

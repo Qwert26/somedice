@@ -20,8 +20,8 @@ public final class MapComparators {
 	 * <li>If the maps have different sizes, the smaller one comes first.</li>
 	 * <li>If a map has a key, that the other one does not, the map with the smaller
 	 * key comes first.</li>
-	 * <li>If both maps have the key, the one with the smaller associated value
-	 * comes first.</li>
+	 * <li>If both maps have the same keys, the smallest one with a difference comes
+	 * first.</li>
 	 * </ol>
 	 * If everything runs through, the two tree-maps are considered identical.
 	 * 
@@ -37,7 +37,7 @@ public final class MapComparators {
 			// The keys are in ascending order!
 			for (Integer key : o1.keySet()) {
 				if (!o2.containsKey(key)) {
-					Integer floor = o2.floorKey(key); // DO NOT use auto-unboxing: There might be no key.
+					Integer floor = o2.floorKey(key); // DO NOT use auto-unboxing: There might be no key (null-value).
 					if (floor == null) {
 						return -1;
 					} else if (o1.containsKey(floor)) {
@@ -58,20 +58,25 @@ public final class MapComparators {
 		}
 	};
 	/**
-	 * Sorts generic map in a string-like fashion:
+	 * <p>
+	 * Sorts generic maps in a string-like fashion:
 	 * <ol>
 	 * <li>If the maps have different sizes, the smaller one comes first.</li>
 	 * <li>If a map has a key, that the other one does not, the map with the smaller
-	 * key comes first.</li>
-	 * <li>If both maps have the key, the one with the smaller associated value
-	 * comes first.</li>
+	 * missing key comes first.</li>
+	 * <li>If both maps have the same keys, the smallest one with a difference comes
+	 * first.</li>
 	 * </ol>
 	 * If everything runs through, the two maps are considered identical.
+	 * </p>
+	 * <p>
+	 * If the maps to be compared are only {@link TreeMap}s, consider using
+	 * {@link #NATURAL_TREEMAP_INT_INT} instead, as it can make use of the strict
+	 * ordering of keys, as well as some of the extra methods.
+	 * </p>
 	 * 
 	 * @author Qwert26
-	 * @deprecated Currently violates the last point.
 	 */
-	@Deprecated
 	public static final Comparator<Map<Integer, Integer>> NATURAL_MAP_INT_INT = new Comparator<Map<Integer, Integer>>() {
 		@Override
 		public int compare(Map<Integer, Integer> o1, Map<Integer, Integer> o2) {
@@ -79,7 +84,11 @@ public final class MapComparators {
 			if (diff != 0) {
 				return diff;
 			}
-			// These two hold the smallest key NOT in the other map.
+			if (o1.isEmpty()/* o2 would be also empty. */) {
+				return 0;
+			}
+			// At this point there is at least one key in each map.
+			/** These two hold the smallest key NOT in the other map. */
 			int minKey1 = Integer.MAX_VALUE, minKey2 = Integer.MAX_VALUE;
 			// They keys can be in ANY order!
 			for (Integer key1 : o1.keySet()) {
@@ -98,8 +107,17 @@ public final class MapComparators {
 				return diff;
 			}
 			// At this point, both maps have the same keys.
-			// TODO: How to deal with uncertainty of order?
-			return 0;
+			int smallestKeyWithDiff = Integer.MAX_VALUE;
+			int lastDiff;
+			for (Integer key : o1.keySet()) { // Don't auto-unbox, as we would need to box it again for the next
+												// methods.
+				lastDiff = o1.get(key) - o2.get(key);
+				if (lastDiff != 0 && key < smallestKeyWithDiff) {
+					smallestKeyWithDiff = key;
+					diff = lastDiff;
+				}
+			}
+			return diff;
 		}
 	};
 }
