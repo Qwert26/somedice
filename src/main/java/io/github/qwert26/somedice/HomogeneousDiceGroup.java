@@ -149,6 +149,9 @@ public class HomogeneousDiceGroup implements IDie {
 	}
 
 	/**
+	 * Produces a "multi-nomial" distribution of rolled dice.
+	 * 
+	 * @see Utils#multinomialComplete(int, int...)
 	 * @implNote Each valid map-key gets produced exactly once and is placed
 	 *           immediately with its final value in the returned map.
 	 */
@@ -187,8 +190,9 @@ public class HomogeneousDiceGroup implements IDie {
 				indexGroups[subIndex]++;
 			}
 			nextValue = nextValue.multiply(Utils.multinomialComplete(count, indexGroups));
-			ret.put(nextKey, nextValue); // Actually, this is bad practice, but we never modify the key afterwards, so
-											// this is OK.
+			// Actually, this is bad practice and dangerous, but we never modify the key
+			// afterwards, so this is OK.
+			ret.put(nextKey, nextValue);
 			do {
 				indices[masterIndex]++;
 				if (indices[masterIndex] == primitiveKeys.length) {

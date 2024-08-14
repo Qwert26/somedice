@@ -40,12 +40,14 @@ public class DiceKeeper implements IDie {
 	}
 
 	/**
+	 * Creates a new {@code DiceKeeper}, which is already configured.
 	 * 
-	 * @param source
-	 * @param keepLowest
-	 * @param keepHighest
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
+	 * @param source      The source to keep dice rolls from, must be not null.
+	 * @param keepLowest  The amount of low rolls to keep.
+	 * @param keepHighest The amount of high rolls to keep.
+	 * @throws NullPointerException     If the given source is null.
+	 * @throws IllegalArgumentException If either {@code keepLowest} or
+	 *                                  {@code keepHighest} is negative.
 	 */
 	public DiceKeeper(IDie source, int keepLowest, int keepHighest) {
 		this.source = Objects.requireNonNull(source, "A source must be given!");
@@ -54,12 +56,14 @@ public class DiceKeeper implements IDie {
 	}
 
 	/**
+	 * Creates a new {@code DiceKeeper}, which is already configured.
 	 * 
-	 * @param keepLowest
-	 * @param keepHighest
-	 * @param source
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
+	 * @param keepLowest  The amount of low rolls to keep.
+	 * @param keepHighest The amount of high rolls to keep.
+	 * @param source      The source to keep dice rolls from, must be not null.
+	 * @throws NullPointerException     If the given source is null.
+	 * @throws IllegalArgumentException If either {@code keepLowest} or
+	 *                                  {@code keepHighest} is negative.
 	 */
 	public DiceKeeper(int keepLowest, int keepHighest, IDie source) {
 		this.source = Objects.requireNonNull(source, "A source must be given!");

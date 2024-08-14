@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
+ * Contains various utility methods, mostly math-related.
+ * 
  * @author Qwert26
  */
 public final class Utils {
@@ -13,17 +15,19 @@ public final class Utils {
 	 */
 	private Utils() {
 		super();
+		throw new UnsupportedOperationException("Not allowed!");
 	}
 
 	/**
 	 * Computes the multinomial coefficient with the assumption, that all items are
 	 * in groups.
 	 * 
-	 * @param total
-	 * @param individuals
+	 * @param total       The expected sum of individual group sizes.
+	 * @param individuals Each value in this variable argument array represent a
+	 *                    single group with a certain size.
 	 * @throws IllegalArgumentException If the sum of the individual group sizes is
 	 *                                  not equal to the total count.
-	 * @return
+	 * @return The total amount of arrangements.
 	 */
 	public static final BigInteger multinomialComplete(int total, int... individuals) {
 		if (total < 0) {
@@ -49,11 +53,12 @@ public final class Utils {
 	 * items can be sprinkled in in any order between the groups of identical
 	 * elements.
 	 * 
-	 * @param total
-	 * @param individuals
+	 * @param total       The expected sum of individual group sizes.
+	 * @param individuals Each value in this variable argument array represent a
+	 *                    single group with a certain size.
 	 * @throws IllegalArgumentException If the sum of the individual group sizes is
 	 *                                  greater than the total count.
-	 * @return
+	 * @return The total amount of arrangements.
 	 */
 	public static final BigInteger multinomialIncomplete(int total, int... individuals) {
 		if (total < 0) {
@@ -76,7 +81,9 @@ public final class Utils {
 	 * 
 	 * @param n
 	 * @throws IllegalArgumentException If {@code n} is negative.
-	 * @return
+	 * @return {@code 1} if {@code n} is zero or one. {@code n!} for any other value
+	 *         greater than one.
+	 * @implSpec Iterative implementation.
 	 */
 	public static final BigInteger factorial(int n) {
 		if (n < 0) {
@@ -127,11 +134,13 @@ public final class Utils {
 	}
 
 	/**
-	 * 
+	 * @see <a href="https://stackoverflow.com/a/70607245">The answer to the
+	 *      question of generating random BigIntegers</a>
 	 * @param rangeStart the smallest value to return, inclusive.
 	 * @param rangeEnd   the biggest value to return, also inclusive.
 	 * @param rand       the source of randomness.
 	 * @implNote The generated values may not be entirely uniform.
+	 * @author Panibo on StackOverflow
 	 * @return
 	 */
 	public final static BigInteger RandomBigInteger(BigInteger rangeStart, BigInteger rangeEnd, Random rand) {

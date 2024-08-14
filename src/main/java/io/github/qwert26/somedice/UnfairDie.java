@@ -25,6 +25,45 @@ public final class UnfairDie extends AbstractDie {
 	}
 
 	/**
+	 * Creates a new {@code UnfairDie}, filled with data matching another already
+	 * made Die.
+	 * 
+	 * @param source The die to copy from, if it is {@code null}, data must be given
+	 *               "manually".
+	 */
+	public UnfairDie(AbstractDie source) {
+		this();
+		if (source != null) {
+			switch (source) {
+			case UnfairDie ud -> {
+				data.putAll(ud.data);
+			}
+			case SingleDie sd -> {
+				for (int i = 1; i < sd.getMaximum(); i++) {
+					data.put(i, BigInteger.ONE);
+				}
+				if (sd.isStartAt0()) {
+					data.put(0, BigInteger.ONE);
+				} else {
+					data.put(sd.getMaximum(), BigInteger.ONE);
+				}
+			}
+			case RangeDie rd -> {
+				for (int value = rd.getStart(); value < rd.getEnd(); value += rd.getStep()) {
+					data.put(value, BigInteger.ONE);
+				}
+			}
+			case FudgeDie fd -> {
+				data.put(-1, BigInteger.ONE);
+				data.put(0, BigInteger.ONE);
+				data.put(1, BigInteger.ONE);
+			}
+			default -> throw new IllegalArgumentException("Unexpected value: " + source);
+			}
+		}
+	}
+
+	/**
 	 * @implSpec Returns the actual object, as {@code UnfairDie} are expected to
 	 *           operate via side-effects.
 	 * @return The internal mapping of distinct values to absolute frequencies.

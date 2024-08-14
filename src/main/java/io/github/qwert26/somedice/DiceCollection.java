@@ -29,9 +29,10 @@ public final class DiceCollection {
 	}
 
 	/**
-	 * 
+	 * No instances allowed.
 	 */
 	private DiceCollection() {
 		super();
+		throw new UnsupportedOperationException("No instances!");
 	}
 }

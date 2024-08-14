@@ -16,6 +16,7 @@ public class IndeterministicDiceGroup implements IDie {
 	private UnfairDie countDistribution;
 
 	/**
+	 * Creates a new {@code IndeterministicDiceGroup}.
 	 * 
 	 * @param baseDie
 	 * @param countDistribution
@@ -27,6 +28,7 @@ public class IndeterministicDiceGroup implements IDie {
 	}
 
 	/**
+	 * Creates a new {@code IndeterministicDiceGroup}.
 	 * 
 	 * @param countDistribution
 	 * @param baseDie
@@ -39,6 +41,7 @@ public class IndeterministicDiceGroup implements IDie {
 
 	/**
 	 * This constructor blocks the use of using two unfair die for initialization.
+	 * It must be public because otherwise the compiler will ignore it.
 	 * 
 	 * @deprecated Use
 	 *             {@link #IndeterministicDiceGroup(UnfairDie, UnfairDie, boolean)}
@@ -75,6 +78,7 @@ public class IndeterministicDiceGroup implements IDie {
 	}
 
 	/**
+	 * Creates a new {@code IndeterministicDiceGroup}.
 	 * 
 	 * @param baseDie
 	 * @param countDistribution
@@ -86,6 +90,7 @@ public class IndeterministicDiceGroup implements IDie {
 	}
 
 	/**
+	 * Creates a new {@code IndeterministicDiceGroup}.
 	 * 
 	 * @param countDistribution
 	 * @param baseDie

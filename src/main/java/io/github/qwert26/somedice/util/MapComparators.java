@@ -4,6 +4,8 @@ import java.util.*;
 
 /**
  * Contains various comparators for comparing maps.
+ * 
+ * @author Qwert26
  */
 public final class MapComparators {
 
