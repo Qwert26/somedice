@@ -134,6 +134,10 @@ public final class Utils {
 	}
 
 	/**
+	 * Creates a new random {@code BigInteger} having a value from the interval
+	 * {@code [rangeStart; rangeEnd]}. It uses the given random-instance to make its
+	 * results repeatable.
+	 * 
 	 * @see <a href="https://stackoverflow.com/a/70607245">The answer to the
 	 *      question of generating random BigIntegers</a>
 	 * @param rangeStart the smallest value to return, inclusive.

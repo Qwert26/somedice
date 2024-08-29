@@ -199,6 +199,7 @@ public class DiceKeeper implements IDie {
 				}
 				nextKey.put(lastEntry.getKey(), Math.min(keep, lastEntry.getValue()));
 				keySource.compute(lastEntry.getKey(), (k, v) -> toBeRemoved >= v ? null : (v - toBeRemoved));
+				// The entry is needed, so this can not be put in the for-header.
 				keep -= Math.min(lastEntry.getValue(), keep);
 			}
 			for (keep = keepLowest; keep > 0;) {
@@ -210,6 +211,7 @@ public class DiceKeeper implements IDie {
 				nextKey.compute(firstEntry.getKey(),
 						(k, v) -> Math.min(toBeRemoved, firstEntry.getValue()) + (v == null ? 0 : v));
 				keySource.compute(firstEntry.getKey(), (k, v) -> toBeRemoved >= v ? null : (v - toBeRemoved));
+				// The entry is needed, so this can not be put in the for-header.
 				keep -= Math.min(firstEntry.getValue(), keep);
 			}
 			ret.compute(nextKey, (k, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
