@@ -62,17 +62,25 @@ public class TestDiceDropper {
 		DiceDropper underTest = new DiceDropper(DiceCollection.WRATH_AND_GLORY_DIE, 1, 1);
 		assumeTrue(underTest.getDropHighest() == 1);
 		assumeTrue(underTest.getDropLowest() == 1);
-		try {
-			underTest.setDropHighest(-3);
-			fail("Expected an excpeption, got none!");
-		} catch (IllegalArgumentException iae) {
-		}
-		try {
-			underTest.setDropLowest(-3);
-			fail("Expected an excpeption, got none!");
-		} catch (IllegalArgumentException iae) {
-		}
+		assertThrows(IllegalArgumentException.class, () -> underTest.setDropHighest(-3));
+		assertThrows(IllegalArgumentException.class, () -> underTest.setDropLowest(-3));
 		assertEquals(1, underTest.getDropHighest());
 		assertEquals(1, underTest.getDropLowest());
+	}
+
+	@Test
+	void overdroppingHigh() {
+		DiceDropper underTest = new DiceDropper(0, 2, DiceCollection.WRATH_AND_GLORY_DIE);
+		assumeTrue(underTest.getDropLowest() == 0);
+		assumeTrue(underTest.getDropHighest() > 1);
+		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies());
+	}
+
+	@Test
+	void overdroppingLow() {
+		DiceDropper underTest = new DiceDropper(2, 0, DiceCollection.WRATH_AND_GLORY_DIE);
+		assumeTrue(underTest.getDropLowest() > 1);
+		assumeTrue(underTest.getDropHighest() == 0);
+		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies());
 	}
 }
