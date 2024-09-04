@@ -79,6 +79,17 @@ public class RecievedDamage implements IDie {
 		return source;
 	}
 
+	/**
+	 * Calculates the damage distribution. The order of modifiers are:
+	 * <ol>
+	 * <li>Reduction of damage, this can push it down to zero but not below it.</li>
+	 * <li>Resistance, this divides the already reduced damage by two, rounding
+	 * up.</li>
+	 * <li>Vulnerability, this multiplies the reduced damage by two.</li>
+	 * </ol>
+	 * Resistance and Vulnerability are <b>NOT</b> mutually exclusive: Having both
+	 * essentially means, that the damage gets rounded up to the next even number.
+	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		Map<Map<Integer, Integer>, BigInteger> ret = new TreeMap<Map<Integer, Integer>, BigInteger>();
