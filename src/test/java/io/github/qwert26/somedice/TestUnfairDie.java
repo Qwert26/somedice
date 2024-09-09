@@ -96,6 +96,14 @@ public class TestUnfairDie {
 			assertEquals(FudgeDie.INSTANCE.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
 		}
 
+		@Test
+		void checkViaConstructor() {
+			UnfairDie cloned = new UnfairDie(FudgeDie.INSTANCE);
+			assertTrue(cloned.hashCode() == underTest.hashCode());
+			assertTrue(cloned.equals(underTest));
+			assertTrue(underTest.equals(cloned));
+		}
+
 		@AfterEach
 		void teardown() {
 			underTest = null;

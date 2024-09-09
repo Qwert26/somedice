@@ -11,35 +11,35 @@ import static org.junit.jupiter.api.Assumptions.*;
  */
 public class TestDiceKeeper {
 	@Test
-	public void testConstructorNull() {
+	void testConstructorNull() {
 		assertThrows(NullPointerException.class, () -> new DiceKeeper(null));
 		assertThrows(NullPointerException.class, () -> new DiceKeeper(null, 0, 0));
 		assertThrows(NullPointerException.class, () -> new DiceKeeper(0, 0, null));
 	}
 
 	@Test
-	public void testConstructorNegativeMinimum() {
+	void testConstructorNegativeMinimum() {
 		IDie source = new SingleDie(12);
 		assertThrows(IllegalArgumentException.class, () -> new DiceKeeper(source, -1, 1));
 		assertThrows(IllegalArgumentException.class, () -> new DiceKeeper(-1, 1, source));
 	}
 
 	@Test
-	public void testConstructorNegativeMaximum() {
+	void testConstructorNegativeMaximum() {
 		IDie source = new SingleDie(12);
 		assertThrows(IllegalArgumentException.class, () -> new DiceKeeper(source, 1, -1));
 		assertThrows(IllegalArgumentException.class, () -> new DiceKeeper(1, -1, source));
 	}
 
 	@Test
-	public void testSourceIsGiven() {
+	void testSourceIsGiven() {
 		IDie source = new SingleDie(20);
 		DiceKeeper keeper = assertDoesNotThrow(() -> new DiceKeeper(source));
 		assertEquals(source, keeper.getSource());
 	}
 
 	@Test
-	public void testMinimumSetter() {
+	void testMinimumSetter() {
 		IDie source = new SingleDie(12);
 		DiceKeeper keeper = assertDoesNotThrow(() -> new DiceKeeper(source));
 		assumeTrue(keeper.getKeepLowest() == 0);
@@ -48,7 +48,7 @@ public class TestDiceKeeper {
 	}
 
 	@Test
-	public void testMaximumSetter() {
+	void testMaximumSetter() {
 		IDie source = new SingleDie(12);
 		DiceKeeper keeper = assertDoesNotThrow(() -> new DiceKeeper(source));
 		assumeTrue(keeper.getKeepHighest() == 0);
@@ -57,7 +57,7 @@ public class TestDiceKeeper {
 	}
 
 	@Test
-	public void testMinimumSetterIgnoresNegatives() {
+	void testMinimumSetterIgnoresNegatives() {
 		IDie source = new SingleDie(12);
 		DiceKeeper keeper = assertDoesNotThrow(() -> new DiceKeeper(source, 1, 1));
 		assumeTrue(keeper.getKeepLowest() == 1);
@@ -66,11 +66,20 @@ public class TestDiceKeeper {
 	}
 
 	@Test
-	public void testMaximumSetterIgnoresNegatives() {
+	void testMaximumSetterIgnoresNegatives() {
 		IDie source = new SingleDie(12);
 		DiceKeeper keeper = assertDoesNotThrow(() -> new DiceKeeper(1, 1, source));
 		assumeTrue(keeper.getKeepHighest() == 1);
 		assertThrows(IllegalArgumentException.class, () -> keeper.setKeepHighest(-2));
 		assertEquals(1, keeper.getKeepHighest());
+	}
+
+	@Test
+	void testToString() {
+		IDie source = new SingleDie(12);
+		DiceKeeper keeper = new DiceKeeper(source);
+		String result = assertDoesNotThrow(() -> keeper.toString());
+		assertNotNull(result);
+		assertTrue(result.contains(source.toString()));
 	}
 }

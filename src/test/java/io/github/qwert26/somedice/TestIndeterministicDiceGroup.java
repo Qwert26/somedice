@@ -16,7 +16,7 @@ public abstract class TestIndeterministicDiceGroup {
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testIllegalConstructor() {
+	void testIllegalConstructor() {
 		UnfairDie unfair = DiceCollection.WRATH_AND_GLORY_DIE;
 		assertThrows(Exception.class, () -> new IndeterministicDiceGroup(unfair, unfair));
 	}

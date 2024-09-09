@@ -14,7 +14,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testDifferentSizes() {
+	void testDifferentSizes() {
 		TreeMap<Integer, Integer> small, big;
 		small = new TreeMap<Integer, Integer>();
 		big = new TreeMap<Integer, Integer>();
@@ -32,7 +32,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testSameMap() {
+	void testSameMap() {
 		TreeMap<Integer, Integer> single = new TreeMap<Integer, Integer>();
 		int result = assertDoesNotThrow(() -> MapComparators.NATURAL_TREEMAP_INT_INT.compare(single, single));
 		assertEquals(0, result, "Expected a zero, as a Map is always equal to itself.");
@@ -42,7 +42,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testIdenticalMaps() {
+	void testIdenticalMaps() {
 		TreeMap<Integer, Integer> first, second;
 		first = new TreeMap<Integer, Integer>();
 		second = new TreeMap<Integer, Integer>();
@@ -61,7 +61,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testSameSizedMapsWithoutOverlap() {
+	void testSameSizedMapsWithoutOverlap() {
 		TreeMap<Integer, Integer> small, big;
 		small = new TreeMap<Integer, Integer>();
 		big = new TreeMap<Integer, Integer>();
@@ -78,7 +78,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testSameSizedMapsWithOverlap() {
+	void testSameSizedMapsWithOverlap() {
 		TreeMap<Integer, Integer> small, big;
 		small = new TreeMap<Integer, Integer>();
 		big = new TreeMap<Integer, Integer>();
@@ -97,7 +97,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testSameSizedMapsWithDifferentValues() {
+	void testSameSizedMapsWithDifferentValues() {
 		TreeMap<Integer, Integer> small, big;
 		small = new TreeMap<Integer, Integer>();
 		big = new TreeMap<Integer, Integer>();
@@ -114,7 +114,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testEmptyMaps() {
+	void testEmptyMaps() {
 		TreeMap<Integer, Integer> empty1, empty2;
 		empty1 = new TreeMap<Integer, Integer>();
 		empty2 = new TreeMap<Integer, Integer>();
@@ -126,7 +126,7 @@ public class TestNaturalTreemapIntIntComparator {
 	 * 
 	 */
 	@Test
-	public void testEmptyAndNonEmptyMaps() {
+	void testEmptyAndNonEmptyMaps() {
 		TreeMap<Integer, Integer> empty, full;
 		empty = new TreeMap<Integer, Integer>();
 		full = new TreeMap<Integer, Integer>();

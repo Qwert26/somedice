@@ -7,6 +7,7 @@ import java.util.function.*;
 /**
  * A compressor takes in a detailed description of rolled dice and converts them
  * into a single number: This is more memory efficient but loses details.
+ * 
  * @author Qwert26
  */
 public final class Compressor implements IDie {
@@ -63,6 +64,24 @@ public final class Compressor implements IDie {
 		setValueCountFunction(vcf);
 		setAccumulator(accu);
 		setStartValue(start);
+	}
+
+	/**
+	 * Creates a compressor with the given source, value-count-function and
+	 * accumulation-function, but with the standard starting value of 0.
+	 * 
+	 * @param source The source of the dice rolls.
+	 * @param vcf    The function which turns a pair of a value and its occurence
+	 *               into a single value, to be accumulated.
+	 * @param accu   The function which takes the previously accumulated result and
+	 *               combines it with the next entry.
+	 * @throws NullPointerException if any of the three parameters are null.
+	 */
+	public Compressor(IDie source, ToIntBiFunction<Integer, Integer> vcf, ToIntBiFunction<Integer, Integer> accu) {
+		setSource(source);
+		setValueCountFunction(vcf);
+		setAccumulator(accu);
+		startValue = () -> 0;
 	}
 
 	/**
