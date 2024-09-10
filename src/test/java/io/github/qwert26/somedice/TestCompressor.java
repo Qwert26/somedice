@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TestCompressor {
 	/**
-	 * 
+	 * Any constructor should throw an exception, if the source is missing.
 	 */
 	@Test
 	void testConstructorsNoDie() {
@@ -27,7 +27,8 @@ public class TestCompressor {
 	}
 
 	/**
-	 * 
+	 * Any constructor should throw an exception, if the supplier for the start
+	 * value is missing.
 	 */
 	@Test
 	void testConstructorsNoStart() {
@@ -38,7 +39,8 @@ public class TestCompressor {
 	}
 
 	/**
-	 * 
+	 * Any constructor should throw an exception, if the value-count-function is
+	 * missing.
 	 */
 	@Test
 	void testConstructorsNoValueCountFunction() {
@@ -49,7 +51,8 @@ public class TestCompressor {
 	}
 
 	/**
-	 * 
+	 * Any constructor should throw an exception, if the accumulation-function is
+	 * missing.
 	 */
 	@Test
 	void testConstructorsNoAccumulationFunction() {
@@ -60,7 +63,12 @@ public class TestCompressor {
 	}
 
 	/**
-	 * 
+	 * Test the basic behavior of toString:
+	 * <ul>
+	 * <li>Never throws an exception.</li>
+	 * <li>Never returns <code>null</code>.</li>
+	 * <li>Contains the toString-result of the source.</li>
+	 * </ul>
 	 */
 	@Test
 	void testToString() {
@@ -72,6 +80,8 @@ public class TestCompressor {
 	}
 
 	/**
+	 * Tests the conversion of a simple integer into an {@link IntSupplier}, by
+	 * checking the result of its {@link IntSupplier#getAsInt()}.
 	 * 
 	 * @param original
 	 */

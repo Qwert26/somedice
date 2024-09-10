@@ -10,6 +10,9 @@ import static org.junit.jupiter.api.Assumptions.*;
  * @author Qwert26
  */
 public class TestDiceKeeper {
+	/**
+	 * Tests, that any constructor throws an exception, when there is no source.
+	 */
 	@Test
 	void testConstructorNull() {
 		assertThrows(NullPointerException.class, () -> new DiceKeeper(null));
@@ -17,6 +20,10 @@ public class TestDiceKeeper {
 		assertThrows(NullPointerException.class, () -> new DiceKeeper(0, 0, null));
 	}
 
+	/**
+	 * Tests, that any constructor throws an exception, when a negative amount of
+	 * low rolls should be kept.
+	 */
 	@Test
 	void testConstructorNegativeMinimum() {
 		IDie source = new SingleDie(12);
@@ -24,6 +31,10 @@ public class TestDiceKeeper {
 		assertThrows(IllegalArgumentException.class, () -> new DiceKeeper(-1, 1, source));
 	}
 
+	/**
+	 * Tests, that any constructor throws an exception, when a negative amount of
+	 * high rolls should be kept.
+	 */
 	@Test
 	void testConstructorNegativeMaximum() {
 		IDie source = new SingleDie(12);
@@ -31,6 +42,10 @@ public class TestDiceKeeper {
 		assertThrows(IllegalArgumentException.class, () -> new DiceKeeper(1, -1, source));
 	}
 
+	/**
+	 * Tests, that the constructor does not unexpectedly changes the given source
+	 * instance.
+	 */
 	@Test
 	void testSourceIsGiven() {
 		IDie source = new SingleDie(20);
@@ -38,6 +53,9 @@ public class TestDiceKeeper {
 		assertEquals(source, keeper.getSource());
 	}
 
+	/**
+	 * Tests the setter for the keeping of low rolls.
+	 */
 	@Test
 	void testMinimumSetter() {
 		IDie source = new SingleDie(12);
@@ -47,6 +65,9 @@ public class TestDiceKeeper {
 		assertEquals(1, keeper.getKeepLowest());
 	}
 
+	/**
+	 * Tests the setter for the keeping of high rolls.
+	 */
 	@Test
 	void testMaximumSetter() {
 		IDie source = new SingleDie(12);
@@ -56,6 +77,9 @@ public class TestDiceKeeper {
 		assertEquals(1, keeper.getKeepHighest());
 	}
 
+	/**
+	 * Tests, that the setter for keeping low rolls ignores negative numbers.
+	 */
 	@Test
 	void testMinimumSetterIgnoresNegatives() {
 		IDie source = new SingleDie(12);
@@ -65,6 +89,9 @@ public class TestDiceKeeper {
 		assertEquals(1, keeper.getKeepLowest());
 	}
 
+	/**
+	 * Tests, that the setter for keeping high rolls ignores negative numbers.
+	 */
 	@Test
 	void testMaximumSetterIgnoresNegatives() {
 		IDie source = new SingleDie(12);
@@ -74,6 +101,14 @@ public class TestDiceKeeper {
 		assertEquals(1, keeper.getKeepHighest());
 	}
 
+	/**
+	 * Tests some basic behavior of the toString-method:
+	 * <ul>
+	 * <li>It does not throw any exceptions.</li>
+	 * <li>It does not return a <code>null</code>-value.</li>
+	 * <li>It contains the result of toString-method of its source.</li>
+	 * </ul>
+	 */
 	@Test
 	void testToString() {
 		IDie source = new SingleDie(12);
