@@ -15,21 +15,37 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  */
 @DisplayName("TestErrorCasesOfMixedDiceGroup")
 public class TestErrorCases extends TestMixedDiceGroup {
+	/**
+	 * The constructor should throw an exception for a missing array.
+	 */
 	@Test
 	void constructorDisallowsNullArray() {
 		assertThrows(IllegalArgumentException.class, () -> new MixedDiceGroup((IDie[]) null));
 	}
 
+	/**
+	 * The constructor should throw an exception for an empty array.
+	 */
 	@Test
 	void constructorDisallowsEmptyArray() {
 		assertThrows(IllegalArgumentException.class, () -> new MixedDiceGroup());
 	}
 
+	/**
+	 * The constructor should throw an exception for an array, which contains a
+	 * <code>null</code>.
+	 */
 	@Test
 	void constructorDisallowsNullInArray() {
 		assertThrows(IllegalArgumentException.class, () -> new MixedDiceGroup((IDie) null));
+		assertThrows(IllegalArgumentException.class,
+				() -> new MixedDiceGroup(DiceCollection.WRATH_AND_GLORY_DIE, null));
 	}
 
+	/**
+	 * Tests, that the returned array of the getSources-method does NOT allow a
+	 * write-through.
+	 */
 	@Test
 	void changeArrayAfterCreation() {
 		IDie[] sources = new IDie[] { DiceCollection.WRATH_AND_GLORY_DIE };
@@ -40,6 +56,10 @@ public class TestErrorCases extends TestMixedDiceGroup {
 		assertEquals(DiceCollection.WRATH_AND_GLORY_DIE, underTest.getSources()[0]);
 	}
 
+	/**
+	 * Tests that changes made to the initially given source array does not change
+	 * the used sources of an instance.
+	 */
 	@Test
 	void changeReturnedSourceArray() {
 		MixedDiceGroup underTest = new MixedDiceGroup(DiceCollection.DICE_0_TO_90_IN_10);

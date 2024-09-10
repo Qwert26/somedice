@@ -16,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 @DisplayName("TestIDGReplicatesOtherDiceGroups")
 public class TestReplication extends TestIndeterministicDiceGroup {
+	/**
+	 * Creates an ArgumentSets for the later {@link CartesianTest}s.
+	 * 
+	 * @return
+	 */
 	public static final ArgumentSets diceAndCounts() {
 		return ArgumentSets
 				.argumentsForFirstParameter(DiceCollection.WRATH_AND_GLORY_DIE, FudgeDie.INSTANCE,
@@ -24,12 +29,24 @@ public class TestReplication extends TestIndeterministicDiceGroup {
 		// Anything over 7 for the amount of dice takes too long to compute.
 	}
 
+	/**
+	 * Creates a new {@link UnfairDie} with only a single number.
+	 * 
+	 * @param count
+	 * @return
+	 */
 	private static final UnfairDie createMonoDice(int count) {
 		UnfairDie ret = new UnfairDie();
 		ret.getData().put(count, BigInteger.ONE);
 		return ret;
 	}
 
+	/**
+	 * Checks the replication of a {@link HomogeneousDiceGroup}.
+	 * 
+	 * @param baseDie
+	 * @param count
+	 */
 	@CartesianTest
 	@CartesianTest.MethodFactory("diceAndCounts")
 	void sameAsHDG(AbstractDie baseDie, int count) {
@@ -38,6 +55,12 @@ public class TestReplication extends TestIndeterministicDiceGroup {
 		assertEquals(expected.getAbsoluteFrequencies(), actual.getAbsoluteFrequencies());
 	}
 
+	/**
+	 * Checks the replication of a {@link MixedDiceGroup}.
+	 * 
+	 * @param baseDie
+	 * @param count
+	 */
 	@CartesianTest
 	@CartesianTest.MethodFactory("diceAndCounts")
 	void sameAsMDG(AbstractDie baseDie, int count) {

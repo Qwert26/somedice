@@ -9,8 +9,19 @@ import io.github.qwert26.somedice.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests the replication of a {@link HomogeneousDiceGroup} by a
+ * {@link MixedDiceGroup}.
+ * 
+ * @author Qwert26
+ */
 @DisplayName("TestMDGReplicatesHDG")
 public class TestReplication extends TestMixedDiceGroup {
+	/**
+	 * 
+	 * @param baseDie
+	 * @param count
+	 */
 	@CartesianTest
 	@CartesianTest.MethodFactory("io.github.qwert26.somedice.idg.TestReplication#diceAndCounts")
 	void sameAsHDG(AbstractDie baseDie, int count) {

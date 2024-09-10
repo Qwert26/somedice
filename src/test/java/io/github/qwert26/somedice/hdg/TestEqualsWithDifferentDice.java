@@ -12,6 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @Tag("integration")
 public class TestEqualsWithDifferentDice {
+	/**
+	 * Uses a {@link FudgeDie} for one instance and a {@link RangeDie} for the
+	 * other.
+	 */
 	@Test
 	void fudgeAndRange() {
 		HomogeneousDiceGroup first = new HomogeneousDiceGroup(FudgeDie.INSTANCE);
@@ -19,6 +23,10 @@ public class TestEqualsWithDifferentDice {
 		assertFalse(first.equals(second));
 	}
 
+	/**
+	 * Uses a {@link FudgeDie} for one instance and a {@link SingleDie} for the
+	 * other.
+	 */
 	@Test
 	void fudgeAndSingle() {
 		HomogeneousDiceGroup first = new HomogeneousDiceGroup(FudgeDie.INSTANCE);
@@ -26,6 +34,10 @@ public class TestEqualsWithDifferentDice {
 		assertFalse(first.equals(second));
 	}
 
+	/**
+	 * Uses a {@link RangeDie} for one instance and a {@link SingleDie} for the
+	 * other.
+	 */
 	@Test
 	void rangeAndSingle() {
 		HomogeneousDiceGroup first = new HomogeneousDiceGroup(DiceCollection.DICE_10_TO_100_IN_10);

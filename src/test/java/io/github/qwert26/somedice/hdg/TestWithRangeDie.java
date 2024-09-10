@@ -4,6 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 
 import io.github.qwert26.somedice.*;
 
+/**
+ * Tests the {@link HomogeneousDiceGroup} with a {@link RangeDie}.
+ * 
+ * @author Qwert26
+ */
 @DisplayName("TestHomogenousDiceGroupWithD[0,100,10]")
 public class TestWithRangeDie extends TestHomogenousDiceGroup {
 	public TestWithRangeDie() {
