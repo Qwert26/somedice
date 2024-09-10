@@ -14,18 +14,27 @@ import static org.junit.jupiter.api.Assumptions.*;
  */
 @Tag("unit")
 public class TestRangeDie {
+	/**
+	 * Tests, that the lower bound is always smaller than the upper bound.
+	 */
 	@Test
 	void disallowsWrongRanges() {
 		assertThrows(IllegalArgumentException.class, () -> new RangeDie(0, -10));
 		assertThrows(IllegalArgumentException.class, () -> new RangeDie(0, -10, 2));
 	}
 
+	/**
+	 * Tests, that the step size is not zero or negative.
+	 */
 	@Test
 	void disallowsWrongSteps() {
 		assertThrows(IllegalArgumentException.class, () -> new RangeDie(0, 10, 0));
 		assertThrows(IllegalArgumentException.class, () -> new RangeDie(0, 10, -1));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkValues() {
 		int start = -10;
@@ -43,6 +52,9 @@ public class TestRangeDie {
 		assertEquals(step, underTest.getStep());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void keepsStartValue() {
 		int start = -8;
@@ -53,6 +65,9 @@ public class TestRangeDie {
 		assertEquals(start, underTest.getStart());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void keepsEndValue() {
 		int start = -12;
@@ -63,6 +78,9 @@ public class TestRangeDie {
 		assertEquals(end, underTest.getEnd());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void updatesStartValue() {
 		final int start = -6;
@@ -73,6 +91,9 @@ public class TestRangeDie {
 		assertEquals(-start, underTest.getStart());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void updatesEndValue() {
 		int start = -20;
@@ -83,36 +104,55 @@ public class TestRangeDie {
 		assertEquals(-end, underTest.getEnd());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void predictsCorrectSizeWithStepsize1() {
 		RangeDie underTest = new RangeDie(1, 21, 1);
 		assertEquals(20, underTest.getDistinctValues());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void predictsCorrectSizeWithStepsize2() {
 		RangeDie underTest = new RangeDie(1, 21, 2);
 		assertEquals(10, underTest.getDistinctValues());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void predictsCorrectSizeWithStepsize4() {
 		RangeDie underTest = new RangeDie(1, 21, 4);
 		assertEquals(5, underTest.getDistinctValues());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void predictsCorrectSizeWithStepsize5() {
 		RangeDie underTest = new RangeDie(1, 21, 5);
 		assertEquals(4, underTest.getDistinctValues());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void predictsCorrectSizeWithStepsize10() {
 		RangeDie underTest = new RangeDie(1, 21, 10);
 		assertEquals(2, underTest.getDistinctValues());
 	}
 
+	/**
+	 * 
+	 * @param size
+	 */
 	@ParameterizedTest
 	@ValueSource(ints = { 1, 2, 4, 5, 10, 20, 25, 50 })
 	void checkPredictionWithActualSizeWithStepsize(final int size) {
@@ -120,6 +160,10 @@ public class TestRangeDie {
 		assertEquals(underTest.getDistinctValues(), underTest.getAbsoluteFrequencies().size());
 	}
 
+	/**
+	 * 
+	 * @param size
+	 */
 	@ParameterizedTest
 	@ValueSource(ints = { 1, 2, 4, 5, 10, 20, 25, 50 })
 	void checkContentsWithStepsize(final int size) {
@@ -135,18 +179,27 @@ public class TestRangeDie {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkEqualsWrongClass() {
 		RangeDie underTest = new RangeDie(0, 10, 1);
 		assertFalse(underTest.equals(new Object()));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkEqualsItself() {
 		RangeDie underTest = new RangeDie(0, 10, 1);
 		assertTrue(underTest.equals(underTest));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkEqualsDifferentStarts() {
 		RangeDie one = new RangeDie(0, 10, 1);
@@ -155,6 +208,9 @@ public class TestRangeDie {
 		assertFalse(one.equals(two));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkEqualsDifferentEnds() {
 		RangeDie one = new RangeDie(0, 10, 1);
@@ -163,6 +219,9 @@ public class TestRangeDie {
 		assertFalse(one.equals(two));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkEqualsDifferentSteps() {
 		RangeDie one = new RangeDie(0, 10, 1);
@@ -171,6 +230,9 @@ public class TestRangeDie {
 		assertFalse(one.equals(two));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkEqualsIdentical() {
 		RangeDie one = new RangeDie(0, 10, 1);
@@ -179,6 +241,9 @@ public class TestRangeDie {
 		assertTrue(one.equals(two));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void checkToString() {
 		RangeDie one = new RangeDie(0, 10, 1);

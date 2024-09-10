@@ -15,13 +15,24 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  */
 @Tag("unit")
 public class TestSingleDie {
+	/**
+	 * 
+	 */
 	private static final int[] PHYSICAL_DIE_SIZES = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
 			18, 19, 20, 21, 22, 24, 26, 28, 30, 36, 48, 50, 60, 100, 120 };
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static final int[] physicalDieSizes() {
-		return PHYSICAL_DIE_SIZES;
+		return Arrays.copyOf(PHYSICAL_DIE_SIZES, PHYSICAL_DIE_SIZES.length);
 	}
 
+	/**
+	 * Tests that any constructor does not accept a maximum size of one. As that
+	 * would imply a die with only a single value.
+	 */
 	@Test
 	void dissallowsMaximumOfOne() {
 		assertThrows(IllegalArgumentException.class, () -> new SingleDie(1));
@@ -29,6 +40,9 @@ public class TestSingleDie {
 		assertThrows(IllegalArgumentException.class, () -> new SingleDie(true, 1));
 	}
 
+	/**
+	 * Tests that any constructor does not accept negative values.
+	 */
 	@Test
 	void dissallowsNegativeMaximum() {
 		assertThrows(IllegalArgumentException.class, () -> new SingleDie(-1));
@@ -36,6 +50,9 @@ public class TestSingleDie {
 		assertThrows(IllegalArgumentException.class, () -> new SingleDie(true, -1));
 	}
 
+	/**
+	 * Tests that any constructor does not accept a value of zero.
+	 */
 	@Test
 	void dissallowsMaximumOfZero() {
 		assertThrows(IllegalArgumentException.class, () -> new SingleDie(0));
@@ -43,6 +60,10 @@ public class TestSingleDie {
 		assertThrows(IllegalArgumentException.class, () -> new SingleDie(true, 0));
 	}
 
+	/**
+	 * 
+	 * @param size
+	 */
 	@ParameterizedTest
 	@MethodSource("physicalDieSizes")
 	void checkValues(final int size) {
@@ -59,6 +80,10 @@ public class TestSingleDie {
 		assertFalse(underTest.isStartAt0());
 	}
 
+	/**
+	 * 
+	 * @param size
+	 */
 	@ParameterizedTest
 	@MethodSource("physicalDieSizes")
 	void checkTruthfullness(final int size) {
@@ -67,7 +92,10 @@ public class TestSingleDie {
 		underTest = new SingleDie(size, false);
 		assertEquals(size, underTest.getAbsoluteFrequencies().size());
 	}
-
+	/**
+	 * 
+	 * @param size
+	 */
 	@ParameterizedTest
 	@MethodSource("physicalDieSizes")
 	void checkToString(final int size) {
