@@ -1,5 +1,8 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
+import java.util.Map;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,6 +13,7 @@ import static org.junit.jupiter.api.Assumptions.*;
  * 
  * @author Qwert26
  */
+@Tag("Integration")
 public class TestDiceDropper {
 	@Test
 	void constructorDisallowsNoSource() {
@@ -81,6 +85,25 @@ public class TestDiceDropper {
 		DiceDropper underTest = new DiceDropper(2, 0, DiceCollection.WRATH_AND_GLORY_DIE);
 		assumeTrue(underTest.getDropLowest() > 1);
 		assumeTrue(underTest.getDropHighest() == 0);
+		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies());
+	}
+
+	@Test
+	void noDropping() {
+		DiceDropper underTest = new DiceDropper(DiceCollection.WRATH_AND_GLORY_DIE, 0, 0);
+		assumeTrue(underTest.getDropHighest() == 0);
+		assumeTrue(underTest.getDropLowest() == 0);
+		Map<Map<Integer, Integer>, BigInteger> result = assertDoesNotThrow(() -> underTest.getAbsoluteFrequencies());
+		assertNotNull(result);
+		assertEquals(DiceCollection.WRATH_AND_GLORY_DIE.getAbsoluteFrequencies(), result);
+	}
+
+	@Test
+	void overdroppingOnPoint() {
+		HomogeneousDiceGroup hdg = new HomogeneousDiceGroup(DiceCollection.WRATH_AND_GLORY_DIE, 2);
+		DiceDropper underTest = new DiceDropper(hdg, 1, 1);
+		assumeTrue(underTest.getDropHighest() == 1);
+		assumeTrue(underTest.getDropLowest() == 1);
 		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies());
 	}
 }

@@ -136,5 +136,23 @@ public class TestUnfairDie {
 			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
 			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
 		}
+
+		@ParameterizedTest
+		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
+		void checkIdenticalCountStartingWith1ViaCloning(final int size) {
+			SingleDie truth = new SingleDie(size, false);
+			UnfairDie underTest = new UnfairDie(truth);
+			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
+			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
+		}
+
+		@ParameterizedTest
+		@MethodSource("io.github.qwert26.somedice.TestSingleDie#physicalDieSizes")
+		void checkIdenticalCountStartingWith0ViaCloning(final int size) {
+			SingleDie truth = new SingleDie(size, true);
+			UnfairDie underTest = new UnfairDie(truth);
+			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
+			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
+		}
 	}
 }
