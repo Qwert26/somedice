@@ -1,5 +1,8 @@
 package io.github.qwert26.somedice;
 
+import java.math.BigInteger;
+import java.util.Map;
+
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -116,5 +119,41 @@ public class TestDiceKeeper {
 		String result = assertDoesNotThrow(() -> keeper.toString());
 		assertNotNull(result);
 		assertTrue(result.contains(source.toString()));
+	}
+
+	@Test
+	void keepNone() {
+		IDie source = new SingleDie(12);
+		DiceKeeper keeper = new DiceKeeper(source, 0, 0);
+		assertThrows(IllegalStateException.class, () -> keeper.getAbsoluteFrequencies());
+	}
+
+	@Test
+	void overkeepHigh() {
+		IDie source = new SingleDie(12);
+		DiceKeeper keeper = new DiceKeeper(source, 0, 2);
+		assertThrows(IllegalStateException.class, () -> keeper.getAbsoluteFrequencies());
+	}
+
+	@Test
+	void overkeepLow() {
+		IDie source = new SingleDie(12);
+		DiceKeeper keeper = new DiceKeeper(source, 2, 0);
+		assertThrows(IllegalStateException.class, () -> keeper.getAbsoluteFrequencies());
+	}
+
+	@Test
+	void keepOneOneFromThree() {
+		HomogeneousDiceGroup hdg = new HomogeneousDiceGroup(DiceCollection.WRATH_AND_GLORY_DIE, 3);
+		DiceKeeper keeper = new DiceKeeper(hdg, 1, 1);
+		Map<Map<Integer, Integer>, BigInteger> result = assertDoesNotThrow(() -> keeper.getAbsoluteFrequencies());
+		assertNotNull(result);
+	}
+
+	@Test
+	void checkHashCode() {
+		IDie source = new SingleDie(12);
+		DiceKeeper keeper = new DiceKeeper(source, 0, 0);
+		assertDoesNotThrow(() -> keeper.hashCode());
 	}
 }

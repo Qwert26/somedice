@@ -16,11 +16,17 @@ public final class Compressor implements IDie {
 	 */
 	private IDie source;
 	/**
-	 * Compresses value-count-pairs into a single value.
+	 * Compresses a value-count-pair into a single value. Usually by multiplying one
+	 * by the other.
+	 * 
+	 * @see Math#multiplyExact(int, int)
 	 */
 	private ToIntBiFunction<Integer, Integer> valueCountFunction;
 	/**
-	 * Compresses many pairs into a single value.
+	 * Function that describes how to combine a new compressed value-count-pair with
+	 * the previous result. Usually by adding them.
+	 * 
+	 * @see Math#addExact(int, int)
 	 */
 	private ToIntBiFunction<Integer, Integer> accumulator;
 	/**
@@ -32,7 +38,7 @@ public final class Compressor implements IDie {
 	 * Creates a fully customized compressor.
 	 * 
 	 * @param source The source of the dice rolls.
-	 * @param vcf    The function which turns a pair of a value and its occurence
+	 * @param vcf    The function which turns a pair of a value and its occurrences
 	 *               into a single value, to be accumulated.
 	 * @param accu   The function which takes the previously accumulated result and
 	 *               combines it with the next entry.

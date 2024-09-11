@@ -12,7 +12,17 @@ import java.util.*;
  * @see HomogeneousDiceGroup
  */
 public class IndeterministicDiceGroup implements IDie {
+	/**
+	 * This is the die that will be virtually multiplied by a result of the
+	 * {@link #countDistribution}.
+	 */
 	private AbstractDie baseDie;
+	/**
+	 * Each possible result of this unfair die will be used to create a
+	 * {@link HomogeneousDiceGroup}, its absolute frequencies will then be
+	 * multiplied by the amount of how often its value shows up and then it will be
+	 * accumulated with the remaining frequencies.
+	 */
 	private UnfairDie countDistribution;
 
 	/**
@@ -53,7 +63,7 @@ public class IndeterministicDiceGroup implements IDie {
 	@Deprecated
 	public IndeterministicDiceGroup(UnfairDie first, UnfairDie second) throws Exception {
 		super();
-		throw new Exception("Paramater are ambigous!");
+		throw new Exception("Paramaters are ambigous!");
 	}
 
 	/**

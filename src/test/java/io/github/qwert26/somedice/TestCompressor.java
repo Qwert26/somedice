@@ -1,12 +1,13 @@
 package io.github.qwert26.somedice;
 
-import java.util.function.IntSupplier;
+import java.util.function.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 /**
  * Tests the {@link Compressor}
@@ -93,5 +94,62 @@ public class TestCompressor {
 		IntSupplier startValue = assertDoesNotThrow(() -> toTest.getStartValue());
 		assertNotNull(startValue);
 		assertEquals(original, startValue.getAsInt());
+	}
+
+	@Test
+	void testStartValueStaysThroughError() {
+		IDie source = DiceCollection.WRATH_AND_GLORY_DIE;
+		IntSupplier starter = () -> 0;
+		Compressor toTest = new Compressor(source, starter);
+		assumeTrue(toTest.getStartValue() == starter);
+		assertThrows(NullPointerException.class, () -> toTest.setStartValue(null));
+		assertEquals(starter, toTest.getStartValue());
+	}
+
+	@Test
+	void testValueCountFunctionStaysThroughError() {
+		IDie source = DiceCollection.WRATH_AND_GLORY_DIE;
+		ToIntBiFunction<Integer, Integer> vcf = (a, b) -> a * b, accu = (a, b) -> a + b;
+		Compressor toTest = new Compressor(source, vcf, accu);
+		assumeTrue(toTest.getValueCountFunction() == vcf);
+		assertThrows(NullPointerException.class, () -> toTest.setValueCountFunction(null));
+		assertEquals(vcf, toTest.getValueCountFunction());
+	}
+
+	@Test
+	void testAccumulationFunctionStaysThroughError() {
+		IDie source = DiceCollection.WRATH_AND_GLORY_DIE;
+		ToIntBiFunction<Integer, Integer> vcf = (a, b) -> a * b, accu = (a, b) -> a + b;
+		Compressor toTest = new Compressor(source, vcf, accu, 3);
+		assumeTrue(toTest.getAccumulator() == accu);
+		assertThrows(NullPointerException.class, () -> toTest.setAccumulator(null));
+		assertEquals(accu, toTest.getAccumulator());
+	}
+
+	@Test
+	void testSourceStaysThroughError() {
+		IDie source = DiceCollection.WRATH_AND_GLORY_DIE;
+		ToIntBiFunction<Integer, Integer> vcf = (a, b) -> a * b, accu = (a, b) -> a + b;
+		Compressor toTest = new Compressor(source, vcf, accu, () -> -4);
+		assumeTrue(toTest.getSource() == source);
+		assertThrows(NullPointerException.class, () -> toTest.setSource(null));
+		assertEquals(source, toTest.getSource());
+	}
+
+	@Test
+	void checkHashCode() {
+		IDie source = new SingleDie(20);
+		Compressor toTest = new Compressor(source);
+		assertDoesNotThrow(() -> toTest.hashCode());
+	}
+
+	@Test
+	void canBeUsedAsConversion() {
+		SingleDie source = new SingleDie(12);
+		UnfairDie truth = new UnfairDie(source);
+		ToIntBiFunction<Integer, Integer> vcf = (a, b) -> a * b, accu = (a, b) -> a + b;
+		Compressor toTest = new Compressor(source, vcf, accu, 0);
+		assertEquals(truth, toTest.toUnfairDie());
+		assertEquals(truth.getAbsoluteFrequencies(), toTest.getAbsoluteFrequencies());
 	}
 }
