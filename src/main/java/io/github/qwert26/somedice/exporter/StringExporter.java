@@ -7,11 +7,11 @@ import io.github.qwert26.somedice.*;
  */
 public final class StringExporter {
 	/**
-	 * Instances are not allowed.
+	 * @throws UnsupportedOperationException Any instances are not allowed.
 	 */
-	private StringExporter() throws Exception {
+	private StringExporter() {
 		super();
-		throw new Exception("Instances of StringExporters are not allowed!");
+		throw new UnsupportedOperationException("Instances of StringExporters are not allowed.");
 	}
 
 	/**
@@ -119,10 +119,17 @@ public final class StringExporter {
 		return builder.toString();
 	}
 
-	@Deprecated
+	/**
+	 * Exports an indeterministic dice group by essentially chaining the count
+	 * distribution to the base die.
+	 * 
+	 * @param indeterministicGroup
+	 * @return
+	 */
 	public static final String export(IndeterministicDiceGroup indeterministicGroup) {
-		StringBuilder builder = new StringBuilder("");
-		// TODO
+		StringBuilder builder = new StringBuilder();
+		builder.append(export(indeterministicGroup.getCountDistribution()));
+		builder.append(export(indeterministicGroup.getBaseDie()));
 		return builder.toString();
 	}
 

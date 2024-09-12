@@ -46,4 +46,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<issueManagement>
+		<system>GitHub Issues</system>
+	</issueManagement>
 </project>

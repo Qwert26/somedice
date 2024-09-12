@@ -19,6 +19,7 @@ public abstract sealed class AbstractDie implements IDie permits SingleDie, Fudg
 	}
 
 	/**
+	 * A support method used by some other classes.
 	 * 
 	 * @return The amount of different values a die has.
 	 */

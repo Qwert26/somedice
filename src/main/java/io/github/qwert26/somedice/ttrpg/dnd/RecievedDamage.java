@@ -6,30 +6,54 @@ import java.util.*;
 import io.github.qwert26.somedice.*;
 
 /**
+ * Implements the standard way of calculating damage in "Dungeons & Dragons".
  * 
+ * @author Qwert26
  */
 public class RecievedDamage implements IDie {
+	/**
+	 * The source of damage.
+	 */
 	private IDie source = null;
+	/**
+	 * The damage reduction: Must be positive or zero.
+	 */
 	private int reduction = 0;
+	/**
+	 * If the target has resistance to the damage-type. As we do not differentiate
+	 * here, it is just a {@code boolean}.
+	 */
 	private boolean resistance = false;
+	/**
+	 * If the target has vulnerability to the damage-type. As we do not
+	 * differentiate here, it is just a {@code boolean}.
+	 */
 	private boolean vulnerability = false;
 
 	/**
+	 * Uses a {@link Compressor} as its source, as it produces value counts of 1.
 	 * 
 	 * @param compressor
+	 * @throws NullPointerException If the given source is null.
 	 */
 	public RecievedDamage(Compressor compressor) {
-		source = compressor;
+		setSource(compressor);
+	}
+
+	/**
+	 * Uses an {@link UnfairDie} as its source, as it produces value counts of 1.
+	 * 
+	 * @param unfairDie
+	 * @throws NullPointerException If the given source is null.
+	 */
+	public RecievedDamage(UnfairDie unfairDie) {
+		setSource(unfairDie);
 	}
 
 	/**
 	 * 
-	 * @param unfairDie
+	 * @return The current reduction-value, will be zero or greater.
 	 */
-	public RecievedDamage(UnfairDie unfairDie) {
-		source = unfairDie;
-	}
-
 	public final int getReduction() {
 		return reduction;
 	}
@@ -75,8 +99,55 @@ public class RecievedDamage implements IDie {
 		this.vulnerability = vulnerability;
 	}
 
+	/**
+	 * 
+	 * @return The currently used source, will never be null and always be either an
+	 *         {@link UnfairDie} or a {@link Compressor}.
+	 */
 	public final IDie getSource() {
 		return source;
+	}
+
+	/**
+	 * 
+	 * @return The current source, if it actually is a {@link Compressor}.
+	 *         <code>null</code>, if it is an {@link UnfairDie}.
+	 */
+	public final Compressor getSourceAsCompressor() {
+		if (source instanceof Compressor compressor) {
+			return compressor;
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @return The current source, if it actually is a {@link UnfairDie}.
+	 *         <code>null</code>, if it is an {@link Compressor}.
+	 */
+	public final UnfairDie getSourceAsUnfairDie() {
+		if (source instanceof UnfairDie die) {
+			return die;
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param source
+	 * @throws NullPointerException if the new source is <code>null</code>.
+	 */
+	public final void setSource(Compressor source) {
+		this.source = Objects.requireNonNull(source, "Compressor-Source can not be null!");
+	}
+
+	/**
+	 * 
+	 * @param source
+	 * @throws NullPointerException if the new source is <code>null</code>.
+	 */
+	public final void setSource(UnfairDie source) {
+		this.source = Objects.requireNonNull(source, "UnfairDie-Source can not be null!");
 	}
 
 	/**

@@ -125,7 +125,7 @@ public final class Compressor implements IDie {
 	 * start value of zero.
 	 * 
 	 * @param source The source of the dice rolls.
-	 * @throws NullPointerException if the parameter is <code>null</code>.
+	 * @throws NullPointerException if the given source is <code>null</code>.
 	 */
 	public Compressor(IDie source) {
 		setSource(source);

@@ -10,10 +10,12 @@ import java.util.*;
 public final class MapComparators {
 
 	/**
-	 * 
+	 * @throws UnsupportedOperationException Always, as this class is not meant to
+	 *                                       have instances.
 	 */
 	private MapComparators() {
 		super();
+		throw new UnsupportedOperationException("Instances of MapComparators are not allowed.");
 	}
 
 	/**
@@ -51,6 +53,7 @@ public final class MapComparators {
 						return 1;
 					}
 				}
+				// The key is in both sets
 				diff = o1.get(key) - o2.get(key);
 				if (diff != 0) {
 					return diff;
