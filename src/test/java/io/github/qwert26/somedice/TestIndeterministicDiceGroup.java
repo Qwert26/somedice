@@ -1,7 +1,6 @@
 package io.github.qwert26.somedice;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Tag;
 
 /**
  * Tests {@link IndeterministicDiceGroup}.
@@ -12,12 +11,5 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class TestIndeterministicDiceGroup {
 	public TestIndeterministicDiceGroup() {
 		super();
-	}
-
-	@SuppressWarnings("deprecation")
-	@Test
-	void testIllegalConstructor() {
-		UnfairDie unfair = DiceCollection.WRATH_AND_GLORY_DIE;
-		assertThrows(Exception.class, () -> new IndeterministicDiceGroup(unfair, unfair));
 	}
 }

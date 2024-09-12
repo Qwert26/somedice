@@ -12,7 +12,7 @@ import io.github.qwert26.somedice.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 
+ * Tests the {@link StringExporter}.}
  */
 public class TestStringExporter {
 	@ParameterizedTest
@@ -92,5 +92,100 @@ public class TestStringExporter {
 			}
 		};
 		assertThrows(IllegalArgumentException.class, () -> StringExporter.export(unknown));
+	}
+
+	@Test
+	void testExportHomogenousDiceGroup() {
+		HomogeneousDiceGroup hdg = new HomogeneousDiceGroup(new SingleDie(false, 12), 2);
+		String result = assertDoesNotThrow(() -> StringExporter.export(hdg));
+		assertNotNull(result);
+		assertEquals("2d12", result);
+	}
+
+	@Test
+	void testExportHomogenousDiceGroupViaDispatch() {
+		IDie hdg = new HomogeneousDiceGroup(new SingleDie(false, 8), 4);
+		String result = assertDoesNotThrow(() -> StringExporter.export(hdg));
+		assertNotNull(result);
+		assertEquals("4d8", result);
+	}
+
+	@Test
+	void testExportMixedDiceGroup() {
+		MixedDiceGroup mdg = new MixedDiceGroup(FudgeDie.INSTANCE, new SingleDie(true, 10));
+		String result = assertDoesNotThrow(() -> StringExporter.export(mdg));
+		assertNotNull(result);
+		assertEquals("(dF,d010)", result);
+	}
+
+	@Test
+	void testExportMixedDiceGroupViaDispatch() {
+		IDie mdg = new MixedDiceGroup(new SingleDie(false, 6), FudgeDie.INSTANCE);
+		String result = assertDoesNotThrow(() -> StringExporter.export(mdg));
+		assertNotNull(result);
+		assertEquals("(d6,dF)", result);
+	}
+
+	@Test
+	void testExportDiceDropperActive() {
+		DiceDropper dropper = new DiceDropper(new HomogeneousDiceGroup(new SingleDie(4), 4), 1, 1);
+		String result = assertDoesNotThrow(() -> StringExporter.export(dropper));
+		assertNotNull(result);
+		assertEquals("(4d4)dh1dl1", result);
+	}
+
+	@Test
+	void testExportDiceDropperInactive() {
+		DiceDropper dropper = new DiceDropper(new HomogeneousDiceGroup(new SingleDie(6), 3), 0, 0);
+		String result = assertDoesNotThrow(() -> StringExporter.export(dropper));
+		assertNotNull(result);
+		assertEquals("(3d6)", result);
+	}
+
+	@Test
+	void testExportDiceDropperViaDispatch() {
+		IDie dropper = new DiceDropper(new HomogeneousDiceGroup(new SingleDie(6), 4), 1, 0);
+		String result = assertDoesNotThrow(() -> StringExporter.export(dropper));
+		assertNotNull(result);
+		assertEquals("(4d6)dl1", result);
+	}
+
+	@Test
+	void testExportDiceKeeperActive() {
+		DiceKeeper keeper = new DiceKeeper(new HomogeneousDiceGroup(new SingleDie(20), 3), 1, 1);
+		String result = assertDoesNotThrow(() -> StringExporter.export(keeper));
+		assertNotNull(result);
+		assertEquals("(3d20)kh1kl1", result);
+	}
+
+	@Test
+	void testExportDiceKeeperInactive() {
+		DiceKeeper keeper = new DiceKeeper(new HomogeneousDiceGroup(new SingleDie(12), 2), 0, 0);
+		String result = assertDoesNotThrow(() -> StringExporter.export(keeper));
+		assertNotNull(result);
+		assertEquals("(2d12)", result);
+	}
+
+	@Test
+	void testExportDiceKeeperViaDispatch() {
+		IDie keeper = new DiceKeeper(new HomogeneousDiceGroup(new SingleDie(2), 8), 0, 1);
+		String result = assertDoesNotThrow(() -> StringExporter.export(keeper));
+		assertNotNull(result);
+		assertEquals("(8d2)kh1", result);
+	}
+
+	@Test
+	void testExportUnfairDie() {
+		UnfairDie die = DiceCollection.WRATH_AND_GLORY_DIE;
+		String result = assertDoesNotThrow(() -> StringExporter.export(die));
+		assertNotNull(result);
+		assertTrue(result.contains(die.getData().toString()));
+	}
+
+	@Test
+	void testExportUnfairDieViaDispatch() {
+		IDie die = DiceCollection.WRATH_AND_GLORY_DIE;
+		String result = assertDoesNotThrow(() -> StringExporter.export(die));
+		assertNotNull(result);
 	}
 }
