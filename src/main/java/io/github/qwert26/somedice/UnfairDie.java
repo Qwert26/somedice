@@ -58,13 +58,12 @@ public final class UnfairDie extends AbstractDie {
 				data.put(0, BigInteger.ONE);
 				data.put(1, BigInteger.ONE);
 			}
-			default -> throw new IllegalArgumentException("Unexpected value: " + source);
 			}
 		}
 	}
 
 	/**
-	 * @implSpec Returns the actual object, as {@code UnfairDie} are expected to
+	 * @implSpec Returns the actual object, as {@code UnfairDie}s are expected to
 	 *           operate via side-effects.
 	 * @return The internal mapping of distinct values to absolute frequencies.
 	 */

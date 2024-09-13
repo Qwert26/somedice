@@ -73,6 +73,22 @@ public class TestUnfairDie {
 		}
 	}
 
+	@Test
+	void checkCloningConstructor() {
+		UnfairDie truth = DiceCollection.WRATH_AND_GLORY_DIE;
+		UnfairDie test = new UnfairDie(truth);
+		assertNotSame(truth.getData(), test.getData());
+		assertEquals(truth, test);
+		assertEquals(truth.getAbsoluteFrequencies(), test.getAbsoluteFrequencies());
+	}
+
+	@Test
+	void checkCloningWithNull() {
+		UnfairDie truth = new UnfairDie();
+		UnfairDie test = assertDoesNotThrow(() -> new UnfairDie(null));
+		assertEquals(truth, test);
+	}
+
 	@Nested
 	@Tag("comparison")
 	public class ReplicatesFudgeDie {
@@ -153,6 +169,17 @@ public class TestUnfairDie {
 			UnfairDie underTest = new UnfairDie(truth);
 			assertEquals(truth.getDistinctValues(), underTest.getDistinctValues());
 			assertEquals(truth.getAbsoluteFrequencies(), underTest.getAbsoluteFrequencies());
+		}
+	}
+
+	@Nested
+	@Tag("comparison")
+	public class ReplicatesRangeDie {
+		@Test
+		void checkViaCloning() {
+			RangeDie truth = DiceCollection.DICE_0_TO_90_IN_10;
+			UnfairDie test = new UnfairDie(truth);
+			assertEquals(truth.getAbsoluteFrequencies(), test.getAbsoluteFrequencies());
 		}
 	}
 }

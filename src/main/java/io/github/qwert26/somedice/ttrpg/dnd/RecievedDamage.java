@@ -151,6 +151,17 @@ public class RecievedDamage implements IDie {
 	}
 
 	/**
+	 * If the current source is a {@link Compressor}, it will convert it into an
+	 * {@link UnfairDie}. This operation can not be undone.
+	 */
+	public final void convertSourceToUnfairDie() {
+		Compressor original = getSourceAsCompressor();
+		if (original != null) {
+			source = original.toUnfairDie();
+		}
+	}
+
+	/**
 	 * Calculates the damage distribution. The order of modifiers are:
 	 * <ol>
 	 * <li>Reduction of damage, this can push it down to zero but not below it.</li>
