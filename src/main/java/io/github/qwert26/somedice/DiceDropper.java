@@ -149,4 +149,52 @@ public class DiceDropper implements IDie {
 		}
 		return ret;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + dropHighest;
+		result = prime * result + dropLowest;
+		result = prime * result + ((source == null) ? 0 : source.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof DiceDropper)) {
+			return false;
+		}
+		DiceDropper other = (DiceDropper) obj;
+		if (dropHighest != other.dropHighest) {
+			return false;
+		}
+		if (dropLowest != other.dropLowest) {
+			return false;
+		}
+		if (source == null) {
+			if (other.source != null) {
+				return false;
+			}
+		} else if (!source.equals(other.source)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DiceDropper [source=");
+		builder.append(source);
+		builder.append(", dropLowest=");
+		builder.append(dropLowest);
+		builder.append(", dropHighest=");
+		builder.append(dropHighest);
+		builder.append("]");
+		return builder.toString();
+	}
 }

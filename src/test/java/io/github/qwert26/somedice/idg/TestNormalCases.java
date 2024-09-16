@@ -1,14 +1,17 @@
 package io.github.qwert26.somedice.idg;
 
+import java.math.BigInteger;
+import java.util.Map;
+
 import org.junit.jupiter.api.*;
 
 import io.github.qwert26.somedice.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 /**
- * 
+ * @author Qwert26
  */
 @DisplayName("TestIDGNormalCases")
 public class TestNormalCases extends TestIndeterministicDiceGroup {
@@ -17,6 +20,8 @@ public class TestNormalCases extends TestIndeterministicDiceGroup {
 		AbstractDie base = new SingleDie(4, false);
 		Compressor dist = new Compressor(new HomogeneousDiceGroup(new SingleDie(10), 3));
 		IndeterministicDiceGroup test = new IndeterministicDiceGroup(base, dist);
+		assertEquals(test.getCountDistribution().getAbsoluteFrequencies(), dist.getAbsoluteFrequencies());
+		test = new IndeterministicDiceGroup(dist, base);
 		assertEquals(test.getCountDistribution().getAbsoluteFrequencies(), dist.getAbsoluteFrequencies());
 	}
 
@@ -88,5 +93,24 @@ public class TestNormalCases extends TestIndeterministicDiceGroup {
 		IndeterministicDiceGroup test = new IndeterministicDiceGroup(base, dist);
 		IndeterministicDiceGroup other = new IndeterministicDiceGroup(base, dist);
 		assertTrue(test.equals(other));
+	}
+
+	@Test
+	void checkEqualsConstructorWithBoolean() {
+		UnfairDie first = DiceCollection.WRATH_AND_GLORY_DIE;
+		UnfairDie second = new UnfairDie(FudgeDie.INSTANCE);
+		assumeFalse(first.equals(second));
+		IndeterministicDiceGroup test = new IndeterministicDiceGroup(first, second, true);
+		IndeterministicDiceGroup other = new IndeterministicDiceGroup(first, second, false);
+		assertFalse(test.equals(other));
+	}
+
+	@Test
+	void checkAbsoluteFrequenciesWithZeroes() {
+		UnfairDie only = DiceCollection.WRATH_AND_GLORY_DIE;
+		IndeterministicDiceGroup test = new IndeterministicDiceGroup(only, only, true);
+		Map<Map<Integer, Integer>, BigInteger> result = assertDoesNotThrow(() -> test.getAbsoluteFrequencies());
+		assertNotNull(result);
+		assertFalse(result.isEmpty());
 	}
 }

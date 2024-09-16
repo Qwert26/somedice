@@ -57,4 +57,56 @@ public class TestReceivedDamage {
 		assertTrue(test.isResistance());
 		assertTrue(test.isVulnerability());
 	}
+
+	@Test
+	void checkSetReductionIgnoresNegatives() {
+		RecievedDamage test = new RecievedDamage(DiceCollection.WRATH_AND_GLORY_DIE);
+		assumeTrue(test.getReduction() == 0);
+		test.setReduction(8);
+		assumeTrue(test.getReduction() == 8);
+		assertThrows(IllegalArgumentException.class, () -> test.setReduction(-5));
+		assertEquals(8, test.getReduction());
+	}
+
+	@Test
+	void checkConversion() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage test = new RecievedDamage(source);
+		assumeTrue(test.getSourceAsCompressor() != null);
+		assumeTrue(test.getSourceAsUnfairDie() == null);
+		test.convertSourceToUnfairDie();
+		assertNotNull(test.getSourceAsUnfairDie());
+		assertNull(test.getSourceAsCompressor());
+		assertDoesNotThrow(() -> test.convertSourceToUnfairDie());
+	}
+
+	@Test
+	void checkToString() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage test = new RecievedDamage(source);
+		String result = assertDoesNotThrow(() -> test.toString());
+		assertNotNull(result);
+		assertTrue(result.contains(source.toString()));
+	}
+
+	@Test
+	void checkHashCode() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage test = new RecievedDamage(source);
+		test.setResistance(false);
+		test.setVulnerability(false);
+		final int noResNoVul = assertDoesNotThrow(() -> test.hashCode());
+		test.setResistance(true);
+		final int resNoVul = assertDoesNotThrow(() -> test.hashCode());
+		assertNotEquals(noResNoVul, resNoVul);
+		test.setVulnerability(true);
+		final int resVul = assertDoesNotThrow(() -> test.hashCode());
+		assertNotEquals(noResNoVul, resVul);
+		assertNotEquals(resNoVul, resVul);
+		test.setResistance(false);
+		final int noResVul = assertDoesNotThrow(() -> test.hashCode());
+		assertNotEquals(noResVul, resNoVul);
+		assertNotEquals(noResVul, resVul);
+		assertNotEquals(noResVul, noResNoVul);
+	}
 }

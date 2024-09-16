@@ -148,4 +148,53 @@ public class TestDiceDropper {
 		assumeTrue(underTest.getDropLowest() == 1);
 		assertThrows(IllegalStateException.class, () -> underTest.getAbsoluteFrequencies());
 	}
+
+	@Test
+	void doubleAdvantage() {
+		DiceDropper underTest = new DiceDropper(new HomogeneousDiceGroup(new SingleDie(20, false), 3), 2, 0);
+		assumeTrue(underTest.getDropLowest() == 2);
+		assumeTrue(underTest.getDropHighest() == 0);
+		Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
+		assertNotNull(result);
+		for (var outer : result.entrySet()) {
+			assertNotNull(outer.getValue());
+			assertNotNull(outer.getValue());
+			for (var inner : outer.getKey().entrySet()) {
+				assertNotNull(inner.getKey());
+				assertEquals(1, inner.getValue());
+			}
+		}
+	}
+
+	@Test
+	void doubleDisadvantage() {
+		DiceDropper underTest = new DiceDropper(new HomogeneousDiceGroup(new SingleDie(20, false), 3), 0, 2);
+		assumeTrue(underTest.getDropLowest() == 0);
+		assumeTrue(underTest.getDropHighest() == 2);
+		Map<Map<Integer, Integer>, BigInteger> result = underTest.getAbsoluteFrequencies();
+		assertNotNull(result);
+		for (var outer : result.entrySet()) {
+			assertNotNull(outer.getValue());
+			assertNotNull(outer.getValue());
+			for (var inner : outer.getKey().entrySet()) {
+				assertNotNull(inner.getKey());
+				assertEquals(1, inner.getValue());
+			}
+		}
+	}
+
+	@Test
+	void checkHashCode() {
+		DiceDropper underTest = new DiceDropper(new HomogeneousDiceGroup(new SingleDie(20, false), 3), 1, 1);
+		assertDoesNotThrow(() -> underTest.hashCode());
+	}
+
+	@Test
+	void checkToString() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper underTest = new DiceDropper(source, 1, 1);
+		String result = assertDoesNotThrow(() -> underTest.toString());
+		assertNotNull(result);
+		assertTrue(result.contains(source.toString()));
+	}
 }

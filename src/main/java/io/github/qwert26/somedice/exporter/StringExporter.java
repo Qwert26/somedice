@@ -34,6 +34,7 @@ public final class StringExporter {
 		case SingleDie single -> export(single);
 		case UnfairDie unfair -> export(unfair);
 		case Compressor compressor -> export(compressor);
+		case IndeterministicDiceGroup idg -> export(idg);
 		default -> throw new IllegalArgumentException("Unable to Export!");
 		};
 	}
