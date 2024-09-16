@@ -6,7 +6,10 @@ import java.util.function.*;
 
 /**
  * A compressor takes in a detailed description of rolled dice and converts them
- * into a single number: This is more memory efficient but loses details.
+ * into a single number: This is more memory efficient but loses details. It is
+ * made {@code final}, as certain other classes rely on the fact, that its
+ * {@link #getAbsoluteFrequencies()}-method produces keys in the form of
+ * <code>{X=1}</code>.
  * 
  * @author Qwert26
  */

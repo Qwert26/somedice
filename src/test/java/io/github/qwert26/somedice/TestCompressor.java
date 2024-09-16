@@ -152,4 +152,78 @@ public class TestCompressor {
 		assertEquals(truth, toTest.toUnfairDie());
 		assertEquals(truth.getAbsoluteFrequencies(), toTest.getAbsoluteFrequencies());
 	}
+
+	@Test
+	void checkEqualsNull() {
+		Compressor toTest = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		assertFalse(toTest.equals(null));
+	}
+
+	@Test
+	void checkEqualsItself() {
+		Compressor toTest = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		assertTrue(toTest.equals(toTest));
+	}
+
+	@Test
+	void checkEqualsWrongClass() {
+		Compressor toTest = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		assertFalse(toTest.equals(new Object()));
+	}
+
+	/**
+	 * I'm suprised that this actually passes. Never knew that
+	 * {@code Math::addExact} and {@code Math::multiplyExact} always produces the
+	 * same object!
+	 */
+	@Test
+	void checkEquals() {
+		Compressor first = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		Compressor second = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		assertTrue(first.equals(second));
+	}
+
+	/**
+	 * Apparently using the same lambda-expression twice in the same method creates
+	 * two DIFFERENT objects.
+	 */
+	@Test
+	void checkEqualsExplicit() {
+		Compressor first = new Compressor(DiceCollection.DICE_10_TO_100_IN_10, (k, v) -> k * v, (o, n) -> o + n,
+				() -> 0);
+		Compressor second = new Compressor(DiceCollection.DICE_10_TO_100_IN_10, (k, v) -> k * v, (o, n) -> o + n,
+				() -> 0);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentAccumulators() {
+		Compressor first = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		Compressor second = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		second.setAccumulator((o, n) -> o + n);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentStartValues() {
+		Compressor first = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		Compressor second = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		second.setStartValue(() -> 1);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentValueCountFunctions() {
+		Compressor first = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		Compressor second = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		second.setValueCountFunction((v, c) -> v * c);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentSources() {
+		Compressor first = new Compressor(DiceCollection.DICE_0_TO_90_IN_10);
+		Compressor second = new Compressor(DiceCollection.DICE_10_TO_100_IN_10);
+		assertFalse(first.equals(second));
+	}
 }

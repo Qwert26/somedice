@@ -12,7 +12,7 @@ import io.github.qwert26.somedice.*;
  */
 public class RecievedDamage implements IDie {
 	/**
-	 * The source of damage.
+	 * The source of damage. It is not allowed to be <code>null</code>.
 	 */
 	private IDie source = null;
 	/**
@@ -174,8 +174,9 @@ public class RecievedDamage implements IDie {
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
-		Map<Map<Integer, Integer>, BigInteger> ret = new TreeMap<Map<Integer, Integer>, BigInteger>();
 		Map<Map<Integer, Integer>, BigInteger> result = source.getAbsoluteFrequencies();
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>(result.size(),
+				1.0f);
 		for (Map.Entry<Map<Integer, Integer>, BigInteger> resultEntry : result.entrySet()) {
 			Map.Entry<Integer, Integer> valueCount = resultEntry.getKey().entrySet().iterator().next();
 			// Compressor and UnfairDie both produce valueCounts, where the count is always

@@ -1,6 +1,8 @@
 package io.github.qwert26.somedice.ttrpg.dnd;
 
 import org.junit.jupiter.api.Test;
+import java.util.*;
+import java.math.*;
 
 import io.github.qwert26.somedice.*;
 
@@ -81,6 +83,30 @@ public class TestReceivedDamage {
 	}
 
 	@Test
+	void checkDamagePassThrough() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage test = new RecievedDamage(source);
+		test.setReduction(0);
+		test.setResistance(false);
+		test.setVulnerability(false);
+		Map<Map<Integer, Integer>, BigInteger> result = assertDoesNotThrow(() -> test.getAbsoluteFrequencies());
+		assertNotNull(result);
+		assertEquals(source.getAbsoluteFrequencies(), result);
+	}
+
+	@Test
+	void checkDamageModifications() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage test = new RecievedDamage(source);
+		test.setReduction(8);
+		test.setResistance(true);
+		test.setVulnerability(true);
+		Map<Map<Integer, Integer>, BigInteger> result = assertDoesNotThrow(() -> test.getAbsoluteFrequencies());
+		assertNotNull(result);
+		assertNotEquals(source.getAbsoluteFrequencies(), result);
+	}
+
+	@Test
 	void checkToString() {
 		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
 		RecievedDamage test = new RecievedDamage(source);
@@ -108,5 +134,72 @@ public class TestReceivedDamage {
 		assertNotEquals(noResVul, resNoVul);
 		assertNotEquals(noResVul, resVul);
 		assertNotEquals(noResVul, noResNoVul);
+	}
+
+	@Test
+	void checkEqualsNull() {
+		RecievedDamage test = new RecievedDamage(DiceCollection.WRATH_AND_GLORY_DIE);
+		assertFalse(test.equals(null));
+	}
+
+	@Test
+	void checkEqualsItself() {
+		RecievedDamage test = new RecievedDamage(DiceCollection.WRATH_AND_GLORY_DIE);
+		assertTrue(test.equals(test));
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	void checkEqualsWrongClass() {
+		RecievedDamage test = new RecievedDamage(DiceCollection.WRATH_AND_GLORY_DIE);
+		assertFalse(test.equals(DiceCollection.DICE_0_TO_90_IN_10));
+	}
+
+	@Test
+	void checkEqualsDifferentReductions() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage first = new RecievedDamage(source);
+		first.setReduction(0);
+		RecievedDamage second = new RecievedDamage(source);
+		second.setReduction(4);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentResistence() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage first = new RecievedDamage(source);
+		first.setResistance(false);
+		RecievedDamage second = new RecievedDamage(source);
+		second.setResistance(true);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentVulnerabilities() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage first = new RecievedDamage(source);
+		first.setVulnerability(false);
+		RecievedDamage second = new RecievedDamage(source);
+		second.setVulnerability(true);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentSources() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage first = new RecievedDamage(source);
+		RecievedDamage second = new RecievedDamage(source.toUnfairDie());
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEquals() {
+		Compressor source = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 4));
+		RecievedDamage first = new RecievedDamage(source);
+		first.convertSourceToUnfairDie();
+		RecievedDamage second = new RecievedDamage(source.toUnfairDie());
+		assertTrue(first.equals(second));
+		assertEquals(first.hashCode(), second.hashCode());
 	}
 }

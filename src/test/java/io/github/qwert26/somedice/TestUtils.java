@@ -1,6 +1,7 @@
 package io.github.qwert26.somedice;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -171,5 +172,16 @@ public class TestUtils {
 	@Test
 	void testIncompleteMultinomialOneTotalTwoIndividuals() {
 		assertThrows(IllegalArgumentException.class, () -> multinomialIncomplete(1, 2));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3, 4, 5, 6 })
+	void testRandomBigInteger(int exponent) {
+		Random random = new Random();
+		final BigInteger start = BigInteger.ZERO;
+		final BigInteger end = BigInteger.TEN.pow(exponent);
+		final BigInteger result = assertDoesNotThrow(() -> Utils.RandomBigInteger(start, end, random));
+		assertTrue(start.compareTo(result) <= 0);
+		assertTrue(result.compareTo(end) <= 0);
 	}
 }

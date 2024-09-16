@@ -126,10 +126,6 @@ public final class Utils {
 				div--;
 			}
 		}
-		while (div > 1 && ret.mod(BigInteger.valueOf(div)).compareTo(BigInteger.ZERO) == 0) {
-			ret = ret.divide(BigInteger.valueOf(div));
-			div--;
-		}
 		return ret;
 	}
 
