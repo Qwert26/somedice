@@ -188,4 +188,24 @@ public class TestStringExporter {
 		String result = assertDoesNotThrow(() -> StringExporter.export(die));
 		assertNotNull(result);
 	}
+
+	@Test
+	void testExportIndeterministicDiceGroup() {
+		UnfairDie base = DiceCollection.WRATH_AND_GLORY_DIE;
+		Compressor dist = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 2));
+		IndeterministicDiceGroup idg = new IndeterministicDiceGroup(base, dist);
+		String result = assertDoesNotThrow(() -> StringExporter.export(idg));
+		assertNotNull(result);
+		assertTrue(result.contains(StringExporter.export(base)));
+	}
+
+	@Test
+	void testExportIndeterministicDiceGroupViaDispatch() {
+		UnfairDie base = DiceCollection.WRATH_AND_GLORY_DIE;
+		Compressor dist = new Compressor(new HomogeneousDiceGroup(new SingleDie(6), 2));
+		IDie idg = new IndeterministicDiceGroup(base, dist);
+		String result = assertDoesNotThrow(() -> StringExporter.export(idg));
+		assertNotNull(result);
+		assertTrue(result.contains(StringExporter.export(base)));
+	}
 }

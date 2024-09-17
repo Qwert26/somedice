@@ -197,4 +197,58 @@ public class TestDiceDropper {
 		assertNotNull(result);
 		assertTrue(result.contains(source.toString()));
 	}
+
+	@Test
+	void checkEqualsNull() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper underTest = new DiceDropper(source, 1, 1);
+		assertFalse(underTest.equals(null));
+	}
+
+	@Test
+	void checkEqualsItself() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper underTest = new DiceDropper(source, 1, 1);
+		assertTrue(underTest.equals(underTest));
+	}
+
+	@Test
+	void checkEqualsWrongClass() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper underTest = new DiceDropper(source, 1, 1);
+		assertFalse(underTest.equals(new Object()));
+	}
+
+	@Test
+	void checkEqualsDifferentDropHighest() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper first = new DiceDropper(source, 1, 1);
+		DiceDropper second = new DiceDropper(source, 1, 10);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentDropLowest() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper first = new DiceDropper(source, 1, 1);
+		DiceDropper second = new DiceDropper(source, 10, 1);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentSources() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper first = new DiceDropper(source, 1, 1);
+		source = new HomogeneousDiceGroup(new SingleDie(20, false), 4);
+		DiceDropper second = new DiceDropper(source, 1, 1);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEquals() {
+		HomogeneousDiceGroup source = new HomogeneousDiceGroup(new SingleDie(20, false), 3);
+		DiceDropper first = new DiceDropper(source, 1, 1);
+		DiceDropper second = new DiceDropper(source, 1, 1);
+		assertTrue(first.equals(second));
+	}
 }

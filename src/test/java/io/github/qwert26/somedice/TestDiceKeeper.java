@@ -154,6 +154,64 @@ public class TestDiceKeeper {
 	void checkHashCode() {
 		IDie source = new SingleDie(12);
 		DiceKeeper keeper = new DiceKeeper(source, 0, 0);
-		assertDoesNotThrow(() -> keeper.hashCode());
+		final int zeroZero = assertDoesNotThrow(() -> keeper.hashCode());
+		keeper.setKeepHighest(9);
+		final int zeroNine = assertDoesNotThrow(() -> keeper.hashCode());
+		assertNotEquals(zeroZero, zeroNine);
+		keeper.setKeepLowest(9);
+		final int nineNine = assertDoesNotThrow(() -> keeper.hashCode());
+		assertNotEquals(zeroZero, nineNine);
+		assertNotEquals(zeroNine, nineNine);
+		keeper.setKeepHighest(0);
+		final int nineZero = assertDoesNotThrow(() -> keeper.hashCode());
+		assertNotEquals(zeroZero, nineZero);
+		assertNotEquals(zeroNine, nineZero);
+		assertNotEquals(nineNine, nineZero);
+	}
+
+	@Test
+	void checkEqualsNull() {
+		DiceKeeper keeper = new DiceKeeper(new SingleDie(20), 0, 0);
+		assertFalse(keeper.equals(null));
+	}
+
+	@Test
+	void checkEqualsItself() {
+		DiceKeeper keeper = new DiceKeeper(new SingleDie(20), 0, 0);
+		assertTrue(keeper.equals(keeper));
+	}
+
+	@Test
+	void checkEqualsWrongClass() {
+		DiceKeeper keeper = new DiceKeeper(new SingleDie(20), 0, 0);
+		assertFalse(keeper.equals(new Object()));
+	}
+
+	@Test
+	void checkEqualsDifferentKeepHighest() {
+		DiceKeeper first = new DiceKeeper(new SingleDie(20), 0, 0);
+		DiceKeeper second = new DiceKeeper(new SingleDie(20), 0, 1);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentKeepLowest() {
+		DiceKeeper first = new DiceKeeper(new SingleDie(20), 0, 0);
+		DiceKeeper second = new DiceKeeper(new SingleDie(20), 1, 0);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEqualsDifferentSources() {
+		DiceKeeper first = new DiceKeeper(new SingleDie(20), 0, 0);
+		DiceKeeper second = new DiceKeeper(new SingleDie(10), 0, 0);
+		assertFalse(first.equals(second));
+	}
+
+	@Test
+	void checkEquals() {
+		DiceKeeper first = new DiceKeeper(new SingleDie(20), 0, 0);
+		DiceKeeper second = new DiceKeeper(new SingleDie(20), 0, 0);
+		assertTrue(first.equals(second));
 	}
 }
