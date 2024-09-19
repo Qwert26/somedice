@@ -43,7 +43,7 @@ public final class FudgeDie extends AbstractDie {
 	}
 
 	/**
-	 * @return 3, always.
+	 * @return {@code 3}, always.
 	 */
 	@Override
 	public int getDistinctValues() {
