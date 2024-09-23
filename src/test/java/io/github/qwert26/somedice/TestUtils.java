@@ -175,6 +175,36 @@ public class TestUtils {
 	}
 
 	@ParameterizedTest
+	@ValueSource(ints = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+	void testIncompleteMultinomialReplicatesBinomialTotal(int total) {
+		assertEquals(binomial(total, total), multinomialIncomplete(total, total, 0));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+	void testIncompleteMultinomialReplicatesBinomialTotalMinusOne(int total) {
+		assertEquals(binomial(total, total - 1), multinomialIncomplete(total, total - 1, 1));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+	void testIncompleteMultinomialReplicatesBinomialOne(int total) {
+		assertEquals(binomial(total, 1), multinomialIncomplete(total, 1, total - 1));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+	void testIncompleteMultinomialReplicatesBinomialZero(int total) {
+		assertEquals(binomial(total, 0), multinomialIncomplete(total, total, 0));
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 })
+	void testIncompleteMultinomialReplicatesFactorial(int x) {
+		assertEquals(factorial(x), multinomialIncomplete(x));
+	}
+
+	@ParameterizedTest
 	@ValueSource(ints = { 1, 2, 3, 4, 5, 6 })
 	void testRandomBigInteger(int exponent) {
 		Random random = new Random();
