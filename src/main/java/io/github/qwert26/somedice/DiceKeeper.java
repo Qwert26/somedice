@@ -11,12 +11,11 @@ import java.util.*;
  * @author Qwert26
  * @see DiceDropper
  */
-public class DiceKeeper implements IDie {
+public class DiceKeeper implements IDie, IRequiresSource {
 	/**
-	 * The source of the dice rolls, can never be <code>null</code> or
-	 * <code>this</code>.
+	 * The source of the dice rolls, can never be <code>null</code>.
 	 */
-	private final IDie source;
+	private IDie source;
 	/**
 	 * Amount of high dice to keep.
 	 */
@@ -36,7 +35,7 @@ public class DiceKeeper implements IDie {
 	 * @throws NullPointerException If the given source is null.
 	 */
 	public DiceKeeper(IDie source) {
-		this.source = Objects.requireNonNull(source, "A source must be given!");
+		setSource(source);
 	}
 
 	/**
@@ -50,7 +49,7 @@ public class DiceKeeper implements IDie {
 	 *                                  {@code keepHighest} is negative.
 	 */
 	public DiceKeeper(IDie source, int keepLowest, int keepHighest) {
-		this.source = Objects.requireNonNull(source, "A source must be given!");
+		setSource(source);
 		setKeepHighest(keepHighest);
 		setKeepLowest(keepLowest);
 	}
@@ -66,7 +65,7 @@ public class DiceKeeper implements IDie {
 	 *                                  {@code keepHighest} is negative.
 	 */
 	public DiceKeeper(int keepLowest, int keepHighest, IDie source) {
-		this.source = Objects.requireNonNull(source, "A source must be given!");
+		setSource(source);
 		setKeepHighest(keepHighest);
 		setKeepLowest(keepLowest);
 	}
@@ -117,6 +116,28 @@ public class DiceKeeper implements IDie {
 	 */
 	public final IDie getSource() {
 		return source;
+	}
+
+	/**
+	 * 
+	 * @param source The source from which dice are to be kept.
+	 * @throws NullPointerException     if the given source is <code>null</code>.
+	 * @throws IllegalArgumentException if using the non-null parameter would result
+	 *                                  in an infinite loop.
+	 * @see Utils#checkForCycle(IRequiresSource)
+	 */
+	public final void setSource(IDie source) {
+		if (source instanceof IRequiresSource future) {
+			IDie oldSource = this.source;
+			this.source = source;
+			try {
+				Utils.checkForCycle(future);
+			} catch (IllegalArgumentException iae) {
+				this.source = oldSource;
+				throw iae;
+			}
+		}
+		this.source = Objects.requireNonNull(source, "A source must be given!");
 	}
 
 	/**

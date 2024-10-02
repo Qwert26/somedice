@@ -10,7 +10,7 @@ import io.github.qwert26.somedice.*;
  * 
  * @author Qwert26
  */
-public class RecievedDamage implements IDie {
+public class RecievedDamage implements IDie, IRequiresSource {
 	/**
 	 * The source of damage. It is not allowed to be <code>null</code>.
 	 */
@@ -255,4 +255,15 @@ public class RecievedDamage implements IDie {
 		return builder.toString();
 	}
 
+	@Override
+	public void setSource(IDie source) {
+		if (source instanceof Compressor comp) {
+			Utils.checkForCycle(comp);
+			setSource(comp);
+		} else if (source instanceof UnfairDie unfair) {
+			setSource(unfair);
+		} else {
+			throw new IllegalArgumentException("Only Compressors and UnfairDies are accepted!");
+		}
+	}
 }

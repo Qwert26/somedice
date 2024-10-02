@@ -11,12 +11,11 @@ import java.util.*;
  * @author Qwert26
  * @see DiceKeeper
  */
-public class DiceDropper implements IDie {
+public class DiceDropper implements IDie, IRequiresSource {
 	/**
-	 * The source to drop dice from, can never be <code>null</code> or
-	 * <code>this</code>.
+	 * The source to drop dice from, can never be <code>null</code>.
 	 */
-	private final IDie source;
+	private IDie source;
 	/**
 	 * Amount of lowest values to drop.
 	 */
@@ -36,7 +35,7 @@ public class DiceDropper implements IDie {
 	 * @throws NullPointerException if the source is <code>null</code>.
 	 */
 	public DiceDropper(IDie source) {
-		this.source = Objects.requireNonNull(source, "A source must be given");
+		setSource(source);
 		dropHighest = dropLowest = 0;
 	}
 
@@ -51,7 +50,7 @@ public class DiceDropper implements IDie {
 	 * @throws IllegalArgumentException if the amount of dice to drop is negative.
 	 */
 	public DiceDropper(IDie source, int dropLowest, int dropHighest) {
-		this.source = Objects.requireNonNull(source, "A source must be given");
+		setSource(source);
 		setDropHighest(dropHighest);
 		setDropLowest(dropLowest);
 	}
@@ -116,6 +115,28 @@ public class DiceDropper implements IDie {
 	 */
 	public final IDie getSource() {
 		return source;
+	}
+
+	/**
+	 * 
+	 * @param source The source from which dice are to be dropped.
+	 * @throws NullPointerException     if the given source is <code>null</code>.
+	 * @throws IllegalArgumentException if using the non-null parameter would result
+	 *                                  in an infinite loop.
+	 * @see Utils#checkForCycle(IRequiresSource)
+	 */
+	public final void setSource(IDie source) {
+		if (source instanceof IRequiresSource future) {
+			IDie oldSource = this.source;
+			this.source = source;
+			try {
+				Utils.checkForCycle(future);
+			} catch (IllegalArgumentException iae) {
+				this.source = oldSource;
+				throw iae;
+			}
+		}
+		this.source = Objects.requireNonNull(source, "A source must be given!");
 	}
 
 	/**

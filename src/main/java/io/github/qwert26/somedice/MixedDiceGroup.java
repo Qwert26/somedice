@@ -55,7 +55,7 @@ public class MixedDiceGroup implements IDie {
 	 * @return A copy of the internal sources, changes made to the array do not
 	 *         reflect in the instance.
 	 */
-	public IDie[] getSources() {
+	public final IDie[] getSources() {
 		return Arrays.copyOf(sources, sources.length);
 	}
 

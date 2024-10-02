@@ -13,7 +13,7 @@ import java.util.function.*;
  * 
  * @author Qwert26
  */
-public final class Compressor implements IDie {
+public final class Compressor implements IDie, IRequiresSource {
 	/**
 	 * The source of dice rolls.
 	 */
@@ -148,9 +148,24 @@ public final class Compressor implements IDie {
 	/**
 	 * 
 	 * @param source The source of dice rolls to compress.
-	 * @throws NullPointerException if the parameter is <code>null</code>.
+	 * 
+	 * @throws NullPointerException     if the parameter is <code>null</code>.
+	 * @throws IllegalArgumentException if the non-null parameter is of type
+	 *                                  {@link IRequiresSource} and using it would
+	 *                                  result in an infinite loop.
+	 * @see Utils#checkForCycle(IRequiresSource)
 	 */
 	public final void setSource(IDie source) {
+		if (source instanceof IRequiresSource future) {
+			IDie oldSource = this.source;
+			this.source = source;
+			try {
+				Utils.checkForCycle(future);
+			} catch (IllegalArgumentException iae) {
+				this.source = oldSource;
+				throw iae;
+			}
+		}
 		this.source = Objects.requireNonNull(source, "A source must be given!");
 	}
 

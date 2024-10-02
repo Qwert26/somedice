@@ -173,4 +173,55 @@ public final class Utils {
 		returnInteger = (returnInteger.compareTo(rangeEnd) > 0 ? rangeEnd : returnInteger);
 		return returnInteger;
 	}
+
+	/**
+	 * Checks, if using the given source would result in an infinite loop. If yes it
+	 * will throw an exception. It uses the slow-fast-detection-method: The slow
+	 * pointer only moves one step at a time, the fast one however two. If the fast
+	 * one reaches the end of a chain, then there can be no cycle. If the fast
+	 * pointer runs into the slow one, than there is a cycle.
+	 * 
+	 * @param current
+	 * @throws IllegalArgumentException If using the given source results in an
+	 *                                  infinite loop.
+	 */
+	public static void checkForCycle(IRequiresSource current) {
+		IDie temp = current.getSource();
+		IRequiresSource slow, fast;
+		{
+			if (temp instanceof IRequiresSource next) {
+				slow = next;
+			} else {
+				return;
+			}
+		}
+		temp = slow.getSource();
+		{
+			if (temp instanceof IRequiresSource next) {
+				fast = next;
+			} else {
+				return;
+			}
+		}
+		while (fast != null) {
+			temp = fast.getSource();
+			if (temp instanceof IRequiresSource next) {
+				temp = next.getSource();
+				if (temp instanceof IRequiresSource nextNext) {
+					fast = nextNext;
+				} else {
+					// The source does not require a source
+					return;
+				}
+			} else {
+				// The source does not require a source
+				return;
+			}
+			// slow should always be behind fast: So additional checks are not needed.
+			slow = (IRequiresSource) slow.getSource();
+			if (slow == fast) {
+				throw new IllegalArgumentException("Using the given source would create a loop!");
+			}
+		}
+	}
 }
