@@ -255,11 +255,25 @@ public class RecievedDamage implements IDie, IRequiresSource {
 		return builder.toString();
 	}
 
+	/**
+	 * @param source The new source to use.
+	 * @throws IllegalArgumentException If the new source is not a
+	 *                                  {@link Compressor} or an {@link UnfairDie}.
+	 *                                  In the case of the compressor, if using it
+	 *                                  would result in an infinite loop.
+	 * @see Utils#checkForCycle(IRequiresSource)
+	 */
 	@Override
 	public void setSource(IDie source) {
 		if (source instanceof Compressor comp) {
-			Utils.checkForCycle(comp);
+			IDie oldSource = this.source;
 			setSource(comp);
+			try {
+				Utils.checkForCycle(comp);
+			} catch (IllegalArgumentException iae) {
+				this.source = oldSource;
+				throw iae;
+			}
 		} else if (source instanceof UnfairDie unfair) {
 			setSource(unfair);
 		} else {
