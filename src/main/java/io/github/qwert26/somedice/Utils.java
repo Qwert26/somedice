@@ -28,6 +28,7 @@ public final class Utils {
 	 * @throws IllegalArgumentException If the sum of the individual group sizes is
 	 *                                  not equal to the total count.
 	 * @return The total amount of arrangements.
+	 * @see Utils#multinomialIncomplete(int, int...)
 	 */
 	public static final BigInteger multinomialComplete(int total, int... individuals) {
 		if (total < 0) {
@@ -58,6 +59,7 @@ public final class Utils {
 	 *                    single group with a certain size.
 	 * @throws IllegalArgumentException If the sum of the individual group sizes is
 	 *                                  greater than the total count.
+	 * @see Utils#multinomialComplete(int, int...)
 	 * @return The total amount of arrangements.
 	 */
 	public static final BigInteger multinomialIncomplete(int total, int... individuals) {

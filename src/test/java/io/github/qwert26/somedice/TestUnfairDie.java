@@ -85,7 +85,7 @@ public class TestUnfairDie {
 	@Test
 	void checkCloningWithNull() {
 		UnfairDie truth = new UnfairDie();
-		UnfairDie test = assertDoesNotThrow(() -> new UnfairDie(null));
+		UnfairDie test = assertDoesNotThrow(() -> new UnfairDie((AbstractDie) null));
 		assertEquals(truth, test);
 	}
 

@@ -37,7 +37,7 @@ public class HomogeneousDiceGroup implements IDie {
 	}
 
 	/**
-	 * Creates a new homogenous dice group consisting of the given base die, which
+	 * Creates a new homogeneous dice group consisting of the given base die, which
 	 * is virtually replicated by an indicated amount.
 	 * 
 	 * @param baseDie

@@ -4,8 +4,15 @@ import java.math.BigInteger;
 import java.util.*;
 
 /**
+ * <p>
  * An indeterministic dice group has its name, because the amount of dice to be
  * rolled depends on another dice roll.
+ * </p>
+ * <p>
+ * Depending on the exact configuration of an instance, it might not be possible
+ * to use it as the source for either a {@link DiceDropper} or a
+ * {@link DiceKeeper}.
+ * </p>
  * 
  * @author <b>Qwert26</b>, Main author
  * @see MixedDiceGroup

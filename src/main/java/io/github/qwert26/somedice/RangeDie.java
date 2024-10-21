@@ -4,7 +4,8 @@ import java.math.BigInteger;
 import java.util.*;
 
 /**
- * A die which produces numbers from an interval.
+ * A die which produces numbers from an interval, usually with a step size of
+ * one, but other step sizes are also possible.
  * 
  * @author Qwert26
  */
@@ -18,7 +19,7 @@ public final class RangeDie extends AbstractDie {
 	 */
 	private int end;
 	/**
-	 * The step size.
+	 * The step size, it is always greater than zero.
 	 */
 	private int step;
 

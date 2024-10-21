@@ -2,10 +2,11 @@ package io.github.qwert26.somedice;
 
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * A Die designed intentionally to be unfair. This can be user designed or the
- * result of a chain of manipulating actions.
+ * result of a chain of manipulating actions. It can also mimic any other die.
  * 
  * @author Qwert26
  * @see Compressor#toUnfairDie()
@@ -18,10 +19,33 @@ public final class UnfairDie extends AbstractDie {
 
 	/**
 	 * Creates a new empty die, ready to be filled with data.
+	 * 
+	 * @implNote Uses a {@link TreeMap} for its data-field.
 	 */
 	public UnfairDie() {
+		this(TreeMap::new);
+	}
+
+	/**
+	 * Creates a new die with the data-field filled by the returned value of the
+	 * given supplier.
+	 * 
+	 * @param dataCreator
+	 * @throws IllegalArgumentException If the given {@link Supplier} was
+	 *                                  <code>null</code>.
+	 * @throws NullPointerException     If a {@code null}-value was given by the
+	 *                                  non-null {@link Supplier}.
+	 */
+	public UnfairDie(Supplier<Map<Integer, BigInteger>> dataCreator) {
 		super();
-		data = new TreeMap<Integer, BigInteger>();
+		if (dataCreator == null) {
+			throw new IllegalArgumentException("DataCreator was null.");
+		}
+		Map<Integer, BigInteger> temp = dataCreator.get();
+		if (temp == null) {
+			throw new NullPointerException("Supplier returned null via its get()-method.");
+		}
+		data = temp;
 	}
 
 	/**
@@ -32,7 +56,7 @@ public final class UnfairDie extends AbstractDie {
 	 *               "manually".
 	 */
 	public UnfairDie(AbstractDie source) {
-		this();
+		this(TreeMap::new);
 		if (source != null) {
 			switch (source) {
 			case UnfairDie ud -> {
