@@ -111,12 +111,14 @@ public class MixedDiceGroup implements IDie {
 	 * better suited, as it can make use of mathematics to compute all variations.
 	 * 
 	 * @implNote The same key can get generated multiple times, but it is never
-	 *           modified after it is put in the returned map.
+	 *           modified after it is put in the returned map. Additionally, as the
+	 *           result can take a while to compute, it is cached after computation
+	 *           and reused on following calls.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		if (cachedResult != null) {
-			Collections.unmodifiableMap(cachedResult);
+			return cachedResult;
 		}
 		@SuppressWarnings("unchecked")
 		List<Map.Entry<Map<Integer, Integer>, BigInteger>>[] indexedResultEntries = new List[sources.length];
