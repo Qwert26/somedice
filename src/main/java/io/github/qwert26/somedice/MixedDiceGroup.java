@@ -24,6 +24,10 @@ public class MixedDiceGroup implements IDie {
 	 * multiple times.
 	 */
 	private final IDie[] sources;
+	/**
+	 * 
+	 */
+	private transient Map<Map<Integer, Integer>, BigInteger> cachedResult;
 
 	/**
 	 * Creates a new mixed dice group with the given sources.
@@ -48,6 +52,7 @@ public class MixedDiceGroup implements IDie {
 		}
 		this.sources = new IDie[sources.length];
 		System.arraycopy(sources, 0, this.sources, 0, sources.length);
+		cachedResult = null;
 	}
 
 	/**
@@ -110,6 +115,9 @@ public class MixedDiceGroup implements IDie {
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
+		if (cachedResult != null) {
+			Collections.unmodifiableMap(cachedResult);
+		}
 		@SuppressWarnings("unchecked")
 		List<Map.Entry<Map<Integer, Integer>, BigInteger>>[] indexedResultEntries = new List[sources.length];
 		for (int i = 0; i < sources.length; i++) {
@@ -145,6 +153,6 @@ public class MixedDiceGroup implements IDie {
 			} while (masterIndex < indices.length);
 			break;
 		}
-		return ret;
+		return cachedResult = ret;
 	}
 }
