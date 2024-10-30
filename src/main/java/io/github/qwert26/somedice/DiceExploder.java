@@ -58,9 +58,26 @@ public class DiceExploder implements IDie, IRequiresSource {
 		return source;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
-		// TODO Auto-generated method stub
-		return null;
+		int previousMuliplier = source.getDistinctValues();
+		Map<Map<Integer, Integer>, BigInteger> baseMapping = source.getAbsoluteFrequencies();
+		previousMuliplier -= baseMapping.entrySet().stream()
+				.map(entry -> entry.getKey().keySet().stream().mapToInt(Integer::intValue).allMatch(explodeOn))
+				.mapToInt(e -> e ? 1 : 0).sum();
+		if (previousMuliplier == 0) {
+			// In that case we were to told to always explode
+			return new HomogeneousDiceGroup(source, explosionDepth).getAbsoluteFrequencies();
+		}
+		// At least one number of the die does not result in an explosion!
+		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>();
+		byte currentDepth = 0;
+		do {
+
+		} while (currentDepth < explosionDepth);
+		return ret;
 	}
 }
