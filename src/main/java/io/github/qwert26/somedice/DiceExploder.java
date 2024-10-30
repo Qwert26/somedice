@@ -21,6 +21,18 @@ public class DiceExploder implements IDie, IRequiresSource {
 	 */
 	private byte explosionDepth = 0;
 
+	public DiceExploder(AbstractDie source, IntPredicate explodeOn) {
+		super();
+		setSource(source);
+		setExplodeOn(explodeOn);
+	}
+
+	public DiceExploder(IntPredicate explodeOn, AbstractDie source) {
+		super();
+		setExplodeOn(explodeOn);
+		setSource(source);
+	}
+
 	public final IntPredicate getExplodeOn() {
 		return explodeOn;
 	}
@@ -41,7 +53,7 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	@Override
-	public void setSource(IDie source) {
+	public final void setSource(IDie source) {
 		if (source instanceof AbstractDie absDie) {
 			source = absDie;
 		} else {
@@ -49,12 +61,12 @@ public class DiceExploder implements IDie, IRequiresSource {
 		}
 	}
 
-	public void setSource(AbstractDie source) {
+	public final void setSource(AbstractDie source) {
 		this.source = Objects.requireNonNull(source, "Source must not be null.");
 	}
 
 	@Override
-	public IDie getSource() {
+	public final IDie getSource() {
 		return source;
 	}
 
@@ -73,11 +85,18 @@ public class DiceExploder implements IDie, IRequiresSource {
 			return new HomogeneousDiceGroup(source, explosionDepth).getAbsoluteFrequencies();
 		}
 		// At least one number of the die does not result in an explosion!
+		final BigInteger mul = BigInteger.valueOf(previousMuliplier);
 		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>();
-		byte currentDepth = 0;
-		do {
-
-		} while (currentDepth < explosionDepth);
+		for (byte currentDepth = 0; currentDepth < explosionDepth; currentDepth++) {
+			final byte current = currentDepth;
+			if (ret.isEmpty()) {
+				// That is for a depth of 1.
+				ret.putAll(baseMapping);
+			} else {
+				// That is for depths of 2 and higher.
+			}
+		}
+		// A depth of 0 will skip to here.
 		return ret;
 	}
 }
