@@ -86,7 +86,7 @@ public class DiceExploder implements IDie, IRequiresSource {
 		}
 		// At least one number of the die does not result in an explosion!
 		final BigInteger mul = BigInteger.valueOf(previousMuliplier);
-		Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>();
+		final Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>();
 		for (byte currentDepth = 0; currentDepth < explosionDepth; currentDepth++) {
 			final byte current = currentDepth;
 			if (ret.isEmpty()) {
@@ -94,6 +94,13 @@ public class DiceExploder implements IDie, IRequiresSource {
 				ret.putAll(baseMapping);
 			} else {
 				// That is for depths of 2 and higher.
+				final Map<Map<Integer, Integer>, BigInteger> shouldExplode = new HashMap<Map<Integer, Integer>, BigInteger>();
+				ret.entrySet().stream().filter(
+						entry -> entry.getKey().keySet().stream().mapToInt(Integer::intValue).allMatch(explodeOn))
+						.forEach(entry -> shouldExplode.put(entry.getKey(), entry.getValue()));
+				shouldExplode.keySet().stream().forEach(key -> ret.remove(key));
+				// ret is free of sets, which should explode in this round.
+				ret.keySet().stream().forEach(key -> ret.compute(key, (k, value) -> value.multiply(mul)));
 			}
 		}
 		// A depth of 0 will skip to here.
