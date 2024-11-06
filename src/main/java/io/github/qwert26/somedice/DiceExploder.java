@@ -5,6 +5,11 @@ import java.util.*;
 import java.util.function.IntPredicate;
 
 /**
+ * Simulates an exploding dice: The usual rule is, that a dice explodes, when it
+ * lands on its maximum number, but this can be controlled via the predicate
+ * {@link #explodeOn}. Exploding on all rolled values, will cause a delegation
+ * to the {@link HomogeneousDiceGroup} for faster computation.
+ * 
  * @author Qwert26
  */
 public class DiceExploder implements IDie, IRequiresSource {
@@ -189,9 +194,16 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
-	 * @see HomogeneousDiceGroup
+	 * @return An empty map, if {@link #explosionDepth} is set to zero. Otherwise,
+	 *         an asymmetrical filled map AND if {@link #explodeOn} did NOT return
+	 *         <code>true</code> for all values of the {@link #source}. Lastly the
+	 *         result of
+	 *         {@code new HomogeneousDiceGroup(source, explosionDepth).getAbsoluteFrequencies()}.
+	 * @see HomogeneousDiceGroup#getAbsoluteFrequencies()
 	 * @implNote Uses a mixture of {@link Collections#singletonMap(Object, Object)}s
-	 *           and {@link TreeMap}s for its keys.
+	 *           and {@link TreeMap}s for its keys. Will delegate to
+	 *           {@link HomogeneousDiceGroup#getAbsoluteFrequencies()} when it is
+	 *           being told to explode on all values of the dice.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
