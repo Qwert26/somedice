@@ -96,6 +96,24 @@ public final class UnfairDie extends AbstractDie {
 	}
 
 	/**
+	 * Implements the default rule for exploding. An empty UnfairDie however is
+	 * unable to explode.
+	 * 
+	 * @param value
+	 * @return <code>true</code>, if the rolled number is equal to the maximum
+	 *         number in the backing map.
+	 * @see DiceExploder
+	 */
+	public final boolean explodesOn(int value) {
+		OptionalInt result = data.keySet().stream().mapToInt(Integer::intValue).max();
+		if (result.isEmpty()) {
+			return false;
+		} else {
+			return value == result.getAsInt();
+		}
+	}
+
+	/**
 	 * @implNote Uses singleton-maps as its keys, as those are unmodifiable.
 	 */
 	@Override

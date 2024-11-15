@@ -129,6 +129,24 @@ public final class RangeDie extends AbstractDie {
 	}
 
 	/**
+	 * Implements the default rule for exploding
+	 * 
+	 * @param value
+	 * @return <code>true</code>, if the rolled number equals its maximum, <b>not
+	 *         the end-value<b>.
+	 * @see DiceExploder
+	 */
+	public final boolean explodesOn(int value) {
+		int diff = end - start;
+		if ((diff % step) == 0) {
+			diff -= step;
+		} else {
+			diff -= diff % step;
+		}
+		return value == (start + diff);
+	}
+
+	/**
 	 * @implNote Uses singleton-maps as its keys, as those are unmodifiable.
 	 */
 	@Override

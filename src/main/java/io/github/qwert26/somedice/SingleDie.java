@@ -104,6 +104,17 @@ public final class SingleDie extends AbstractDie {
 	}
 
 	/**
+	 * Implements the default explosion rule for a SingleDie.
+	 * 
+	 * @param value
+	 * @return <code>true</code>, if the rolled value is equal to its maximum.
+	 * @see DiceExploder
+	 */
+	public final boolean explodesOn(int value) {
+		return value == maximum - (startAt0 ? 1 : 0);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override

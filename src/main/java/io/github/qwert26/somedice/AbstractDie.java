@@ -24,4 +24,5 @@ public abstract sealed class AbstractDie implements IDie permits SingleDie, Fudg
 	 * @return The amount of different values a die has.
 	 */
 	public abstract int getDistinctValues();
+	public abstract boolean explodesOn(int value);
 }

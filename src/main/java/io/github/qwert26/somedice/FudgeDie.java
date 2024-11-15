@@ -17,6 +17,17 @@ public final class FudgeDie extends AbstractDie {
 	public static final FudgeDie INSTANCE = new FudgeDie();
 
 	/**
+	 * Implements the default explosion-rule for the FudgeDie.
+	 * 
+	 * @param value
+	 * @return <code>true</code>, if the rolled value equals 1.
+	 * @see DiceExploder
+	 */
+	public final boolean explodesOn(int value) {
+		return value == 1;
+	}
+
+	/**
 	 * Creates the only fudge-die.
 	 */
 	private FudgeDie() {
