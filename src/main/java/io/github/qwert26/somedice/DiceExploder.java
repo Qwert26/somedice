@@ -27,9 +27,13 @@ public class DiceExploder implements IDie, IRequiresSource {
 	private byte explosionDepth = 0;
 
 	/**
+	 * Creates a new DiceExploder with the given source and condition, but with an
+	 * explosion depth set to zero.
 	 * 
 	 * @param source
 	 * @param explodeOn
+	 * @throws NullPointerException If either the source or the condition is
+	 *                              <code>null</code>.
 	 */
 	public DiceExploder(AbstractDie source, IntPredicate explodeOn) {
 		super();
@@ -38,10 +42,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
+	 * Creates a new DiceExploder with the given source, explosion condition and the
+	 * given depth.
 	 * 
 	 * @param source
 	 * @param explodeOn
 	 * @param explosionDepth
+	 * @throws NullPointerException     If either the source or the condition is
+	 *                                  <code>null</code>.
+	 * @throws IllegalArgumentException If the depth is negative.
 	 */
 	public DiceExploder(AbstractDie source, IntPredicate explodeOn, byte explosionDepth) {
 		super();
@@ -51,10 +60,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
+	 * Creates a new DiceExploder with the given source, explosion condition and the
+	 * given depth.
 	 * 
 	 * @param source
 	 * @param explosionDepth
 	 * @param explodeOn
+	 * @throws NullPointerException     If either the source or the condition is
+	 *                                  <code>null</code>.
+	 * @throws IllegalArgumentException If the depth is negative.
 	 */
 	public DiceExploder(AbstractDie source, byte explosionDepth, IntPredicate explodeOn) {
 		super();
@@ -64,10 +78,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
+	 * Creates a new DiceExploder with the given source, explosion condition and the
+	 * given depth.
 	 * 
 	 * @param explosionDepth
 	 * @param source
 	 * @param explodeOn
+	 * @throws NullPointerException     If either the source or the condition is
+	 *                                  <code>null</code>.
+	 * @throws IllegalArgumentException If the depth is negative.
 	 */
 	public DiceExploder(byte explosionDepth, AbstractDie source, IntPredicate explodeOn) {
 		super();
@@ -77,9 +96,13 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
+	 * Creates a new DiceExploder with the given source and condition, but with an
+	 * explosion depth set to zero.
 	 * 
 	 * @param explodeOn
 	 * @param source
+	 * @throws NullPointerException If either the source or the condition is
+	 *                              <code>null</code>.
 	 */
 	public DiceExploder(IntPredicate explodeOn, AbstractDie source) {
 		super();
@@ -88,10 +111,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
+	 * Creates a new DiceExploder with the given source, explosion condition and the
+	 * given depth.
 	 * 
 	 * @param explodeOn
 	 * @param source
 	 * @param explosionDepth
+	 * @throws NullPointerException     If either the source or the condition is
+	 *                                  <code>null</code>.
+	 * @throws IllegalArgumentException If the depth is negative.
 	 */
 	public DiceExploder(IntPredicate explodeOn, AbstractDie source, byte explosionDepth) {
 		super();
@@ -101,10 +129,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
+	 * Creates a new DiceExploder with the given source, explosion condition and the
+	 * given depth.
 	 * 
 	 * @param explodeOn
 	 * @param explosionDepth
 	 * @param source
+	 * @throws NullPointerException     If either the source or the condition is
+	 *                                  <code>null</code>.
+	 * @throws IllegalArgumentException If the depth is negative.
 	 */
 	public DiceExploder(IntPredicate explodeOn, byte explosionDepth, AbstractDie source) {
 		super();
@@ -114,10 +147,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 	}
 
 	/**
+	 * Creates a new DiceExploder with the given source, explosion condition and the
+	 * given depth.
 	 * 
 	 * @param explosionDepth
 	 * @param explodeOn
 	 * @param source
+	 * @throws NullPointerException     If either the source or the condition is
+	 *                                  <code>null</code>.
+	 * @throws IllegalArgumentException If the depth is negative.
 	 */
 	public DiceExploder(byte explosionDepth, IntPredicate explodeOn, AbstractDie source) {
 		super();
@@ -128,7 +166,7 @@ public class DiceExploder implements IDie, IRequiresSource {
 
 	/**
 	 * 
-	 * @return
+	 * @return The current explosion condition, never <code>null</code>.
 	 */
 	public final IntPredicate getExplodeOn() {
 		return explodeOn;
@@ -145,7 +183,7 @@ public class DiceExploder implements IDie, IRequiresSource {
 
 	/**
 	 * 
-	 * @return
+	 * @return The current explosion depth, never negative.
 	 */
 	public final byte getExplosionDepth() {
 		return explosionDepth;
@@ -165,11 +203,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 
 	/**
 	 * @param source
-	 * @throws IllegalArgumentException
+	 * @throws NullPointerException     If the given source was <code>null</code>.
+	 * @throws IllegalArgumentException If the given source was not an
+	 *                                  {@link AbstractDie}.
 	 */
 	@Override
 	public final void setSource(IDie source) {
-		if (source instanceof AbstractDie absDie) {
+		if (source == null) {
+			throw new NullPointerException("Source as IDie must not be null.");
+		} else if (source instanceof AbstractDie absDie) {
 			source = absDie;
 		} else {
 			throw new IllegalArgumentException("Given source was not an AbstractDie.");
@@ -179,14 +221,15 @@ public class DiceExploder implements IDie, IRequiresSource {
 	/**
 	 * 
 	 * @param source
-	 * @throws NullPointerException
+	 * @throws NullPointerException If the given source was <code>null</code>.
 	 */
 	public final void setSource(AbstractDie source) {
-		this.source = Objects.requireNonNull(source, "Source must not be null.");
+		this.source = Objects.requireNonNull(source, "Source as AbstractDie must not be null.");
 	}
 
 	/**
-	 * 
+	 * @return The current source, always an {@link AbstractDie} and never
+	 *         <code>null</code>.
 	 */
 	@Override
 	public final IDie getSource() {
@@ -213,10 +256,10 @@ public class DiceExploder implements IDie, IRequiresSource {
 				.map(entry -> entry.getKey().keySet().stream().mapToInt(Integer::intValue).allMatch(explodeOn))
 				.mapToInt(e -> e ? 1 : 0).sum();
 		if (previousMuliplier == 0) {
-			// In that case we were to told to always explode
+			// In that case we were to told to always explode.
 			return new HomogeneousDiceGroup(source, explosionDepth).getAbsoluteFrequencies();
 		}
-		// At least one number of the die does not result in an explosion!
+		// At least one number of the die does not result in an explosion.
 		final BigInteger mul = BigInteger.valueOf(previousMuliplier);
 		final Map<Map<Integer, Integer>, BigInteger> ret = new HashMap<Map<Integer, Integer>, BigInteger>();
 		for (byte currentDepth = 0; currentDepth < explosionDepth; currentDepth++) {
