@@ -291,4 +291,66 @@ public class DiceExploder implements IDie, IRequiresSource {
 		// A depth of 0 will skip to here.
 		return ret;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((explodeOn == null) ? 0 : explodeOn.hashCode());
+		result = prime * result + explosionDepth;
+		result = prime * result + ((source == null) ? 0 : source.hashCode());
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof DiceExploder)) {
+			return false;
+		}
+		DiceExploder other = (DiceExploder) obj;
+		if (explodeOn == null) {
+			if (other.explodeOn != null) {
+				return false;
+			}
+		} else if (!explodeOn.equals(other.explodeOn)) {
+			return false;
+		}
+		if (explosionDepth != other.explosionDepth) {
+			return false;
+		}
+		if (source == null) {
+			if (other.source != null) {
+				return false;
+			}
+		} else if (!source.equals(other.source)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DiceExploder [source=");
+		builder.append(source);
+		builder.append(", explodeOn=");
+		builder.append(explodeOn);
+		builder.append(", explosionDepth=");
+		builder.append(explosionDepth);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

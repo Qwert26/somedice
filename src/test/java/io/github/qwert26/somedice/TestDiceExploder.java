@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 
+ * @author Qwert26
  */
 public class TestDiceExploder {
 	/**
