@@ -8,7 +8,7 @@ import java.util.*;
  * standard D6 as <code>+</code>, <code>-</code> and <code>0</code>. It is also
  * sometimes called a fate-die.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public final class FudgeDie extends AbstractDie {
 	/**

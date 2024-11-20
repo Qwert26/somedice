@@ -3,7 +3,7 @@ package io.github.qwert26.somedice.exporter;
 import io.github.qwert26.somedice.*;
 
 /**
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public final class StringExporter {
 	/**

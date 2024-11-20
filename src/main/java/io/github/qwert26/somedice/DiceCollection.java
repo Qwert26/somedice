@@ -5,7 +5,7 @@ import java.math.BigInteger;
 /**
  * A collection of various dice, ready to be used.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public final class DiceCollection {
 	/**

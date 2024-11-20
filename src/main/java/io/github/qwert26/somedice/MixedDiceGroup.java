@@ -14,7 +14,7 @@ import java.util.*;
  * cause a {@link StackOverflowError} or a {@link OutOfMemoryError}.
  * </p>
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  * @see HomogeneousDiceGroup
  * @see IndeterministicDiceGroup
  */
@@ -25,7 +25,8 @@ public class MixedDiceGroup implements IDie {
 	 */
 	private final IDie[] sources;
 	/**
-	 * 
+	 * {@code MixedDiceGroup}s can be quite expensive to calculate their result: So
+	 * the last result gets cached and reused.
 	 */
 	private transient Map<Map<Integer, Integer>, BigInteger> cachedResult;
 

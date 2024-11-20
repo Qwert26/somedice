@@ -1,5 +1,6 @@
 /**
  * Contains classes for simulating <b>Pathfinder</b> rules, that use dice.
- * @author Qwert26 
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 package io.github.qwert26.somedice.ttrpg.pf;

@@ -8,7 +8,7 @@ import java.util.*;
  * long as there is no overlap between the two. For dropping values instead, use
  * the {@link DiceDropper}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  * @see DiceDropper
  */
 public class DiceKeeper implements IDie, IRequiresSource {

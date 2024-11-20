@@ -10,7 +10,7 @@ import java.util.function.IntPredicate;
  * {@link #explodeOn}. Exploding on all rolled values, will cause a delegation
  * to the {@link HomogeneousDiceGroup} for faster computation.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public class DiceExploder implements IDie, IRequiresSource {
 	/**

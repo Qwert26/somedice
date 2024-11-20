@@ -9,7 +9,7 @@ import java.util.*;
  * rolled dice depends on another dice roll, take a look at
  * {@link IndeterministicDiceGroup}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  * @see MixedDiceGroup
  * @see IndeterministicDiceGroup
  */

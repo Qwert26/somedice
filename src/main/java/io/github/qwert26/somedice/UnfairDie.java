@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  * A Die designed intentionally to be unfair. This can be user designed or the
  * result of a chain of manipulating actions. It can also mimic any other die.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  * @see Compressor#toUnfairDie()
  */
 public final class UnfairDie extends AbstractDie {

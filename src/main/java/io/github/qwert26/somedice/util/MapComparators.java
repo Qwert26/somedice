@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Contains various comparators for comparing maps.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public final class MapComparators {
 
@@ -29,7 +29,7 @@ public final class MapComparators {
 	 * </ol>
 	 * If everything runs through, the two tree-maps are considered identical.
 	 * 
-	 * @author Qwert26
+	 * @author <b>Qwert26</b>, main author
 	 */
 	public static final Comparator<TreeMap<Integer, Integer>> NATURAL_TREEMAP_INT_INT = new Comparator<TreeMap<Integer, Integer>>() {
 		@Override
@@ -80,7 +80,7 @@ public final class MapComparators {
 	 * ordering of keys, as well as some of the extra methods.
 	 * </p>
 	 * 
-	 * @author Qwert26
+	 * @author <b>Qwert26</b>, main author
 	 */
 	public static final Comparator<Map<Integer, Integer>> NATURAL_MAP_INT_INT = new Comparator<Map<Integer, Integer>>() {
 		@Override

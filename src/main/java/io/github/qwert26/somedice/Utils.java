@@ -7,11 +7,14 @@ import java.util.stream.IntStream;
 /**
  * Contains various utility methods, mostly math-related.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public final class Utils {
 	/**
 	 * No instances are allowed.
+	 * 
+	 * @throws UnsupportedOperationException Always, just in case someone invokes it
+	 *                                       via reflection.
 	 */
 	private Utils() {
 		super();

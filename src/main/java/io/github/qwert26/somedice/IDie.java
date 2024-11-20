@@ -6,11 +6,14 @@ import java.math.BigInteger;
 /**
  * The interface for a die.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @FunctionalInterface
 public interface IDie {
 	/**
+	 * Requests the absolute frequencies of a single die or a collection of dice.
+	 * The "keying" map is a mapping from thrown values to their occurrences.
+	 * 
 	 * @implSpec After adding a map as a key, further modifications to it are
 	 *           prohibited, because this might result in <b>inaccessible</b> data!
 	 * @see Collections#singletonMap(Object, Object)

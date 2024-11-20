@@ -7,7 +7,7 @@ import java.util.*;
  * Represents a single fair die, with numbers starting either at zero or one.
  * The die is "dense", meaning it does not skip numbers.
  * 
- * @author Christian Schuerhoff
+ * @author <b>Qwert26</b>, main author
  */
 public final class SingleDie extends AbstractDie {
 	/**

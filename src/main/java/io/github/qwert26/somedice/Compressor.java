@@ -11,7 +11,7 @@ import java.util.function.*;
  * {@link #getAbsoluteFrequencies()}-method produces keys in the form of
  * <code>{X=1}</code>.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public final class Compressor implements IDie, IRequiresSource {
 	/**

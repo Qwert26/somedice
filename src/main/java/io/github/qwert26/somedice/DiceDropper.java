@@ -8,7 +8,7 @@ import java.util.*;
  * as there are dice still left over to create a frequency mapping. For keeping
  * dice instead, use the {@link DiceKeeper}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  * @see DiceKeeper
  */
 public class DiceDropper implements IDie, IRequiresSource {

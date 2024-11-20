@@ -7,7 +7,7 @@ import java.util.*;
  * A die which produces numbers from an interval, usually with a step size of
  * one, but other step sizes are also possible.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public final class RangeDie extends AbstractDie {
 	/**

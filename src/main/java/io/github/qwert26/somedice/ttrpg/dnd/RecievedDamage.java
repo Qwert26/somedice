@@ -8,11 +8,12 @@ import io.github.qwert26.somedice.*;
 /**
  * Implements the standard way of calculating damage in "Dungeons & Dragons".
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public class RecievedDamage implements IDie, IRequiresSource {
 	/**
-	 * The source of damage. It is not allowed to be <code>null</code>.
+	 * The source of damage. It is not allowed to be <code>null</code> and the only
+	 * allowed types are {@link Compressor}s and {@link UnfairDie}s.
 	 */
 	private IDie source = null;
 	/**
@@ -71,6 +72,10 @@ public class RecievedDamage implements IDie, IRequiresSource {
 		this.reduction = reduction;
 	}
 
+	/**
+	 * 
+	 * @return If resistance is currently active.
+	 */
 	public final boolean isResistance() {
 		return resistance;
 	}
@@ -85,6 +90,10 @@ public class RecievedDamage implements IDie, IRequiresSource {
 		this.resistance = resistance;
 	}
 
+	/**
+	 * 
+	 * @return If vulnerability is currently active.
+	 */
 	public final boolean isVulnerability() {
 		return vulnerability;
 	}
