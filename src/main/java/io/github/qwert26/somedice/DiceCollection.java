@@ -20,17 +20,29 @@ public final class DiceCollection {
 	 */
 	public static final UnfairDie REROLLED_WRATH_AND_GLORY_DIE;
 	/**
+	 * A die containing the multi-set {1, 2, 2, 3}. Together with a
+	 * {@link #D4_SICHERMAN_HIGH} in a {@link MixedDiceGroup}, they recreated the
+	 * resulting distribution of {@code 2D4} exactly.
+	 */
+	public static final UnfairDie D4_SICHERMAN_LOW;
+	/**
+	 * A die containing the multi-set {1, 3, 3, 5}. Together with a
+	 * {@link #D4_SICHERMAN_LOW} in a {@link MixedDiceGroup}, they recreated the
+	 * resulting distribution of {@code 2D4} exactly.
+	 */
+	public static final UnfairDie D4_SICHERMAN_HIGH;
+	/**
 	 * A die containing the multi-set {1, 2, 2, 3, 3, 4}. Together with a
-	 * {@link #SICHERMAN_HIGH} in a {@link MixedDiceGroup}, they recreated the
+	 * {@link #D6_SICHERMAN_HIGH} in a {@link MixedDiceGroup}, they recreated the
 	 * resulting distribution of {@code 2D6} exactly.
 	 */
-	public static final UnfairDie SICHERMAN_LOW;
+	public static final UnfairDie D6_SICHERMAN_LOW;
 	/**
 	 * A die containing the set {1, 3, 4, 5, 6, 8}. Together with a
-	 * {@link #SICHERMAN_LOW} in a {@link MixedDiceGroup}, they recreated the
+	 * {@link #D6_SICHERMAN_LOW} in a {@link MixedDiceGroup}, they recreated the
 	 * resulting distribution of {@code 2D6} exactly.
 	 */
-	public static final UnfairDie SICHERMAN_HIGH;
+	public static final UnfairDie D6_SICHERMAN_HIGH;
 	/**
 	 * A "Tens D10", starting at 0 and ending at 90.
 	 */
@@ -48,18 +60,26 @@ public final class DiceCollection {
 		REROLLED_WRATH_AND_GLORY_DIE.getData().put(0, BigInteger.valueOf(3));
 		REROLLED_WRATH_AND_GLORY_DIE.getData().put(1, BigInteger.valueOf(4));
 		REROLLED_WRATH_AND_GLORY_DIE.getData().put(2, BigInteger.TWO);
-		SICHERMAN_LOW = new UnfairDie();
-		SICHERMAN_LOW.getData().put(1, BigInteger.ONE);
-		SICHERMAN_LOW.getData().put(2, BigInteger.TWO);
-		SICHERMAN_LOW.getData().put(3, BigInteger.TWO);
-		SICHERMAN_LOW.getData().put(4, BigInteger.ONE);
-		SICHERMAN_HIGH = new UnfairDie();
-		SICHERMAN_HIGH.getData().put(1, BigInteger.ONE);
-		SICHERMAN_HIGH.getData().put(3, BigInteger.ONE);
-		SICHERMAN_HIGH.getData().put(4, BigInteger.ONE);
-		SICHERMAN_HIGH.getData().put(5, BigInteger.ONE);
-		SICHERMAN_HIGH.getData().put(6, BigInteger.ONE);
-		SICHERMAN_HIGH.getData().put(8, BigInteger.ONE);
+		D4_SICHERMAN_LOW = new UnfairDie();
+		D4_SICHERMAN_LOW.getData().put(1, BigInteger.ONE);
+		D4_SICHERMAN_LOW.getData().put(2, BigInteger.TWO);
+		D4_SICHERMAN_LOW.getData().put(3, BigInteger.ONE);
+		D4_SICHERMAN_HIGH = new UnfairDie();
+		D4_SICHERMAN_HIGH.getData().put(1, BigInteger.ONE);
+		D4_SICHERMAN_HIGH.getData().put(3, BigInteger.TWO);
+		D4_SICHERMAN_HIGH.getData().put(5, BigInteger.ONE);
+		D6_SICHERMAN_LOW = new UnfairDie();
+		D6_SICHERMAN_LOW.getData().put(1, BigInteger.ONE);
+		D6_SICHERMAN_LOW.getData().put(2, BigInteger.TWO);
+		D6_SICHERMAN_LOW.getData().put(3, BigInteger.TWO);
+		D6_SICHERMAN_LOW.getData().put(4, BigInteger.ONE);
+		D6_SICHERMAN_HIGH = new UnfairDie();
+		D6_SICHERMAN_HIGH.getData().put(1, BigInteger.ONE);
+		D6_SICHERMAN_HIGH.getData().put(3, BigInteger.ONE);
+		D6_SICHERMAN_HIGH.getData().put(4, BigInteger.ONE);
+		D6_SICHERMAN_HIGH.getData().put(5, BigInteger.ONE);
+		D6_SICHERMAN_HIGH.getData().put(6, BigInteger.ONE);
+		D6_SICHERMAN_HIGH.getData().put(8, BigInteger.ONE);
 	}
 
 	/**

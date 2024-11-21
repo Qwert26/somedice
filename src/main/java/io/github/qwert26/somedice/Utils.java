@@ -13,8 +13,7 @@ public final class Utils {
 	/**
 	 * No instances are allowed.
 	 * 
-	 * @throws UnsupportedOperationException Always, just in case someone invokes it
-	 *                                       via reflection.
+	 * @throws UnsupportedOperationException Always.
 	 */
 	private Utils() {
 		super();
@@ -54,8 +53,7 @@ public final class Utils {
 
 	/**
 	 * Computes the multinomial coefficient with the assumption, that left over
-	 * items can be sprinkled in in any order between the groups of identical
-	 * elements.
+	 * items can be sprinkled in any order between the groups of identical elements.
 	 * 
 	 * @param total       The expected sum of individual group sizes.
 	 * @param individuals Each value in this variable argument array represent a
@@ -99,6 +97,29 @@ public final class Utils {
 		}
 		BigInteger ret = BigInteger.ONE;
 		for (; n > 1; n--) {
+			ret = ret.multiply(BigInteger.valueOf(n));
+		}
+		return ret;
+	}
+
+	/**
+	 * Computes the semifactorial of {@code n}.
+	 * 
+	 * @param n
+	 * @throws IllegalArgumentException If {@code n} is negative.
+	 * @return {@code 1} if {@code n} is zero or one. {@code n!!} for any other
+	 *         value greater than one.
+	 * @implSpec Iterative implementation.
+	 */
+	public static final BigInteger semiFactorial(int n) {
+		if (n < 0) {
+			throw new IllegalArgumentException("Factorial of negative numbers can not be computed!");
+		}
+		if (n == 0 || n == 1) {
+			return BigInteger.ONE;
+		}
+		BigInteger ret = BigInteger.ONE;
+		for (; n > 1; n -= 2) {
 			ret = ret.multiply(BigInteger.valueOf(n));
 		}
 		return ret;
