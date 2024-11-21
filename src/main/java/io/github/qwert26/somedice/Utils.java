@@ -201,11 +201,12 @@ public final class Utils {
 	}
 
 	/**
-	 * Checks, if using the given source would result in an infinite loop. If yes it
-	 * will throw an exception. It uses the slow-fast-detection-method: The slow
+	 * Checks, if using the given source would result in an infinite loop. If yes,
+	 * it will throw an exception. It uses the slow-fast-detection-method: The slow
 	 * pointer only moves one step at a time, the fast one however two. If the fast
 	 * one reaches the end of a chain, then there can be no cycle. If the fast
-	 * pointer runs into the slow one, than there is a cycle.
+	 * pointer runs into the slow one, than there is a cycle. Where it is, does not
+	 * matter at all.
 	 * 
 	 * @param current
 	 * @throws IllegalArgumentException If using the given source results in an
