@@ -5,7 +5,9 @@ import org.junit.jupiter.api.*;
 import io.github.qwert26.somedice.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
-
+/**
+ * @author <b>Qwert26</b>, main author
+ */
 @DisplayName("TestIDGErrorCases")
 public class TestErrorCases extends TestIndeterministicDiceGroup {
 	@Test

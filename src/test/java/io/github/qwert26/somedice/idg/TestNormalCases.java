@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 /**
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @DisplayName("TestIDGNormalCases")
 public class TestNormalCases extends TestIndeterministicDiceGroup {

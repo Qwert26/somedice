@@ -8,6 +8,8 @@ import io.github.qwert26.somedice.util.MapComparators;
 
 /**
  * Not an actual test!
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @Disabled("Not an actual Test!")
 @Deprecated

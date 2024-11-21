@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assumptions.*;
 /**
  * Tests {@link DiceDropper}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("Integration")
 public class TestDiceDropper {

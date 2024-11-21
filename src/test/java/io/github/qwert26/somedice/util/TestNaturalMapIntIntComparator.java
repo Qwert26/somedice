@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Tests the {@link MapComparators#NATURAL_MAP_INT_INT}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 public class TestNaturalMapIntIntComparator {
 	/**

@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Tests {@link SingleDie}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("unit")
 public class TestSingleDie {
@@ -92,6 +94,7 @@ public class TestSingleDie {
 		underTest = new SingleDie(size, false);
 		assertEquals(size, underTest.getAbsoluteFrequencies().size());
 	}
+
 	/**
 	 * 
 	 * @param size

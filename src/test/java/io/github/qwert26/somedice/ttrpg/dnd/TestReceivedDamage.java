@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assumptions.*;
 
 /**
  * Tests {@link RecievedDamage}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 public class TestReceivedDamage {
 	@Test

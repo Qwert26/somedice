@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Tests the {@link IndeterministicDiceGroup} to be able to replicate a
  * {@link HomogeneousDiceGroup} or a {@link MixedDiceGroup}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @DisplayName("TestIDGReplicatesOtherDiceGroups")
 public class TestReplication extends TestIndeterministicDiceGroup {

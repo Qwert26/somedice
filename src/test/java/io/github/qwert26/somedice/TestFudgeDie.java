@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests {@link FudgeDie}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("unit")
 public class TestFudgeDie {

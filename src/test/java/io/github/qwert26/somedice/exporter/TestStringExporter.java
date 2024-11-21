@@ -12,7 +12,9 @@ import io.github.qwert26.somedice.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tests the {@link StringExporter}.}
+ * Tests the {@link StringExporter}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 public class TestStringExporter {
 	@ParameterizedTest

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assumptions.*;
 /**
  * Tests {@link DiceKeeper}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public class TestDiceKeeper {
 	/**

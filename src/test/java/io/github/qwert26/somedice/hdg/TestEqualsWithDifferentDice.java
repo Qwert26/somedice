@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests {@link HomogeneousDiceGroup#equals(Object)} with different base die.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("integration")
 public class TestEqualsWithDifferentDice {

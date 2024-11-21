@@ -7,7 +7,7 @@ import io.github.qwert26.somedice.*;
 /**
  * Tests the {@link HomogeneousDiceGroup} with a {@link FudgeDie}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @DisplayName("TestHomogenousDiceGroupWithFudgeDie")
 public class TestWithFudgeDie extends TestHomogenousDiceGroup {

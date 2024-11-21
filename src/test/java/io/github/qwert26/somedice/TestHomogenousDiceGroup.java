@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assumptions.*;
 /**
  * Provides the framework for testing the {@link HomogeneousDiceGroup} with
  * multiple different base die.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("integration")
 public abstract class TestHomogenousDiceGroup {

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Tests the replication of a {@link HomogeneousDiceGroup} by a
  * {@link MixedDiceGroup}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @DisplayName("TestMDGReplicatesHDG")
 public class TestReplication extends TestMixedDiceGroup {

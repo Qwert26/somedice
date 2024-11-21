@@ -7,7 +7,7 @@ import io.github.qwert26.somedice.*;
 /**
  * Tests the {@link HomogeneousDiceGroup} with a {@link RangeDie}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @DisplayName("TestHomogenousDiceGroupWithD[0,100,10]")
 public class TestWithRangeDie extends TestHomogenousDiceGroup {

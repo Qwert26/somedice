@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assumptions.*;
 
 /**
  * Tests the {@link Compressor}
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 public class TestCompressor {
 	/**

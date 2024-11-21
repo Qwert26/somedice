@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests {@link MixedDiceGroup}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 public class TestOverridenMethods extends TestMixedDiceGroup {
 	@Test

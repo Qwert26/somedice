@@ -3,7 +3,9 @@ package io.github.qwert26.somedice;
 import org.junit.jupiter.api.*;
 
 /**
- * @author Qwert26
+ * Tests the {@link MixedDiceGroup}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("integration")
 public abstract class TestMixedDiceGroup {

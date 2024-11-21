@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
+ * Tests the {@link MapComparators#NATURAL_TREEMAP_INT_INT}.
  * 
+ * @author <b>Qwert26</b>, main author
  */
 public class TestNaturalTreemapIntIntComparator {
 	/**

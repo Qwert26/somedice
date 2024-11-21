@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests {@link Utils}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("unit")
 public class TestUtils {

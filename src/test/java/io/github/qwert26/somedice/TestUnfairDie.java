@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Tests {@link UnfairDie}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("unit")
 public class TestUnfairDie {

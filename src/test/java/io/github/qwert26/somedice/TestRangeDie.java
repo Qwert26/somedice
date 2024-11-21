@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assumptions.*;
 
 /**
  * Tests {@link RangeDie}.
+ * 
+ * @author <b>Qwert26</b>, main author
  */
 @Tag("unit")
 public class TestRangeDie {

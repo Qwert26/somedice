@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 /**
  * Tests {@link MixedDiceGroup}.
  * 
- * @author Qwert26
+ * @author <b>Qwert26</b>, main author
  */
 @DisplayName("TestErrorCasesOfMixedDiceGroup")
 public class TestErrorCases extends TestMixedDiceGroup {
