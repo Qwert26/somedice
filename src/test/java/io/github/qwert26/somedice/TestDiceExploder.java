@@ -4,6 +4,7 @@ import java.util.function.*;
 
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 /**
  * Tests the {@link DiceExploder}, currently WIP.
@@ -150,5 +151,63 @@ public class TestDiceExploder {
 		DiceExploder other = new DiceExploder(source, explodeOn);
 		assertTrue(underTest.equals(other));
 		assertEquals(underTest.hashCode(), other.hashCode());
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	void keepPredicateThroughErrorCase() {
+		final AbstractDie source = new SingleDie(12);
+		final IntPredicate explodeOn = x -> true;
+		final byte explosionDepth = 4;
+		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
+		assumeTrue(underTest.getExplodeOn() == explodeOn);
+		assertThrows(NullPointerException.class, () -> underTest.setExplodeOn(null));
+		assertEquals(explodeOn, underTest.getExplodeOn());
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	void keepSourceThroughErrorCaseNull() {
+		final AbstractDie source = new SingleDie(12);
+		final IntPredicate explodeOn = x -> true;
+		final byte explosionDepth = 4;
+		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
+		assumeTrue(underTest.getSource() == source);
+		assertThrows(NullPointerException.class, () -> underTest.setSource((AbstractDie) null));
+		assertEquals(source, underTest.getSource());
+		assertThrows(NullPointerException.class, () -> underTest.setSource((IDie) null));
+		assertEquals(source, underTest.getSource());
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	void keepSourceThroughErrorCaseWrongClass() {
+		final AbstractDie source = new SingleDie(12);
+		final IntPredicate explodeOn = x -> true;
+		final byte explosionDepth = 4;
+		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
+		assumeTrue(underTest.getSource() == source);
+		assertThrows(IllegalArgumentException.class, () -> underTest.setSource(new HomogeneousDiceGroup(source)));
+		assertEquals(source, underTest.getSource());
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	void keeDepthThroughErrorCase() {
+		final AbstractDie source = new SingleDie(12);
+		final IntPredicate explodeOn = x -> true;
+		final byte explosionDepth = 4;
+		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
+		assumeTrue(underTest.getExplosionDepth() == explosionDepth);
+		assertThrows(IllegalArgumentException.class, () -> underTest.setExplosionDepth((byte) -5));
+		assertEquals(explosionDepth, underTest.getExplosionDepth());
 	}
 }
