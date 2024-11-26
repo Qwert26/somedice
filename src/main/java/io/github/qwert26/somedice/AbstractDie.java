@@ -4,7 +4,7 @@ import java.util.function.IntPredicate;
 
 /**
  * An abstract die, as the code makes certain assumptions about the internal
- * workings of its subclasses, it is sealed.
+ * workings of its subclasses, it is <code>sealed</code>.
  * 
  * @author <b>Qwert26</b>, Main-author
  * @see SingleDie

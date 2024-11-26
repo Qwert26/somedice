@@ -208,7 +208,9 @@ public final class Utils {
 	 * pointer runs into the slow one, than there is a cycle. Where it is, does not
 	 * matter at all.
 	 * 
-	 * @param current
+	 * @param current The starting point, something that has another
+	 *                {@link IDie}-instance. Said instance could also be a
+	 *                {@code IRequiresSource}-instance.
 	 * @throws IllegalArgumentException If using the given source results in an
 	 *                                  infinite loop.
 	 */

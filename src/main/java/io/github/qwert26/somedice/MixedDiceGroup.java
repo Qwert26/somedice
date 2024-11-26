@@ -26,7 +26,7 @@ public class MixedDiceGroup implements IDie {
 	private final IDie[] sources;
 	/**
 	 * {@code MixedDiceGroup}s can be quite expensive to calculate their result: So
-	 * the last result gets cached and reused.
+	 * the result gets cached and reused.
 	 */
 	private transient Map<Map<Integer, Integer>, BigInteger> cachedResult;
 
