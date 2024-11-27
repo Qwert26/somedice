@@ -22,12 +22,12 @@ public class HomogeneousDiceGroup implements IDie {
 	 */
 	private AbstractDie baseDie;
 	/**
-	 * Amount of identical dice in this group.
+	 * Amount of identical dice in this group. It is always positive.
 	 */
 	private int count;
 
 	/**
-	 * Creates a new homogenous dice group consisting of a single base die.
+	 * Creates a new homogeneous dice group consisting of a single base die.
 	 * 
 	 * @param baseDie The dice to use, it is not replicated.
 	 * @throws NullPointerException If the base die is <code>null</code>.

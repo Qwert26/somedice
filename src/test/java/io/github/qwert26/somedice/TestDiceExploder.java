@@ -201,7 +201,7 @@ public class TestDiceExploder {
 	 * 
 	 */
 	@Test
-	void keeDepthThroughErrorCase() {
+	void keepDepthThroughErrorCase() {
 		final AbstractDie source = new SingleDie(12);
 		final IntPredicate explodeOn = x -> true;
 		final byte explosionDepth = 4;
@@ -209,5 +209,11 @@ public class TestDiceExploder {
 		assumeTrue(underTest.getExplosionDepth() == explosionDepth);
 		assertThrows(IllegalArgumentException.class, () -> underTest.setExplosionDepth((byte) -5));
 		assertEquals(explosionDepth, underTest.getExplosionDepth());
+	}
+
+	@Test
+	@Disabled
+	void checkResult() {
+
 	}
 }
