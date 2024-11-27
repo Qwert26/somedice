@@ -152,6 +152,8 @@ public final class StringExporter {
 	}
 
 	/**
+	 * Exports an unfair die by "abusing" the canonical small 'd' followed by the
+	 * content of its data-mapping.
 	 * 
 	 * @param unfair
 	 * @return

@@ -28,7 +28,7 @@ public class MixedDiceGroup implements IDie {
 	 * {@code MixedDiceGroup}s can be quite expensive to calculate their result: So
 	 * the result gets cached and reused.
 	 */
-	private transient Map<Map<Integer, Integer>, BigInteger> cachedResult;
+	private volatile transient Map<Map<Integer, Integer>, BigInteger> cachedResult;
 
 	/**
 	 * Creates a new mixed dice group with the given sources.
