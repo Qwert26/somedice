@@ -211,17 +211,17 @@ public final class Utils {
 	 * @param current The starting point, something that has another
 	 *                {@link IDie}-instance. Said instance could also be a
 	 *                {@code IRequiresSource}-instance.
-	 * @throws IllegalArgumentException If using the given source results in an
-	 *                                  infinite loop.
+	 * @return <code>true</code>, if using the given source results in an infinite
+	 *         loop.
 	 */
-	public static void checkForCycle(IRequiresSource current) {
+	public static final boolean checkForCycle(IRequiresSource current) {
 		IDie temp = current.getSource();
 		IRequiresSource slow, fast;
 		{
 			if (temp instanceof IRequiresSource next) {
 				slow = next;
 			} else {
-				return;
+				return false;
 			}
 		}
 		temp = slow.getSource();
@@ -229,7 +229,7 @@ public final class Utils {
 			if (temp instanceof IRequiresSource next) {
 				fast = next;
 			} else {
-				return;
+				return false;
 			}
 		}
 		while (fast != null) {
@@ -240,17 +240,18 @@ public final class Utils {
 					fast = nextNext;
 				} else {
 					// The source does not require a source
-					return;
+					return false;
 				}
 			} else {
 				// The source does not require a source
-				return;
+				return false;
 			}
 			// slow should always be behind fast: So additional checks are not needed.
 			slow = (IRequiresSource) slow.getSource();
 			if (slow == fast) {
-				throw new IllegalArgumentException("Using the given source would create a loop!");
+				return true;
 			}
 		}
+		return false;
 	}
 }

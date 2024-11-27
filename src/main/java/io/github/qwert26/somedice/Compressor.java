@@ -149,21 +149,15 @@ public final class Compressor implements IDie, IRequiresSource {
 	 * 
 	 * @param source The source of dice rolls to compress.
 	 * 
-	 * @throws NullPointerException     if the parameter is <code>null</code>.
-	 * @throws IllegalArgumentException if the non-null parameter is of type
-	 *                                  {@link IRequiresSource} and using it would
-	 *                                  result in an infinite loop.
+	 * @throws NullPointerException if the parameter is <code>null</code>.
 	 * @see Utils#checkForCycle(IRequiresSource)
 	 */
 	public final void setSource(IDie source) {
 		if (source instanceof IRequiresSource future) {
 			IDie oldSource = this.source;
 			this.source = source;
-			try {
-				Utils.checkForCycle(future);
-			} catch (IllegalArgumentException iae) {
+			if (Utils.checkForCycle(future)) {
 				this.source = oldSource;
-				throw iae;
 			}
 		}
 		this.source = Objects.requireNonNull(source, "A source must be given!");

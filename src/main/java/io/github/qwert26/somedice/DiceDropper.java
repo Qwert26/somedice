@@ -120,20 +120,15 @@ public class DiceDropper implements IDie, IRequiresSource {
 	/**
 	 * 
 	 * @param source The source from which dice are to be dropped.
-	 * @throws NullPointerException     if the given source is <code>null</code>.
-	 * @throws IllegalArgumentException if using the non-null parameter would result
-	 *                                  in an infinite loop.
+	 * @throws NullPointerException if the given source is <code>null</code>.
 	 * @see Utils#checkForCycle(IRequiresSource)
 	 */
 	public final void setSource(IDie source) {
 		if (source instanceof IRequiresSource future) {
 			IDie oldSource = this.source;
 			this.source = source;
-			try {
-				Utils.checkForCycle(future);
-			} catch (IllegalArgumentException iae) {
+			if (Utils.checkForCycle(future)) {
 				this.source = oldSource;
-				throw iae;
 			}
 		}
 		this.source = Objects.requireNonNull(source, "A source must be given!");
