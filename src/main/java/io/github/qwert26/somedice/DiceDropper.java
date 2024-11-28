@@ -137,6 +137,7 @@ public class DiceDropper implements IDie, IRequiresSource {
 	/**
 	 * @throws IllegalStateException if the source did not "rolled enough dice" and
 	 *                               dropping values resulted in an empty key.
+	 * @implNote Uses {@link TreeMap}s for its keys.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
@@ -166,6 +167,9 @@ public class DiceDropper implements IDie, IRequiresSource {
 		return ret;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -176,6 +180,9 @@ public class DiceDropper implements IDie, IRequiresSource {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -201,6 +208,9 @@ public class DiceDropper implements IDie, IRequiresSource {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

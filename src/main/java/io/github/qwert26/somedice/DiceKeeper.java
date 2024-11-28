@@ -195,6 +195,7 @@ public class DiceKeeper implements IDie, IRequiresSource {
 
 	/**
 	 * @throws IllegalStateException If too little dice can be kept.
+	 * @implNote Uses {@link TreeMap}s for its keys.
 	 */
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {

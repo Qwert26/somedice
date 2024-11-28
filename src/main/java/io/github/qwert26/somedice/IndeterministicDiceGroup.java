@@ -243,5 +243,4 @@ public class IndeterministicDiceGroup implements IDie {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }
