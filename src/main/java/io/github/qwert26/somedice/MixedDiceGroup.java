@@ -18,7 +18,7 @@ import java.util.*;
  * @see HomogeneousDiceGroup
  * @see IndeterministicDiceGroup
  */
-public class MixedDiceGroup implements IDie {
+public class MixedDiceGroup implements IDie, IRequiresSources {
 	/**
 	 * The source where the results are coming from, the same source can be used
 	 * multiple times.
