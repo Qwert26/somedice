@@ -22,49 +22,49 @@ public final class DiceCollection {
 	/**
 	 * A die containing the multi-set {1, 2, 2, 3}. Together with a
 	 * {@link #D4_SICHERMAN_HIGH} in a {@link MixedDiceGroup}, they recreated the
-	 * resulting distribution of {@code 2D4} exactly.
+	 * resulting distribution of {@code 2d4} exactly.
 	 */
 	public static final UnfairDie D4_SICHERMAN_LOW;
 	/**
 	 * A die containing the multi-set {1, 3, 3, 5}. Together with a
 	 * {@link #D4_SICHERMAN_LOW} in a {@link MixedDiceGroup}, they recreated the
-	 * resulting distribution of {@code 2D4} exactly.
+	 * resulting distribution of {@code 2d4} exactly.
 	 */
 	public static final UnfairDie D4_SICHERMAN_HIGH;
 	/**
 	 * A die containing the multi-set {1, 2, 2, 3, 3, 4}. Together with a
 	 * {@link #D6_SICHERMAN_HIGH} in a {@link MixedDiceGroup}, they recreated the
-	 * resulting distribution of {@code 2D6} exactly.
+	 * resulting distribution of {@code 2d6} exactly.
 	 */
 	public static final UnfairDie D6_SICHERMAN_LOW;
 	/**
 	 * A die containing the set {1, 3, 4, 5, 6, 8}. Together with a
 	 * {@link #D6_SICHERMAN_LOW} in a {@link MixedDiceGroup}, they recreated the
-	 * resulting distribution of {@code 2D6} exactly.
+	 * resulting distribution of {@code 2d6} exactly.
 	 */
 	public static final UnfairDie D6_SICHERMAN_HIGH;
 	/**
 	 * A die containing the multi-set {1, 2, 2, 3, 3, 3, 4, 4, 5}. Together with a
 	 * {@link #D9_SICHERMAN_HIGH} in a {@link MixedDiceGroup}, they recreated the
-	 * resulting distribution of {@code 2D9} exactly.
+	 * resulting distribution of {@code 2d9} exactly.
 	 */
 	public static final UnfairDie D9_SICHERMAN_LOW;
 	/**
 	 * A die containing the multi-set {1, 4, 4, 7, 7, 7, 10, 10, 13}. Together with
 	 * a {@link #D9_SICHERMAN_LOW} in a {@link MixedDiceGroup}, they recreated the
-	 * resulting distribution of {@code 2D9} exactly.
+	 * resulting distribution of {@code 2d9} exactly.
 	 */
 	public static final UnfairDie D9_SICHERMAN_HIGH;
 	/**
 	 * A die containing the multi-set {1, 2, 2, 3, 3, 4, 4, 5, 5, 6}. Together with
 	 * a {@link #D10_SICHERMAN_HIGH} in a {@link MixedDiceGroup}, they recreated the
-	 * resulting distribution of {@code 2D10} exactly.
+	 * resulting distribution of {@code 2d10} exactly.
 	 */
 	public static final UnfairDie D10_SICHERMAN_LOW;
 	/**
-	 * A die containing the multi-set {1, 3, 5, 6, 7, 8, 9, 10, 12, 14}. Together
+	 * A die containing the set {1, 3, 5, 6, 7, 8, 9, 10, 12, 14}. Together
 	 * with a {@link #D10_SICHERMAN_LOW} in a {@link MixedDiceGroup}, they recreated
-	 * the resulting distribution of {@code 2D10} exactly.
+	 * the resulting distribution of {@code 2d10} exactly.
 	 */
 	public static final UnfairDie D10_SICHERMAN_HIGH;
 	/**
