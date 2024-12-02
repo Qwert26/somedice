@@ -28,7 +28,7 @@ public class MixedDiceGroup implements IDie, IRequiresSources {
 	 * {@code MixedDiceGroup}s can be quite expensive to calculate their result: So
 	 * the result gets cached and reused.
 	 */
-	private volatile transient Map<Map<Integer, Integer>, BigInteger> cachedResult;
+	private volatile transient Map<Map<Integer, Integer>, BigInteger> cachedResult = null;
 
 	/**
 	 * Creates a new mixed dice group with the given sources.
@@ -119,7 +119,7 @@ public class MixedDiceGroup implements IDie, IRequiresSources {
 	@Override
 	public Map<Map<Integer, Integer>, BigInteger> getAbsoluteFrequencies() {
 		if (cachedResult != null) {
-			return cachedResult;
+			return new HashMap<>(cachedResult);
 		}
 		@SuppressWarnings("unchecked")
 		List<Map.Entry<Map<Integer, Integer>, BigInteger>>[] indexedResultEntries = new List[sources.length];
@@ -156,6 +156,7 @@ public class MixedDiceGroup implements IDie, IRequiresSources {
 			} while (masterIndex < indices.length);
 			break;
 		}
-		return cachedResult = ret;
+		cachedResult = new HashMap<>(ret);
+		return ret;
 	}
 }
