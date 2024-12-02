@@ -8,7 +8,10 @@ import java.util.function.IntPredicate;
  * Simulates an exploding dice: The usual rule is, that a dice explodes, when it
  * lands on its maximum number, but this can be controlled via the predicate
  * {@link #explodeOn}. Exploding on all rolled values, will cause a delegation
- * to the {@link HomogeneousDiceGroup} for faster computation.
+ * to the {@link HomogeneousDiceGroup} for faster computation. In reality a dice
+ * can explode infinite times, but programs can not deal with infinity when it
+ * comes to probabilities and frequencies. So there is an artificial cut-off
+ * which is controlled via {@link #explosionDepth}.
  * 
  * @author <b>Qwert26</b>, main author
  */

@@ -95,6 +95,21 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * 
+	 * @param start the new start value, inclusive
+	 * @param end   the new end value, exclusive
+	 * @throws IllegalArgumentException if the new start value is not strictly
+	 *                                  smaller than the new end value.
+	 */
+	public final void setInterval(int start, int end) {
+		if (start >= end) {
+			throw new IllegalArgumentException("start can not be greater than end.");
+		}
+		this.start = start;
+		this.end = end;
+	}
+
+	/**
+	 * 
 	 * @param start the new start value, it must be less than the new end value.
 	 * @param end   the new end value, it must be greater than the new start value.
 	 * @throws IllegalArgumentException if the new range is not allowed.

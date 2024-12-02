@@ -52,6 +52,7 @@ public final class UnfairDie extends AbstractDie {
 	 * Creates a new {@code UnfairDie}, filled with data matching another already
 	 * made Die.
 	 * 
+	 * @implNote Uses a {@link TreeMap} for its data-field.
 	 * @param source The die to copy from, if it is {@code null}, data must be given
 	 *               "manually".
 	 */

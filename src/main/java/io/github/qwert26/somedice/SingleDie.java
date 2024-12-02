@@ -33,6 +33,7 @@ public final class SingleDie extends AbstractDie {
 	 * @throws IllegalArgumentException If the given maximum is less than two.
 	 */
 	public SingleDie(boolean startAt0, int maximum) {
+		super();
 		setMaximum(maximum);
 		setStartAt0(startAt0);
 	}
@@ -48,6 +49,7 @@ public final class SingleDie extends AbstractDie {
 	 * @throws IllegalArgumentException If the given maximum is less than two.
 	 */
 	public SingleDie(int maximum, boolean startAt0) {
+		super();
 		setMaximum(maximum);
 		setStartAt0(startAt0);
 	}
