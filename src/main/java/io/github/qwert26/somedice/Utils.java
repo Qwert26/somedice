@@ -1,7 +1,7 @@
 package io.github.qwert26.somedice;
 
 import java.math.*;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
