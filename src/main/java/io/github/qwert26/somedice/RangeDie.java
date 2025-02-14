@@ -180,7 +180,7 @@ public final class RangeDie extends AbstractDie {
 	 */
 	@Override
 	public int getDistinctValues() {
-		return (int) Math.ceil((end - start) / (float) step);
+		return (int) Math.ceil((end - start) / (double) step);
 	}
 
 	/**
