@@ -278,7 +278,7 @@ public class DiceExploder implements IDie, IRequiresSource {
 				shouldExplode.keySet().stream().forEach(key -> ret.remove(key));
 				// ret is free of sets, which should explode in this round.
 				// shouldExplode now contains set to explode.
-				ret.keySet().stream().forEach(key -> ret.compute(key, (k, value) -> value.multiply(mul)));
+				ret.keySet().stream().forEach(key -> ret.compute(key, (_, value) -> value.multiply(mul)));
 				// ret now contains updated absolute frequencies for previous sets.
 				for (Map<Integer, Integer> keyPart : shouldExplode.keySet()) {
 					for (var baseEntry : baseMapping.entrySet()) {

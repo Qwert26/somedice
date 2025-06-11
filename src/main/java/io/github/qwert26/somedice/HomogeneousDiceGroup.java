@@ -176,7 +176,7 @@ public class HomogeneousDiceGroup implements IDie {
 			nextValue = BigInteger.ONE;
 			Arrays.fill(indexGroups, 0);
 			for (int subIndex : indices) {
-				nextKey.compute(primitiveKeys[subIndex], (k, v) -> {
+				nextKey.compute(primitiveKeys[subIndex], (_, v) -> {
 					if (v == null) {
 						return 1;
 					} else {

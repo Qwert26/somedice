@@ -216,7 +216,7 @@ public class DiceKeeper implements IDie, IRequiresSource {
 					throw new IllegalStateException("Overkept while keeping highest rolls!");
 				}
 				nextKey.put(lastEntry.getKey(), Math.min(keep, lastEntry.getValue()));
-				keySource.compute(lastEntry.getKey(), (k, v) -> toBeRemoved >= v ? null : (v - toBeRemoved));
+				keySource.compute(lastEntry.getKey(), (_, v) -> toBeRemoved >= v ? null : (v - toBeRemoved));
 				// The entry is needed, so this can not be put in the for-header.
 				keep -= Math.min(lastEntry.getValue(), keep);
 			}
@@ -227,12 +227,12 @@ public class DiceKeeper implements IDie, IRequiresSource {
 					throw new IllegalStateException("Overkept while keeping lowest rolls!");
 				}
 				nextKey.compute(firstEntry.getKey(),
-						(k, v) -> Math.min(toBeRemoved, firstEntry.getValue()) + (v == null ? 0 : v));
-				keySource.compute(firstEntry.getKey(), (k, v) -> toBeRemoved >= v ? null : (v - toBeRemoved));
+						(_, v) -> Math.min(toBeRemoved, firstEntry.getValue()) + (v == null ? 0 : v));
+				keySource.compute(firstEntry.getKey(), (_, v) -> toBeRemoved >= v ? null : (v - toBeRemoved));
 				// The entry is needed, so this can not be put in the for-header.
 				keep -= Math.min(firstEntry.getValue(), keep);
 			}
-			ret.compute(nextKey, (k, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
+			ret.compute(nextKey, (_, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}

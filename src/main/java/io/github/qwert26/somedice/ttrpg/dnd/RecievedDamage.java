@@ -217,7 +217,7 @@ public class RecievedDamage implements IDie, IRequiresSource {
 			value *= vulnerability ? 2 : 1;
 			Map<Integer, Integer> newKey = Collections.singletonMap(value, 1);
 			ret.compute(newKey,
-					(key, frequency) -> resultEntry.getValue().add(frequency == null ? BigInteger.ZERO : frequency));
+					(_, frequency) -> resultEntry.getValue().add(frequency == null ? BigInteger.ZERO : frequency));
 		}
 		return ret;
 	}

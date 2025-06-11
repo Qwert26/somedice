@@ -323,7 +323,7 @@ public final class Compressor implements IDie, IRequiresSource {
 				accumulated = accumulator.applyAsInt(accumulated, temp);
 			}
 			ret.compute(Collections.singletonMap(accumulated, 1),
-					(k, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
+					(_, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}
@@ -345,7 +345,7 @@ public final class Compressor implements IDie, IRequiresSource {
 				int temp = valueCountFunction.applyAsInt(valueCount.getKey(), valueCount.getValue());
 				accumulated = accumulator.applyAsInt(accumulated, temp);
 			}
-			data.compute(accumulated, (k, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
+			data.compute(accumulated, (_, v) -> resultEntry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}

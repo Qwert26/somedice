@@ -78,7 +78,7 @@ public final class UnfairDie extends AbstractDie {
 					data.put(value, BigInteger.ONE);
 				}
 			}
-			case FudgeDie fd -> {
+			case FudgeDie _ -> {
 				data.put(-1, BigInteger.ONE);
 				data.put(0, BigInteger.ONE);
 				data.put(1, BigInteger.ONE);

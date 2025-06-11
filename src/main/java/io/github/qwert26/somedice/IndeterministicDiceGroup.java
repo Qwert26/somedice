@@ -175,13 +175,13 @@ public class IndeterministicDiceGroup implements IDie {
 				// The next line is problematic, as there might be different kind of maps but
 				// having the same content!
 				temp.getAbsoluteFrequencies().forEach((composition, count) -> {
-					ret.compute(composition, (k, v) -> {
+					ret.compute(composition, (_, v) -> {
 						return count.multiply(factor).add(v == null ? BigInteger.ZERO : v);
 					});
 				});
 			} else {
 				Map<Integer, Integer> zero = Collections.singletonMap(0, 1);
-				ret.compute(zero, (k, v) -> {
+				ret.compute(zero, (_, v) -> {
 					return factor.add(v == null ? BigInteger.ZERO : v);
 				});
 			}

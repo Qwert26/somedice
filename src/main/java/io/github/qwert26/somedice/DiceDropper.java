@@ -151,18 +151,18 @@ public class DiceDropper implements IDie, IRequiresSource {
 				if (nextKey.size() == 0) {
 					throw new IllegalStateException("Overfiltered while dropping lowest rolls!");
 				}
-				nextKey.compute(nextKey.firstKey(), (k, v) -> v == 1 ? null : (v - 1));
+				nextKey.compute(nextKey.firstKey(), (_, v) -> v == 1 ? null : (v - 1));
 			}
 			for (drop = dropHighest; drop > 0; drop--) {
 				if (nextKey.size() == 0) {
 					throw new IllegalStateException("Overfiltered while dropping highest rolls!");
 				}
-				nextKey.compute(nextKey.lastKey(), (k, v) -> v == 1 ? null : (v - 1));
+				nextKey.compute(nextKey.lastKey(), (_, v) -> v == 1 ? null : (v - 1));
 			}
 			if (nextKey.size() == 0) {
 				throw new IllegalStateException("Overfiltered after dropping lowest and highest rolls!");
 			}
-			ret.compute(nextKey, (k, v) -> entry.getValue().add(v == null ? BigInteger.ZERO : v));
+			ret.compute(nextKey, (_, v) -> entry.getValue().add(v == null ? BigInteger.ZERO : v));
 		}
 		return ret;
 	}

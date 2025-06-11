@@ -18,7 +18,7 @@ public class TestDiceExploder {
 	@Test
 	void errorWithoutSource() {
 		final AbstractDie source = null;
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 4;
 		assertThrows(NullPointerException.class, () -> new DiceExploder(source, explodeOn));
 		assertThrows(NullPointerException.class, () -> new DiceExploder(source, explodeOn, explosionDepth));
@@ -54,7 +54,7 @@ public class TestDiceExploder {
 	@Test
 	void errorWithNegativeDepth() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = -4;
 		assertThrows(IllegalArgumentException.class, () -> new DiceExploder(source, explodeOn, explosionDepth));
 		assertThrows(IllegalArgumentException.class, () -> new DiceExploder(source, explosionDepth, explodeOn));
@@ -70,7 +70,7 @@ public class TestDiceExploder {
 	@Test
 	void checkEqualsNull() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 1;
 		DiceExploder underTest = new DiceExploder(source, explodeOn, explosionDepth);
 		assertFalse(underTest.equals(null));
@@ -82,7 +82,7 @@ public class TestDiceExploder {
 	@Test
 	void checkEqualsItself() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 1;
 		DiceExploder underTest = new DiceExploder(source, explosionDepth, explodeOn);
 		assertTrue(underTest.equals(underTest));
@@ -94,7 +94,7 @@ public class TestDiceExploder {
 	@Test
 	void checkEqualsWrongClass() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 1;
 		DiceExploder underTest = new DiceExploder(explosionDepth, source, explodeOn);
 		Object other = new HomogeneousDiceGroup(source, explosionDepth);
@@ -107,10 +107,10 @@ public class TestDiceExploder {
 	@Test
 	void checkEqualsUnequalPredicate() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 1;
 		DiceExploder underTest = new DiceExploder(explosionDepth, explodeOn, source);
-		DiceExploder other = new DiceExploder(explosionDepth, x -> false, source);
+		DiceExploder other = new DiceExploder(explosionDepth, _ -> false, source);
 		assertFalse(underTest.equals(other));
 	}
 
@@ -120,7 +120,7 @@ public class TestDiceExploder {
 	@Test
 	void checkEqualsUnequalSource() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 1;
 		DiceExploder underTest = new DiceExploder(explodeOn, explosionDepth, source);
 		DiceExploder other = new DiceExploder(explodeOn, explosionDepth, new SingleDie(20));
@@ -133,7 +133,7 @@ public class TestDiceExploder {
 	@Test
 	void checkEqualsUnequalDepth() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 1;
 		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
 		DiceExploder other = new DiceExploder(explodeOn, source, (byte) (explosionDepth + 1));
@@ -146,7 +146,7 @@ public class TestDiceExploder {
 	@Test
 	void checkEqualsIdentical() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		DiceExploder underTest = new DiceExploder(explodeOn, source);
 		DiceExploder other = new DiceExploder(source, explodeOn);
 		assertTrue(underTest.equals(other));
@@ -159,7 +159,7 @@ public class TestDiceExploder {
 	@Test
 	void keepPredicateThroughErrorCase() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 4;
 		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
 		assumeTrue(underTest.getExplodeOn() == explodeOn);
@@ -173,7 +173,7 @@ public class TestDiceExploder {
 	@Test
 	void keepSourceThroughErrorCaseNull() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 4;
 		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
 		assumeTrue(underTest.getSource() == source);
@@ -189,7 +189,7 @@ public class TestDiceExploder {
 	@Test
 	void keepSourceThroughErrorCaseWrongClass() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 4;
 		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
 		assumeTrue(underTest.getSource() == source);
@@ -203,7 +203,7 @@ public class TestDiceExploder {
 	@Test
 	void keepDepthThroughErrorCase() {
 		final AbstractDie source = new SingleDie(12);
-		final IntPredicate explodeOn = x -> true;
+		final IntPredicate explodeOn = _ -> true;
 		final byte explosionDepth = 4;
 		DiceExploder underTest = new DiceExploder(explodeOn, source, explosionDepth);
 		assumeTrue(underTest.getExplosionDepth() == explosionDepth);
