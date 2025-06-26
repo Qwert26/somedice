@@ -133,7 +133,7 @@ public final class RangeDie extends AbstractDie {
 
 	/**
 	 * 
-	 * @param step
+	 * @param step the new step size.
 	 * @throws IllegalArgumentException if steps are not positive.
 	 */
 	public final void setStep(int step) {
@@ -146,7 +146,7 @@ public final class RangeDie extends AbstractDie {
 	/**
 	 * Implements the default rule for exploding
 	 * 
-	 * @param value
+	 * @param value the rolled value.
 	 * @return <code>true</code>, if the rolled number equals its maximum, <b>not
 	 *         the end-value<b>.
 	 * @see DiceExploder

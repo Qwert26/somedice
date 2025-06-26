@@ -167,7 +167,9 @@ public final class Utils {
 	 * @param rand       the source of randomness.
 	 * @implNote The generated values may not be entirely uniform.
 	 * @author Panibo on StackOverflow
-	 * @return
+	 * @return A pseudo-randomly generated {@code BigInteger} which fill fall inside
+	 *         the given interval by the parameters {@code rangeStart} and
+	 *         {@code rangeEnd}.
 	 */
 	public final static BigInteger RandomBigInteger(BigInteger rangeStart, BigInteger rangeEnd, Random rand) {
 		int scale = rangeEnd.toString().length();

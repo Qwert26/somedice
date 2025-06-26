@@ -8,7 +8,7 @@ package io.github.qwert26.somedice;
 public interface IRequiresSources {
 	/**
 	 * @implSpec Changes to the array <b>must not</b> be visible in the class.
-	 * @return
+	 * @return The used sources.
 	 */
 	IDie[] getSources();
 }
