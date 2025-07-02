@@ -15,8 +15,8 @@
 		</developer>
 	</developers>
 	<properties>
-		<maven.compiler.source>21</maven.compiler.source>
-		<maven.compiler.target>21</maven.compiler.target>
+		<maven.compiler.source>24</maven.compiler.source>
+		<maven.compiler.target>24</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,7 +40,7 @@
 			<dependency>
 				<groupId>org.junit</groupId>
 				<artifactId>junit-bom</artifactId>
-				<version>5.10.3</version>
+				<version>5.13.2</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>

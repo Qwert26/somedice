@@ -210,10 +210,10 @@ public class TestDiceExploder {
 		assertThrows(IllegalArgumentException.class, () -> underTest.setExplosionDepth((byte) -5));
 		assertEquals(explosionDepth, underTest.getExplosionDepth());
 	}
-
+	/**
+	 * 
+	 */
 	@Test
 	@Disabled
-	void checkResult() {
-
-	}
+	void checkResult() {}
 }
