@@ -157,6 +157,18 @@ public class TestDiceExploder {
 	 * 
 	 */
 	@Test
+	void checkToStringNoError() {
+		final AbstractDie source = new SingleDie(12);
+		final IntPredicate explodeOn = _ -> true;
+		DiceExploder underTest = new DiceExploder(explodeOn, source);
+		String result = assertDoesNotThrow(underTest::toString);
+		assertNotNull(result);
+	}
+
+	/**
+	 * 
+	 */
+	@Test
 	void keepPredicateThroughErrorCase() {
 		final AbstractDie source = new SingleDie(12);
 		final IntPredicate explodeOn = _ -> true;
@@ -210,10 +222,12 @@ public class TestDiceExploder {
 		assertThrows(IllegalArgumentException.class, () -> underTest.setExplosionDepth((byte) -5));
 		assertEquals(explosionDepth, underTest.getExplosionDepth());
 	}
+
 	/**
 	 * 
 	 */
 	@Test
 	@Disabled
-	void checkResult() {}
+	void checkResult() {
+	}
 }
