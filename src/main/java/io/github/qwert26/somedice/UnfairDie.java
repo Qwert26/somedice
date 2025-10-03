@@ -15,7 +15,7 @@ public final class UnfairDie extends AbstractDie {
 	/**
 	 * The internal mapping from values to frequencies.
 	 */
-	private final Map<Integer, BigInteger> data;
+	private Map<Integer, BigInteger> data = null;
 
 	/**
 	 * Creates a new empty die, ready to be filled with data.
@@ -58,6 +58,9 @@ public final class UnfairDie extends AbstractDie {
 	 */
 	public UnfairDie(AbstractDie source) {
 		this(TreeMap::new);
+		if (data == null) {
+			throw new InternalError("The TreeMap-constructor without arguments is broken!");
+		}
 		if (source != null) {
 			switch (source) {
 			case UnfairDie ud -> {
